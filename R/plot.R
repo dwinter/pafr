@@ -1,6 +1,5 @@
 
 .per_row <- function(r, q_chrom, t_chrom){
-    cols 
     if(r[["strand"]] == "+"){
         cols <- c("qstart", "qend", "tend", "tstart", "qstart")
     } else {
