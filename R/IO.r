@@ -21,13 +21,13 @@ tag_to_type_fxn <- function(tag_tokens){
     
 }
 
+#' @importFrom dplyr bind_rows
 process_tags <- function(tag_rows){
     tag_tibble <- dplyr::bind_rows(lapply(tag_rows, .one_tag_row))
     as.data.frame(tag_tibble) #base format is df, so force it back here
 }
 
-
-
+#' @export
 read_paf <- function(file_name, tibble=FALSE){
     lines <- scan(file_name, "", sep="\n", quiet=TRUE)
     tokens <-  strsplit(lines, "\t")
@@ -47,19 +47,4 @@ read_paf <- function(file_name, tibble=FALSE){
     res
 }
 
-.get_tag_vals <- function(tags){
-    sapply(strsplit(tags, ":"), "[[", 3)
-    
-}
 
-
-paf_tag <- function(x, tag){
-    tokens <- strsplit(x$annotation, "\\|")
-    tag_pattern <- paste0("^", tag, ":")    
-    tags <- sapply(tokens, function(y) y[grepl(y, pattern=tag_pattern)])
-    .get_tag_vals(tags)
-}
-
-#paf_dotplot(x){
-# ggplot() + geom_segment(data=np, aes(xend=qstart, x=qend, yend=tstart, y=tend, colour=mapq), size=1) 
-#}

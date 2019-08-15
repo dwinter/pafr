@@ -1,12 +1,3 @@
-synteny_data <- function(ali, q_chrom, t_chrom, offset=0){
-    to_plot <- subset(ali, qname==q_chrom & tname==t_chrom)
-    synt_data <- apply(to_plot, 1, .per_row, q_chrom=q_chrom, t_chrom=t_chrom)
-    synt_df <- do.call(rbind.data.frame, synt_data)
-    synt_df$block_id <- rep(1:length(synt_data), each=5)
-    synt_df
-
-       #ggplot(df0, aes(x,y)) + geom_polygon()
-}
 
 .per_row <- function(r, q_chrom, t_chrom){
     cols 
@@ -18,7 +9,17 @@ synteny_data <- function(ali, q_chrom, t_chrom, offset=0){
     list(x =as.numeric( r[cols] ), seq = c(q_chrom, q_chrom, t_chrom, t_chrom, q_chrom))
 }
       
+#' @export
+synteny_data <- function(ali, q_chrom, t_chrom, offset=0){
+    to_plot <- subset(ali, qname==q_chrom & tname==t_chrom)
+    synt_data <- apply(to_plot, 1, .per_row, q_chrom=q_chrom, t_chrom=t_chrom)
+    synt_df <- do.call(rbind.data.frame, synt_data)
+    synt_df$block_id <- rep(1:length(synt_data), each=5)
+    synt_df
+}
 
+
+#' @export
 Mb_lab <- function(x) paste(x/1e6, "Mb")
 
 chrom_sizes <- function(ali){
@@ -27,6 +28,7 @@ chrom_sizes <- function(ali){
     )
 }
 
+#' @export
 plot_synteny <- function(ali, q_chrom, t_chrom, centre=TRUE){
     synt_df <- synteny_data(ali, q_chrom = q_chrom,  t_chrom = t_chrom)
     cs <- chrom_sizes(ali)
@@ -56,8 +58,8 @@ plot_synteny <- function(ali, q_chrom, t_chrom, centre=TRUE){
 
 } 
 
-
-coverage_plot <- function(ali, target=TRUE, fill_colour="forestgreen"){
+#' @export
+plot_coverage <- function(ali, target=TRUE, fill_colour="forestgreen"){
     cs <- chrom_sizes(ali)
     if(target){
         u_chroms <- cs[["tlens"]]
@@ -104,8 +106,9 @@ add_pos_in_concatentaed_genome <- function(ali, maps){
 
 
 
-
-dot_plot <- function(ali, dashes=TRUE, alignment_colour="black"){
+#' @import ggplot2 
+#' @export
+dotplot <- function(ali, dashes=TRUE, alignment_colour="black", xlab = "query", ylab="target"){
   seq_maps <- order_seqs(ali) 
   ali <- add_pos_in_concatentaed_genome(ali, seq_maps)
   
@@ -114,8 +117,8 @@ dot_plot <- function(ali, dashes=TRUE, alignment_colour="black"){
       geom_segment(data=subset(ali, strand=="+"), aes(x=concat_qstart, xend=concat_qend, y=concat_tstart, yend=concat_tend), size=2, colour=alignment_colour) + 
       geom_segment(data=subset(ali, strand=="-"), aes(x=concat_qend, xend=concat_qstart, y=concat_tstart, yend=concat_tend), size=2, colour=alignment_colour) + 
       coord_equal() +
-      scale_x_continuous("Query seq",   labels=Mb_lab) + 
-      scale_y_continuous("Target seq", labels=Mb_lab)
+      scale_x_continuous(xlab, labels=Mb_lab) + 
+      scale_y_continuous(ylab, labels=Mb_lab)
   if(dashes){
       return(p + geom_hline(yintercept=seq_maps[["tmap"]], linetype=3) +
                  geom_vline(xintercept=seq_maps[["qmap"]], linetype=3))
