@@ -9,8 +9,15 @@
 }
       
 #' @export
-synteny_data <- function(ali, q_chrom, t_chrom, offset=0){
+synteny_data <- function(ali, q_chrom, t_chrom, RC=FALSE){
     to_plot <- subset(ali, qname==q_chrom & tname==t_chrom)
+    if(RC){
+        e <- to_plot$tend
+        s <- to_plot$tstart
+        to_plot$tstart = to_plot$tlen -e
+        to_plot$tend = to_plot$tlen - s
+        to_plot$strand <- ifelse(to_plot$strand == "+", "-", "+")
+    }
     synt_data <- apply(to_plot, 1, .per_row, q_chrom=q_chrom, t_chrom=t_chrom)
     synt_df <- do.call(rbind.data.frame, synt_data)
     synt_df$block_id <- rep(1:length(synt_data), each=5)
@@ -28,14 +35,14 @@ chrom_sizes <- function(ali){
 }
 
 #' @export
-plot_synteny <- function(ali, q_chrom, t_chrom, centre=TRUE){
-    synt_df <- synteny_data(ali, q_chrom = q_chrom,  t_chrom = t_chrom)
+plot_synteny <- function(ali, q_chrom, t_chrom, centre=TRUE, RC=FALSE){
+    synt_df <- synteny_data(ali, q_chrom = q_chrom,  t_chrom = t_chrom, RC=RC)
     cs <- chrom_sizes(ali)
     tlen <- cs$tlens$tlen[cs$tlens$tname == t_chrom]     
     qlen <- cs$qlens$qlen[cs$qlens$qname == q_chrom]
-    os <- abs(tlen - qlen)/2
     seq_lens <- data.frame(seq=factor(c(q_chrom, t_chrom)), start=0, end=c(qlen, tlen))
     if( centre ){
+        os <- abs(tlen - qlen)/2
         if(qlen > tlen){        
             synt_df[["x"]] [ synt_df[["seq"]]  == t_chrom ] <- synt_df[["x"]] [ synt_df[["seq"]]  == t_chrom ] + os
             seq_lens[2,2:3] <- seq_lens[2,2:3]  + os
