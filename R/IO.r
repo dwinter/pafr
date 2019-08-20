@@ -44,7 +44,24 @@ read_paf <- function(file_name, tibble=FALSE){
     if(tibble){
         return(as.tibble(res))
     }
+    class(res) <- c("pafr", "data.frame")
     res
 }
+
+#' @export 
+print.pafr <- function(x){
+    message("pafr object with ", nrow(x), " alignments (", round(sum(x$alen)/1e6,1), "Mb)")
+    message(" ", length(unique(x$qname)), " query seqs")
+    message(" ", length(unique(x$tname)), " target seqs")
+    ntags <- ncol(x) - 12
+    if(ntags < 12){
+        tags <- paste(names(ali)[13:ncol(x)], collapse=", ")
+    } else {
+        tags <- paste(paste(names(ali)[13:23], collapse=", "), "...")
+    }
+    message(" ", ntags, " tags: ", tags)
+}
+
+
 
 
