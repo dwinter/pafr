@@ -2,6 +2,7 @@
 
 export(Mb_lab)
 export(dotplot)
+export(filter_secondary_alignments)
 export(plot_coverage)
 export(plot_synteny)
 export(read_paf)
