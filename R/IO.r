@@ -49,19 +49,32 @@ read_paf <- function(file_name, tibble=FALSE){
 }
 
 #' @export 
-print.pafr <- function(x){
-    message("pafr object with ", nrow(x), " alignments (", round(sum(x$alen)/1e6,1), "Mb)")
-    message(" ", length(unique(x$qname)), " query seqs")
-    message(" ", length(unique(x$tname)), " target seqs")
+print.pafr <- function(x, ...){
+    if(nrow(x) == 1){
+        print_alignment(x)
+        return(invisible(x))
+    } 
+    print_pafr_rows(x)
+    return(invisible(x))
+}
+    
+print_pafr_rows <- function(x){
+    cat("pafr object with ", nrow(x), " alignments (", round(sum(x$alen)/1e6,1), "Mb)\n")
+    cat(" ", length(unique(x$qname)), " query seqs\n")
+    cat(" ", length(unique(x$tname)), " target seqs\n")
     ntags <- ncol(x) - 12
     if(ntags < 12){
         tags <- paste(names(ali)[13:ncol(x)], collapse=", ")
     } else {
         tags <- paste(paste(names(ali)[13:23], collapse=", "), "...")
     }
-    message(" ", ntags, " tags: ", tags)
+    cat(" ", ntags, " tags: ", tags, "\n")
 }
 
-
+print_alignment <- function(x){
+    ali_str <- paste0(x[["qname"]], ":", x[["qstart"]], "-", x[["qend"]], " v ", x[["tname"]], ":", x[["tstart"]], "-", x[["tend"]])
+    cat("Single pafr alignment:\n")
+    cat(" ", ali_str, "\n")
+}
 
 
