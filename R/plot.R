@@ -92,7 +92,7 @@ plot_coverage <- function(ali, target=TRUE, fill_colour="forestgreen"){
 }
     
 
-
+#' @importFrom utils head
 order_seqs <- function(ali){
     t_idx <- order(unique(ali$tlen), decreasing=TRUE)
     q_idx <- order(unique(ali$qlen), decreasing=TRUE)

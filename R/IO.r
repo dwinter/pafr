@@ -27,6 +27,8 @@ process_tags <- function(tag_rows){
     as.data.frame(tag_tibble) #base format is df, so force it back here
 }
 
+
+#' @importFrom tibble as_tibble 
 #' @export
 read_paf <- function(file_name, tibble=FALSE){
     lines <- scan(file_name, "", sep="\n", quiet=TRUE)
@@ -42,7 +44,7 @@ read_paf <- function(file_name, tibble=FALSE){
         res <- cbind.data.frame(res, process_tags(raw_tags))
     }
     if(tibble){
-        return(as.tibble(res))
+        return(as_tibble(res))
     }
     class(res) <- c("pafr", "data.frame")
     res

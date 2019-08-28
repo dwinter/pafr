@@ -1,3 +1,4 @@
+#' @export
 filter_secondary_alignments <- function(ali){
     if( "tp" %in% names(ali) ){
         return(ali[ ali$tp == "P",])

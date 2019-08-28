@@ -1,5 +1,5 @@
 Package: pafr
-Title: Read, manipulate and visualize 'Pairwise mApping Format' data.
+Title: Read, manipulate and visualize 'Pairwise mApping Format' data
 Version: 0.0.0.9000
 Authors@R: person("David", "Winter", 
                   email = "david.winter@gmail.com", 
@@ -7,7 +7,10 @@ Authors@R: person("David", "Winter",
                   comment  = c(ORCID = "0000-0002-6165-0029")
            )
 Description: Provides functions to read pairwise sequence alignments in the 'PAF' format used by 'minimap2' and 'miniasm'. 
-Depends: R (>= 3.4.4)
+Depends: 
+    R (>= 3.4.4),
+    dplyr, 
+    tibble
 Imports:
  ggplot2
 License: MIT + file LICENSE
