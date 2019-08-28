@@ -66,7 +66,12 @@ print_pafr_rows <- function(x){
     cat(" ", length(unique(x$tname)), " target seqs\n", sep="")
     ntags <- ncol(x) - 12
     if(ntags < 12){
-        tags <- paste(names(x)[13:ncol(x)], collapse=", ")
+        if(ntags > 0){
+            tags <- paste(names(x)[13:ncol(x)], collapse=", ")
+        } else {
+            tags <- ""
+        }
+
     } else {
         tags <- paste(paste(names(x)[13:23], collapse=", "), "...")
     }
