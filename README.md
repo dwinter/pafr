@@ -18,7 +18,7 @@ ali <- read_paf(test_alignment)
 dotplot(ali)
 ```
 
-![](README-dotplot-1.png)
+![](man/figures/README-dotplot-1.png)
 
 Installation
 ------------
