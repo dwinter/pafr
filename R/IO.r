@@ -61,22 +61,22 @@ print.pafr <- function(x, ...){
 }
     
 print_pafr_rows <- function(x){
-    cat("pafr object with ", nrow(x), " alignments (", round(sum(x$alen)/1e6,1), "Mb)\n")
-    cat(" ", length(unique(x$qname)), " query seqs\n")
-    cat(" ", length(unique(x$tname)), " target seqs\n")
+    cat("pafr object with ", nrow(x), " alignments (", round(sum(x$alen)/1e6,1), "Mb)\n", sep="")
+    cat(" ", length(unique(x$qname)), " query seqs\n", sep="")
+    cat(" ", length(unique(x$tname)), " target seqs\n", sep="")
     ntags <- ncol(x) - 12
     if(ntags < 12){
-        tags <- paste(names(ali)[13:ncol(x)], collapse=", ")
+        tags <- paste(names(x)[13:ncol(x)], collapse=", ")
     } else {
-        tags <- paste(paste(names(ali)[13:23], collapse=", "), "...")
+        tags <- paste(paste(names(x)[13:23], collapse=", "), "...")
     }
-    cat(" ", ntags, " tags: ", tags, "\n")
+    cat(" ", ntags, " tags: ", tags, "\n", sep="")
 }
 
 print_alignment <- function(x){
     ali_str <- paste0(x[["qname"]], ":", x[["qstart"]], "-", x[["qend"]], " v ", x[["tname"]], ":", x[["tstart"]], "-", x[["tend"]])
     cat("Single pafr alignment:\n")
-    cat(" ", ali_str, "\n")
+    cat(" ", ali_str, "\n", sep="")
 }
 
 
