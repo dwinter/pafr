@@ -13,6 +13,24 @@ Nevertheless, you can check out the code and run it for youself. Here's how to m
 
 ``` r
 library(pafr)
-ali <- read_paf("my_paf_file.paf")
+test_alignment <- system.file("extdata", "fungi.paf", package="pafr")
+ali <- read_paf(test_alignment)
 dotplot(ali)
 ```
+
+![](README-dotplot-1.png)
+
+Installation
+------------
+
+If you want to play with the code already here, you can install this package using devtools
+
+``` r
+#install.packages(pafr)
+devtools::install_github("dwinter/pafr")
+```
+
+Bugs/Issues
+-----------
+
+Please use the issue tracker on this repo to let us know about any bugs or issues that arise as you use this package
