@@ -27,6 +27,7 @@ process_tags <- function(tag_rows){
     as.data.frame(tag_tibble) #base format is df, so force it back here
 }
 
+
 #' @export
 read_paf <- function(file_name, tibble=FALSE){
     lines <- scan(file_name, "", sep="\n", quiet=TRUE)
