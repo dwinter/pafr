@@ -3,8 +3,11 @@ output:
   md_document:
     variant: markdown_github
 ---
-
 <!-- README.md is generated from README.Rmd. Please edit that file -->
+
+![Devlopment stage](https://img.shields.io/badge/development--stage-alpha-lightgrey)
+[![Travis-CI Build Status](https://travis-ci.org/dwinter/pafr.svg?branch=master)](https://travis-ci.org/dwinter/pafr)
+[![Coverage Status](https://img.shields.io/codecov/c/github/dwinter/pafr/master.svg)](https://codecov.io/github/dwinter/pafr?branch=master)
 
 ```{r, echo = FALSE}
 knitr::opts_chunk$set(

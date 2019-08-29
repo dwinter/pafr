@@ -1,4 +1,6 @@
 <!-- README.md is generated from README.Rmd. Please edit that file -->
+![Devlopment stage](https://img.shields.io/badge/development--stage-alpha-lightgrey) [![Travis-CI Build Status](https://travis-ci.org/dwinter/pafr.svg?branch=master)](https://travis-ci.org/dwinter/pafr) [![Coverage Status](https://img.shields.io/codecov/c/github/dwinter/pafr/master.svg)](https://codecov.io/github/dwinter/pafr?branch=master)
+
 pafr
 ====
 
@@ -13,6 +15,19 @@ Nevertheless, you can check out the code and run it for youself. Here's how to m
 
 ``` r
 library(pafr)
+#> Loading required package: dplyr
+#> 
+#> Attaching package: 'dplyr'
+#> The following objects are masked from 'package:stats':
+#> 
+#>     filter, lag
+#> The following object is masked from 'package:MoreUtils':
+#> 
+#>     last
+#> The following objects are masked from 'package:base':
+#> 
+#>     intersect, setdiff, setequal, union
+#> Loading required package: tibble
 test_alignment <- system.file("extdata", "fungi.paf", package="pafr")
 ali <- read_paf(test_alignment)
 dotplot(ali)
