@@ -2,6 +2,7 @@
 
 S3method(print,pafr)
 export(Mb_lab)
+export(chrom_sizes)
 export(dotplot)
 export(filter_secondary_alignments)
 export(plot_coverage)

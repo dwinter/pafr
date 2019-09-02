@@ -28,10 +28,16 @@ synteny_data <- function(ali, q_chrom, t_chrom, RC=FALSE){
 #' @export
 Mb_lab <- function(x) paste(x/1e6, "Mb")
 
+
+#' @export
 chrom_sizes <- function(ali){
-    list(qlens = unique(ali[,c("qname", "qlen")]),
+    res <- list(qlens = unique(ali[,c("qname", "qlen")]),
          tlens = unique(ali[,c("tname", "tlen")])
     )
+    if('pafr' %in% class(ali)){
+        return(lapply(res, as.data.frame))
+    }
+    res
 }
 
 #' @export
