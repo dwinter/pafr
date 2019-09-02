@@ -114,14 +114,14 @@ add_pos_in_concatentaed_genome <- function(ali, maps){
 
 #' @import ggplot2 
 #' @export
-dotplot <- function(ali, dashes=TRUE, alignment_colour="black", xlab = "query", ylab="target"){
+dotplot <- function(ali, dashes=TRUE, alignment_colour="black", xlab = "query", ylab="target", line_size=2){
   seq_maps <- order_seqs(ali) 
   ali <- add_pos_in_concatentaed_genome(ali, seq_maps)
   
     
   p <- ggplot() + 
-      geom_segment(data=subset(ali, strand=="+"), aes(x=concat_qstart, xend=concat_qend, y=concat_tstart, yend=concat_tend), size=2, colour=alignment_colour) + 
-      geom_segment(data=subset(ali, strand=="-"), aes(x=concat_qend, xend=concat_qstart, y=concat_tstart, yend=concat_tend), size=2, colour=alignment_colour) + 
+      geom_segment(data=subset(ali, strand=="+"), aes(x=concat_qstart, xend=concat_qend, y=concat_tstart, yend=concat_tend), size=line_size, colour=alignment_colour) + 
+      geom_segment(data=subset(ali, strand=="-"), aes(x=concat_qend, xend=concat_qstart, y=concat_tstart, yend=concat_tend), size=line_size, colour=alignment_colour) + 
       coord_equal() +
       scale_x_continuous(xlab, labels=Mb_lab) + 
       scale_y_continuous(ylab, labels=Mb_lab)
