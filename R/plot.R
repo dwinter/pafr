@@ -99,14 +99,33 @@ plot_coverage <- function(ali, target=TRUE, fill_colour="forestgreen"){
     
 
 #' @importFrom utils head
-order_seqs <- function(ali){
-    t_idx <- order(unique(ali$tlen), decreasing=TRUE)
-    q_idx <- order(unique(ali$qlen), decreasing=TRUE)
-    list(qmap  = structure(.Names=unique(ali$qname)[q_idx], c(0, head(cumsum(unique(ali$qlen)[q_idx]),-1))),
-         tmap  = structure(.Names=unique(ali$tname)[t_idx], c(0, head(cumsum(unique(ali$tlen)[t_idx]),-1)))
-    )
-               
+order_seqs <- function(ali, by = c("size", "qstart", "provided"), odering = list() ){
+    by <- match.arg(by)
+    chrom_lens <- chrom_sizes(ali)
+    if(by == "size"){
+        q_idx <- order(chrom_lens[["qlens"]][,2], decreasing = TRUE )
+        t_idx <- order(chrom_lens[["tlens"]][,2], decreasing = TRUE )
+        qmap  = structure(.Names=chrom_lens[["qlens"]][q_idx,1], c(0, head(cumsum(chrom_lens[["qlens"]][q_idx,2]),-1)))
+        tmap  = structure(.Names=chrom_lens[["qlens"]][t_idx,1], c(0, head(cumsum(chrom_lens[["tlens"]][q_idx,2]),-1)))
+        qsum = sum(chrom_lens[["qlens"]][,2])
+        tsum = sum(chrom_lens[["tlens"]][,2])
+    } else if (by == "qstart") {
+        #TODO
+        #qidx/map id duplicated from above. DRY out depending on how we
+        #implement other options
+        q_idx <- order(chrom_lens[["qlens"]][,2], decreasing = TRUE )
+        qmap  = structure(.Names=chrom_lens[["qlens"]][q_idx,1], c(0, head(cumsum(chrom_lens[["qlens"]][q_idx,2]),-1)))
+        qsum = sum(chrom_lens[["qlens"]][,2])
+        longest_by_target <- top_n(group_by(ali, tname), 1, alen)
+        t_idx  <- order(qmap[longest_by_target$qname] + longest_by_target$qstart)
+        tmap <- sort(structure(.Names = longest_by_target$tname[t_idx], c(0, head(cumsum(longest_by_target$tlen[t_idx]), -1))))        
+        tsum = sum(chrom_lens[["tlens"]][,2])
+    } else if (by == "provided") {
+        stop("NOT YET IMPLIMENTED") 
+    }
+    list(qmap = qmap, qsum = qsum, tmap = tmap, tsum = tsum)
 }
+               
 
 add_pos_in_concatentaed_genome <- function(ali, maps){
     ali$concat_qstart <- ali$qstart + maps[["qmap"]][ali$qname]
@@ -117,11 +136,16 @@ add_pos_in_concatentaed_genome <- function(ali, maps){
 }
 
 
+dotplot_name_df <- function(seq_map, genome_len){
+    data.frame(seq_name = names(seq_map),
+               centre=seq_map + diff(c(seq_map, genome_len)/2)
+    )
+}
 
 #' @import ggplot2 
 #' @export
-dotplot <- function(ali, dashes=TRUE, alignment_colour="black", xlab = "query", ylab="target", line_size=2){
-  seq_maps <- order_seqs(ali) 
+dotplot <- function(ali, order_by = c("size", "qstart", "provided"), label_seqs = FALSE, dashes=TRUE, alignment_colour="black", xlab = "query", ylab="target", line_size=2){
+  seq_maps <- order_seqs(ali, order_by) 
   ali <- add_pos_in_concatentaed_genome(ali, seq_maps)
   
     
@@ -132,8 +156,14 @@ dotplot <- function(ali, dashes=TRUE, alignment_colour="black", xlab = "query", 
       scale_x_continuous(xlab, labels=Mb_lab) + 
       scale_y_continuous(ylab, labels=Mb_lab)
   if(dashes){
-      return(p + geom_hline(yintercept=seq_maps[["tmap"]], linetype=3) +
-                 geom_vline(xintercept=seq_maps[["qmap"]], linetype=3))
+      p <- p +  geom_hline(yintercept=c(seq_maps[["tmap"]], sum(unique(ali$tlen))), linetype=3) +
+                geom_vline(xintercept=c(seq_maps[["qmap"]], sum(unique(ali$qlen))), linetype=3)
+  }
+  if (label_seqs){
+    qname_df <- dotplot_name_df(seq_maps[["qmap"]], seq_maps[["qsum"]])
+    tname_df <- dotplot_name_df(seq_maps[["tmap"]], seq_maps[["tsum"]])
+    p <- p + geom_text(data=qname_df, aes(label=seq_name, x=centre, y=0), vjust=1, check_overlap=TRUE) + 
+             geom_text(data=tname_df, aes(label=seq_name, x=0, y=centre), angle=90, vjust=0, check_overlap=TRUE) 
   }
   p
 
