@@ -99,29 +99,46 @@ plot_coverage <- function(ali, target=TRUE, fill_colour="forestgreen"){
     
 
 #' @importFrom utils head
-order_seqs <- function(ali, by = c("size", "qstart", "provided"), odering = list() ){
+order_seqs <- function(ali, by = c("size", "qstart", "provided", "asis"), ordering = list() ){    
     by <- match.arg(by)
     chrom_lens <- chrom_sizes(ali)
+    qsum = sum(chrom_lens[["qlens"]][,2])
+    tsum = sum(chrom_lens[["tlens"]][,2])
+    if(by == "asis"){
+        ("NOT YET IMPLEMENTED")
+    }
     if(by == "size"){
         q_idx <- order(chrom_lens[["qlens"]][,2], decreasing = TRUE )
         t_idx <- order(chrom_lens[["tlens"]][,2], decreasing = TRUE )
         qmap  = structure(.Names=chrom_lens[["qlens"]][q_idx,1], c(0, head(cumsum(chrom_lens[["qlens"]][q_idx,2]),-1)))
         tmap  = structure(.Names=chrom_lens[["qlens"]][t_idx,1], c(0, head(cumsum(chrom_lens[["tlens"]][q_idx,2]),-1)))
-        qsum = sum(chrom_lens[["qlens"]][,2])
-        tsum = sum(chrom_lens[["tlens"]][,2])
     } else if (by == "qstart") {
         #TODO
         #qidx/map id duplicated from above. DRY out depending on how we
         #implement other options
         q_idx <- order(chrom_lens[["qlens"]][,2], decreasing = TRUE )
         qmap  = structure(.Names=chrom_lens[["qlens"]][q_idx,1], c(0, head(cumsum(chrom_lens[["qlens"]][q_idx,2]),-1)))
-        qsum = sum(chrom_lens[["qlens"]][,2])
         longest_by_target <- top_n(group_by(ali, tname), 1, alen)
         t_idx  <- order(qmap[longest_by_target$qname] + longest_by_target$qstart)
         tmap <- sort(structure(.Names = longest_by_target$tname[t_idx], c(0, head(cumsum(longest_by_target$tlen[t_idx]), -1))))        
-        tsum = sum(chrom_lens[["tlens"]][,2])
     } else if (by == "provided") {
-        stop("NOT YET IMPLIMENTED") 
+        if(length(ordering) != 2) {
+            stop("To use 'provided' sequence ordering argument 'ordering' must by a list with two character vectors")             
+        }
+        qord <- ordering[[1]]
+        tord <- ordering[[2]]
+        q_idx <- match(qord, chrom_lens[["qlens"]][["qname"]])
+        if(any(is.na(q_idx))){
+            msg <- paste("Sequence(s) provided for ordering are nor present in alignment:\n",qord[is.na(q_idx)], "\n")
+            stop(msg)
+        }
+        t_idx <- match(tord, chrom_lens[["tlens"]][["tname"]])
+        if(any(is.na(t_idx))){
+            msg <- paste("Sequence(s) provided for ordering are nor present in alignment:\n",tord[is.na(t_idx)], "\n")
+            stop(msg)
+        }
+        qmap  = structure(.Names=chrom_lens[["qlens"]][q_idx,1], c(0, head(cumsum(chrom_lens[["qlens"]][q_idx,2]),-1)))
+        tmap  = structure(.Names=chrom_lens[["tlens"]][t_idx,1], c(0, head(cumsum(chrom_lens[["tlens"]][t_idx,2]),-1)))
     }
     list(qmap = qmap, qsum = qsum, tmap = tmap, tsum = tsum)
 }
@@ -144,8 +161,8 @@ dotplot_name_df <- function(seq_map, genome_len){
 
 #' @import ggplot2 
 #' @export
-dotplot <- function(ali, order_by = c("size", "qstart", "provided"), label_seqs = FALSE, dashes=TRUE, alignment_colour="black", xlab = "query", ylab="target", line_size=2){
-  seq_maps <- order_seqs(ali, order_by) 
+dotplot <- function(ali, order_by = c("size", "qstart", "provided", "asis"), label_seqs = FALSE, dashes=TRUE, ordering = list(), alignment_colour="black", xlab = "query", ylab="target", line_size=2){
+  seq_maps <- order_seqs(ali, order_by, ordering) 
   ali <- add_pos_in_concatentaed_genome(ali, seq_maps)
   
     
