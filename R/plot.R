@@ -129,7 +129,7 @@ order_seqs <- function(ali, by = c("size", "qstart", "provided", "asis"), orderi
         q_idx <- order(chrom_lens[["qlens"]][,2], decreasing = TRUE )
         t_idx <- order(chrom_lens[["tlens"]][,2], decreasing = TRUE )
         qmap  = structure(.Names=chrom_lens[["qlens"]][q_idx,1], c(0, head(cumsum(chrom_lens[["qlens"]][q_idx,2]),-1)))
-        tmap  = structure(.Names=chrom_lens[["tlens"]][t_idx,1], c(0, head(cumsum(chrom_lens[["tlens"]][q_idx,2]),-1)))
+        tmap  = structure(.Names=chrom_lens[["tlens"]][t_idx,1], c(0, head(cumsum(chrom_lens[["tlens"]][t_idx,2]),-1)))
     } else if (by == "qstart") {
         #TODO
         #qidx/map id duplicated from above. DRY out depending on how we
