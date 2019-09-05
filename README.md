@@ -14,23 +14,10 @@ This package is in the process of being turned from reseach code into a nice usa
 Nevertheless, you can check out the code and run it for youself. Here's how to make a basic whole-genome dotplot from a PAF file:
 
 ``` r
-library(pafr)
-#> Loading required package: dplyr
-#> 
-#> Attaching package: 'dplyr'
-#> The following objects are masked from 'package:stats':
-#> 
-#>     filter, lag
-#> The following object is masked from 'package:MoreUtils':
-#> 
-#>     last
-#> The following objects are masked from 'package:base':
-#> 
-#>     intersect, setdiff, setequal, union
-#> Loading required package: tibble
+library(pafr, quietly=TRUE)
 test_alignment <- system.file("extdata", "fungi.paf", package="pafr")
 ali <- read_paf(test_alignment)
-dotplot(ali)
+dotplot(ali, label_seqs=TRUE)
 ```
 
 ![](man/figures/README-dotplot-1.png)
@@ -41,11 +28,11 @@ Installation
 If you want to play with the code already here, you can install this package using devtools
 
 ``` r
-#install.packages(pafr)
+#install.packages(devtools)
 devtools::install_github("dwinter/pafr")
 ```
 
 Bugs/Issues
 -----------
 
-Please use the issue tracker on this repo to let us know about any bugs or issues that arise as you use this package
+Please use the issue tracker on this repo to let us know about any bugs or issues that arise as you use this package.
