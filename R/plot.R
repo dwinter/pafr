@@ -24,6 +24,24 @@ synteny_data <- function(ali, q_chrom, t_chrom, RC=FALSE){
     synt_df
 }
 
+highlight_query <- function(ali, bed, ordered_by, fill="yellow", colour="black", alpha=0.6){
+    seq_maps <- order_seqs(ali, ordered_by)
+    os = seq_maps[["qmap"]][as.character(bed$chrom)]
+    to_plot <- data.frame( qstart = bed$start + os, qend = bed$end + os)
+    geom_rect(data=to_plot, 
+              aes(xmin=qstart, xmax=qend, ymin=0, ymax=seq_maps[["tsum"]]),
+              fill=fill, colour=colour, alpha=alpha)
+}          
+    
+
+highlight_target <- function(ali, bed, ordered_by, fill="yellow", colour="black", alpha=0.6){
+    seq_maps <- order_seqs(ali, ordered_by)                                                                                                                                  
+    os = seq_maps[["tmap"]][as.character(bed$chrom)] 
+    to_plot <- data.frame( tstart = bed$start + os, tend = bed$end + os)                                                                                                     
+    geom_rect(data=to_plot,                                                                                                                           
+              aes(xmin=0, xmax=seq_maps[["qsum"]], ymin=tstart, ymax=tend),                                                                                                  
+              fill=fill, colour=colour, alpha=alpha)                                                                                                                         
+}
 
 #' @export
 Mb_lab <- function(x) paste(x/1e6, "Mb")
