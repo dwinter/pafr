@@ -35,12 +35,12 @@ highlight_query <- function(ali, bed, ordered_by, fill="yellow", colour="black",
     
 
 highlight_target <- function(ali, bed, ordered_by, fill="yellow", colour="black", alpha=0.6){
-    seq_maps <- order_seqs(ali, ordered_by)                                                                                                                                  
+    seq_maps <- order_seqs(ali, ordered_by) 
     os = seq_maps[["tmap"]][as.character(bed$chrom)] 
-    to_plot <- data.frame( tstart = bed$start + os, tend = bed$end + os)                                                                                                     
-    geom_rect(data=to_plot,                                                                                                                           
-              aes(xmin=0, xmax=seq_maps[["qsum"]], ymin=tstart, ymax=tend),                                                                                                  
-              fill=fill, colour=colour, alpha=alpha)                                                                                                                         
+    to_plot <- data.frame( tstart = bed$start + os, tend = bed$end + os) 
+    geom_rect(data=to_plot, 
+              aes(xmin=0, xmax=seq_maps[["qsum"]], ymin=tstart, ymax=tend), 
+              fill=fill, colour=colour, alpha=alpha)
 }
 
 #' @export
