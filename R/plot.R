@@ -116,6 +116,7 @@ plot_coverage <- function(ali, target=TRUE, fill_colour="forestgreen"){
 }
     
 #' @importFrom dplyr top_n
+#' @importFrom dplyr group_by
 #' @importFrom utils head
 order_seqs <- function(ali, by = c("size", "qstart", "provided", "asis"), ordering = list() ){    
     by <- match.arg(by)

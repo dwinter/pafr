@@ -17,7 +17,7 @@ test_that("Ordering sequences by size", {
     expect_equal(names(qmap), c("Q_chr1", "Q_chr2", "Q_chr6", "Q_chr7"))
     expect_equal(unname(qmap), c(0, 6273420, 12125925, 16469409))
     expect_equal(names(tmap), c("T_chr1", "T_chr2", "T_chr3", "T_chr5"))
-    expect_equal(unname(tmap), c(0, 6377790, 12271384, 17811269)
+    expect_equal(unname(tmap), c(0, 6377790, 12271384, 17811269))
 })
 
 test_that("Ordering sequences by size", {
