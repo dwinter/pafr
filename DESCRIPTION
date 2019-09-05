@@ -9,10 +9,10 @@ Authors@R: person("David", "Winter",
 Description: Provides functions to read pairwise sequence alignments in the 'PAF' format used by 'minimap2' and 'miniasm'. 
 Depends: 
     R (>= 3.4.4),
+    ggplot2,
+Imports:
     dplyr, 
     tibble
-Imports:
- ggplot2
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
