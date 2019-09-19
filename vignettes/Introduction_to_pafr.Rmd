@@ -1,0 +1,182 @@
+---
+title: "Using pafr to read, manipulate and plot genome alignments in the PAF format"
+author: "David Winter"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{tutorial}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  fig.height=6,
+  fig.width=6,
+  fig.align = 'center'
+)
+```
+
+
+
+
+## Reading data with `read_paf`
+
+`pafr` deals with data stored in the Pairwise mApping Format (PAF), as 
+used by `minimap2` and possibly other whole-genome aligners. PAF is a plain text
+tabular format where each row represents and alignment between two sequences. 
+Each `.paf` file has at least the following 12 columns.
+
+
+| **Column | Data type | Description**
+|--------|-----------|---------------------------------------------------------|
+| 1      | string    | Query sequence name                                     |
+| 2      | int       | Query sequence length                                   |
+| 3      | int       | Query start coordinate (0-based)                        |
+| 4      | int       | Query end coordinate (0-based)                          |
+| 5      | char      | ‘+’ if query/target on the same strand; ‘-’ if opposite |
+| 6      | string    | Target sequence name                                    |
+| 7      | int       | Target sequence length                                  |
+| 8      | int       | Target start coordinate on the original strand          |
+| 9      | int       | Target end coordinate on the original strand            |
+| 10     | int       | Number of matching bases in the mapping                 |
+| 11     | int       | Number bases, including gaps, in the mapping            |
+| 12     | int       | Mapping quality (0-255 with 255 for missing)            |
+
+In addition, each row canhave a variable number of 'tags', which share a simliar
+format to those used SAM files [See the SAM specification (pdf)](https://samtools.github.io/hts-specs/SAMtags.pdf).
+
+`pafr` provides the function `read_paf` to read alignments into an R session.
+
+
+```{r, read}
+library(pafr)
+path_to_fungal_alignment <- system.file("extdata", "fungi.paf", package = "pafr")
+ali <- read_paf(path_to_fungal_alignment)
+```
+
+By default, the object returned by read_paf behaves almost exactly like a base R
+`data.frame`. In fact, the only difference is this object prints a nice summary
+of the object content when called directly or printed (rather than the thousands
+of lines it might contain):
+
+
+```{r, print}
+ali
+```
+
+So, in this case there is a total of 35Mb of aligned-genome, coming from 8 query
+and 8 target sequences.`read_paf` gives the 12 core columns of the PAF format 
+the following column names.
+
+
+| Column | Name   | Data type | Description                                             |
+|--------|--------|-----------|---------------------------------------------------------|
+| 1      | qname  | string    | Query sequence name                                     |
+| 2      | qlen   | int       | Query sequence length                                   |
+| 3      | qstart | int       | Query start coordinate (0-based)                        |
+| 4      | qend   | int       | Query end coordinate (0-based)                          |
+| 5      | strand | char      | ‘+’ if query/target on the same strand; ‘-’ if opposite |
+| 6      | tname  | string    | Target sequence name                                    |
+| 7      | tlen   | int       | Target sequence length                                  |
+| 8      | tstart | int       | Target start coordinate on the original strand          |
+| 9      | tend   | int       | Target end coordinate on the original strand            |
+| 10     | nmatch | int       | Number of matching bases in the mapping                 |
+| 11     | alen   | int       | Number bases, including gaps, in the mapping            |
+| 12     | mapq   | int       | Mapping quality (0-255 with 255 for missing)            |
+
+In addition, any tags present in the file will be included as a column. The tags
+used by `minimap2` [are documented
+here](https://lh3.github.io/minimap2/minimap2.html) or in the man page for that
+program. One interesting tag for this alignment is `dv`, which encodes the
+approximate per-base difference between query and target sequence. We can use
+this tag to visualize the relatinship between alignment-length and sequence
+divergence. Because the alignment data is stored in a `data.frame` we can pass
+it directly to `ggplot2`:
+
+
+```{r, alen}
+library(ggplot2)
+library(ggpubr)
+
+ggplot(ali, aes(alen, dv)) + 
+    geom_point(alpha=0.6, colour="steelblue", size=2) + 
+    scale_x_continuous("Alignment length (kb)", label =  function(x) x/ 1e3) +
+    scale_y_continuous("Per base divergence") + 
+    theme_pubr()
+```
+
+So, there are a lot of very-short alignments, some of which a re very
+divergent.But there are also so very long alignments, which all show high
+similarity. 
+
+Because the `pafr` object is effectively a `data.frame`, we can use normal R
+functions to inspect or analyse it. For example, let's compare the mean
+divergence level for alignments including the difference query sequences.
+
+```{r, compare_q}
+by_q <- aggregate(dv ~ qname, data=ali, FUN=mean)
+knitr::kable(by_q)
+```
+
+Interestingly enough, `Q_chrm` is the mitochondrial genome, and appears to have
+less diveregnce than any of the chromosomes in this case.
+
+
+## Filtering and subsetting alignments
+
+Often the first thing you will want to do after reading in some data is get rid
+of low-quality, short otherwise not-ideal alignments. `minimap2` uses the 
+`tp` (type of alignment) tag to makr secondaory alignments (i.e. possible
+alignments between the query and target sequence that are not the best possible
+alignment for those regions). The function `filter_secondary_alignments` removes
+non-primary alignments from a `pafr object`. Let's use it to filter our `ali`
+object and see how many alignment (i.e. rows of data) we lose as a result:
+
+```{r, prim_only}
+prim_alignment <- filter_secondary_alignments(ali)
+nrow(ali) - nrow(prim_alignment)
+```
+
+In some cases you might want to remove alignments with low mapping quality, high
+divergence, short length or some other property. Again, because the `pafr`
+object behaces like a  `data.frame` you can use your favourite base `R` or
+`tidyverse` functions to do this. Here I remove short alignemnts and those with
+a low mapping quality score:
+
+
+```{r, remove_short}
+long_ali <- subset(ali, alen > 1e4 & mapq > 40)
+long_ali
+```
+
+Note, this has remvode quote a lot of data (thousands of alignments and ~ 10Mb
+of sequence).
+
+## Plotting alignments 
+
+### Dotplot
+
+
+```{r}
+dotplot(prim_alignment)
+```
+
+#### Adding annotations
+
+### Synteny plot
+
+
+```{r, syny_plot}
+plot_synteny(long_ali, q_chrom="Q_chr3", t_chrom="T_chr4", centre=TRUE)
+```
+
+### Coverage plot
+
+```{r,cov_plot}
+plot_coverage(prim_alignment)   
+```
+
+```{r, cov_long}
+plot_coverage(long_ali, fill_colour="steelblue")   
+```
