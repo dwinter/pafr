@@ -23,8 +23,8 @@ knitr::opts_chunk$set(
 ## Reading data with `read_paf`
 
 `pafr` deals with data stored in the Pairwise mApping Format (PAF), as 
-used by `minimap2` and possibly other whole-genome aligners. PAF is a plain text
-tabular format where each row represents and alignment between two sequences. 
+used by `minimap2` and other whole-genome aligners. PAF is a plain text
+tabular format where each row represents an alignment between two sequences. 
 Each `.paf` file has at least the following 12 columns.
 
 
@@ -43,7 +43,7 @@ Each `.paf` file has at least the following 12 columns.
 | 11     | int       | Number bases, including gaps, in the mapping            |
 | 12     | int       | Mapping quality (0-255 with 255 for missing)            |
 
-In addition, each row canhave a variable number of 'tags', which share a simliar
+In addition, each row can have a variable number of 'tags', which share a simliar
 format to those used SAM files [See the SAM specification (pdf)](https://samtools.github.io/hts-specs/SAMtags.pdf).
 
 `pafr` provides the function `read_paf` to read alignments into an R session.
@@ -65,7 +65,7 @@ of lines it might contain):
 ali
 ```
 
-So, in this case there is a total of 35Mb of aligned-genome, coming from 8 query
+In this case there is a total of 35Mb of aligned-genome, coming from 8 query
 and 8 target sequences.`read_paf` gives the 12 core columns of the PAF format 
 the following column names.
 
@@ -106,8 +106,8 @@ ggplot(ali, aes(alen, dv)) +
     theme_pubr()
 ```
 
-So, there are a lot of very-short alignments, some of which a re very
-divergent.But there are also so very long alignments, which all show high
+There are a lot of short alignments, some of which are very
+divergent. But there are also so very long alignments, which all show high
 similarity. 
 
 Because the `pafr` object is effectively a `data.frame`, we can use normal R
@@ -126,12 +126,12 @@ less diveregnce than any of the chromosomes in this case.
 ## Filtering and subsetting alignments
 
 Often the first thing you will want to do after reading in some data is get rid
-of low-quality, short otherwise not-ideal alignments. `minimap2` uses the 
-`tp` (type of alignment) tag to makr secondaory alignments (i.e. possible
+of low-quality, short and otherwise not-ideal alignments. `minimap2` uses the 
+`tp` (type of alignment) tag to make secondary alignments (i.e. possible
 alignments between the query and target sequence that are not the best possible
 alignment for those regions). The function `filter_secondary_alignments` removes
 non-primary alignments from a `pafr object`. Let's use it to filter our `ali`
-object and see how many alignment (i.e. rows of data) we lose as a result:
+object and see how many alignments (i.e. rows of data) we lose as a result:
 
 ```{r, prim_only}
 prim_alignment <- filter_secondary_alignments(ali)
@@ -140,8 +140,8 @@ nrow(ali) - nrow(prim_alignment)
 
 In some cases you might want to remove alignments with low mapping quality, high
 divergence, short length or some other property. Again, because the `pafr`
-object behaces like a  `data.frame` you can use your favourite base `R` or
-`tidyverse` functions to do this. Here I remove short alignemnts and those with
+object behaves like a  `data.frame` you can use your favourite base `R` or
+`tidyverse` functions to do this. Here I remove short alignments and those with
 a low mapping quality score:
 
 
@@ -150,7 +150,7 @@ long_ali <- subset(ali, alen > 1e4 & mapq > 40)
 long_ali
 ```
 
-Note, this has remvode quote a lot of data (thousands of alignments and ~ 10Mb
+Note, this has removed quite a lot of data (thousands of alignments and ~ 10Mb
 of sequence).
 
 ## Plotting alignments 
