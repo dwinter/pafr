@@ -111,8 +111,8 @@ divergent. But there are also so very long alignments, which all show high
 similarity. 
 
 Because the `pafr` object is effectively a `data.frame`, we can use normal R
-functions to inspect or analyse it. For example, let's compare the mean
-divergence level for alignments including the difference query sequences.
+functions to inspect or analyse it. For example, let's calculate the mean
+divergence-level for alignments featuring each query sequence.
 
 ```{r, compare_q}
 by_q <- aggregate(dv ~ qname, data=ali, FUN=mean)
