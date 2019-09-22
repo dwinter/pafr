@@ -44,7 +44,24 @@ highlight_target <- function(ali, bed, ordered_by, fill="yellow", colour="black"
 }
 
 #' @export
+Gb_lab <- function(x) paste(x/1e9, "Gb")
+
+#' Provide axis labels in megabases 
+#'
+#' For use with \code{\link{ggplot2}}
+#' @param x The data (in base-pairs) to be fromated as Mb
+#' @return A character vector with with scale labels (in Mb).
+#' @examples
+#' \dontrun{
+#' ali <- read_paf(system.file("extdata", "fungi.paf", package="pafr"))
+#' doplot(ali) + scale_x_continuous("Genomic position", label=Mb_lab)
+#'}
+#' @export
+#'
 Mb_lab <- function(x) paste(x/1e6, "Mb")
+
+#' @export
+Kb_lab <- function(x) paste(x/1e3, "Kb")
 
 
 #' @export
