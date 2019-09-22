@@ -23,7 +23,7 @@ synteny_data <- function(ali, q_chrom, t_chrom, RC=FALSE){
     synt_df$block_id <- rep(1:length(synt_data), each=5)
     synt_df
 }
-
+#' @export 
 highlight_query <- function(ali, bed, ordered_by, fill="yellow", colour="black", alpha=0.6){
     seq_maps <- order_seqs(ali, ordered_by)
     os = seq_maps[["qmap"]][as.character(bed$chrom)]
@@ -33,7 +33,7 @@ highlight_query <- function(ali, bed, ordered_by, fill="yellow", colour="black",
               fill=fill, colour=colour, alpha=alpha)
 }          
     
-
+#' @export
 highlight_target <- function(ali, bed, ordered_by, fill="yellow", colour="black", alpha=0.6){
     seq_maps <- order_seqs(ali, ordered_by) 
     os = seq_maps[["tmap"]][as.character(bed$chrom)] 
@@ -43,25 +43,6 @@ highlight_target <- function(ali, bed, ordered_by, fill="yellow", colour="black"
               fill=fill, colour=colour, alpha=alpha)
 }
 
-#' @export
-Gb_lab <- function(x) paste(x/1e9, "Gb")
-
-#' Provide axis labels in megabases 
-#'
-#' For use with \code{\link{ggplot2}}
-#' @param x The data (in base-pairs) to be fromated as Mb
-#' @return A character vector with with scale labels (in Mb).
-#' @examples
-#' \dontrun{
-#' ali <- read_paf(system.file("extdata", "fungi.paf", package="pafr"))
-#' doplot(ali) + scale_x_continuous("Genomic position", label=Mb_lab)
-#'}
-#' @export
-#'
-Mb_lab <- function(x) paste(x/1e6, "Mb")
-
-#' @export
-Kb_lab <- function(x) paste(x/1e3, "Kb")
 
 
 #' @export
@@ -105,8 +86,30 @@ plot_synteny <- function(ali, q_chrom, t_chrom, centre=TRUE, RC=FALSE){
 
 } 
 
+
+#' Plot the regions of one genome that are covered by alignments in a paf flie
+#' 
+#' Each sequence in the focal genome is display as rectange, with regions 
+#' covered by an alignment shaded with the fill_colour as described below.
+#' Uncovered regions remain white.
+#'
+#' Note this function uses a \code{\link{theme_coverage_plot}} to style the graph
+#' using another ggplot theme on the plot may produce unexpected results.
+#'
+#' @param ali an alignment as read by \code{\link{read_paf}}
+#' @param target logical, if TRUE (defautl) dsiplay coverage for the target
+#' genome, if FALSE for the query
+#' @param fill_colour, colour used for the covered-regions
+#' @param direct_label, logical. If TRUE use geom_text to directly label the
+#' name of the focal sequences. if FALSE no direct labels are drown
+#' @param label_colour character, colour used for direct labels
+#' @param xlab, character, Name for for x-axis
+#' @param x_labeller function to be used to label x-axis (defaults to
+#' \code{\link{Mb_lab}}
 #' @export
-plot_coverage <- function(ali, target=TRUE, fill_colour="forestgreen"){
+plot_coverage <- function(ali, target=TRUE, fill_colour="forestgreen", 
+                          direct_label = TRUE, label_colour="black",
+                          xlab="Position in sequence", x_labeller = Mb_lab){
     cs <- chrom_sizes(ali)
     if(target){
         u_chroms <- cs[["tlens"]]
@@ -121,17 +124,34 @@ plot_coverage <- function(ali, target=TRUE, fill_colour="forestgreen"){
     }
     names(u_chroms) <- c("seq_name", "seq_len")
     biggest <- max(u_chroms$seq_len)
-    ggplot() + 
+    p <- ggplot() + 
         geom_rect(data=u_chroms, aes(xmin=0, xmax=seq_len, ymin=-1, ymax=1), colour='black', fill='white', size=1) + 
         geom_rect(data=ali, aes_string(xmin=spos, xmax=epos, ymin=-0.95, ymax=0.95), fill=fill_colour) + 
-        geom_text(data=u_chroms, aes(x=biggest/10,y=0, label=seq_name)) + 
-        facet_grid(seq_name ~ . )  +
-        theme(axis.title.y=element_blank(),
-              axis.text.y=element_blank(),
-              axis.ticks.y=element_blank()) 
-    
+        scale_x_continuous(xlab, labels=x_labeller) +
+        facet_grid(seq_name ~ . )  
+       
+    if (direct_label){
+        p <- p + geom_text(data=u_chroms, aes(x=biggest/10,y=0, label=seq_name), color=label_colour) +
+            theme_coverage_plot(facet_labs=FALSE)
+        return(p)
+    }    
+    p  + theme_coverage_plot() 
 }
     
+#'@export
+theme_coverage_plot <- function(facet_labs=TRUE){
+    theme <- theme_bw()
+    theme$axis.title.y=element_blank()
+    theme$axis.text.y=element_blank()
+    theme$axis.ticks.y=element_blank()
+    if(!facet_labs){
+          theme$strip.background = element_blank()
+          theme$strip.text = element_blank()
+    }
+    theme
+}
+
+
 #' @importFrom dplyr top_n
 #' @importFrom dplyr group_by
 #' @importFrom utils head
