@@ -8,7 +8,6 @@
     list(x =as.numeric( r[cols] ), seq = c(q_chrom, q_chrom, t_chrom, t_chrom, q_chrom))
 }
       
-#' @export
 synteny_data <- function(ali, q_chrom, t_chrom, RC=FALSE){
     to_plot <- subset(ali, qname==q_chrom & tname==t_chrom)
     if(RC){
@@ -56,8 +55,25 @@ chrom_sizes <- function(ali){
     res
 }
 
+
+#' Plot synteny between a query and target sequence in a paf alignment
+#' 
+#' @param ali pafr or tibble containing the genome alignment (as returned by
+#' \code{\link{read_paf}})
+#' @param q_chrom character, name for the query sequence
+#' @param t_chrom character, name for the target sequence
+#' @param RC logical, if TRUE, use the reverse and complement for the target
+#' sequence
+#' @param centre, logical, if TRUE (default) adjust the position of the target 
+#' sequence so it is centred on the query. If not, both sequences start at
+#' position zero
+#' @param xlab, character, Name for for x-axis
+#' @param ylab, character, Name for for x-axus
+#' @param x_labeller function to be used to label x-axis (defaults to
+#' @return A ggplot object dsplaying synteny between query and target sequences
 #' @export
-plot_synteny <- function(ali, q_chrom, t_chrom, centre=TRUE, RC=FALSE){
+plot_synteny <- function(ali, q_chrom, t_chrom, centre=TRUE, RC=FALSE, 
+                         xlab = "Position in query", ylab = "",  x_labeller=Mb_lab){
     synt_df <- synteny_data(ali, q_chrom = q_chrom,  t_chrom = t_chrom, RC=RC)
     cs <- chrom_sizes(ali)
     tlen <- cs$tlens$tlen[cs$tlens$tname == t_chrom]     
@@ -82,7 +98,9 @@ plot_synteny <- function(ali, q_chrom, t_chrom, centre=TRUE, RC=FALSE){
         tops <- c(0.95, 2.2)
     }
     ggplot() + geom_polygon(data=synt_df, aes(x,seq, group=block_id), fill='grey80', colour='black') + 
-               geom_rect(data=seq_lens, aes(xmin=start, xmax=end, ymin=bottoms, ymax=tops), colour='black', fill='white')
+               geom_rect(data=seq_lens, aes(xmin=start, xmax=end, ymin=bottoms, ymax=tops), colour='black', fill='white') +
+               scale_x_continuous(xlab, label=x_labeller) + ylab(ylab)
+
 
 } 
 
