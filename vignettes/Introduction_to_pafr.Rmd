@@ -28,7 +28,7 @@ tabular format where each row represents an alignment between two sequences.
 Each `.paf` file has at least the following 12 columns.
 
 
-| **Column | Data type | Description**
+| **Column** | **Data type** | **Description**
 |--------|-----------|---------------------------------------------------------|
 | 1      | string    | Query sequence name                                     |
 | 2      | int       | Query sequence length                                   |
@@ -157,11 +157,22 @@ of sequence).
 
 ### Dotplot
 
+Often the most useful visualization of a genome alignment is the
+[dotplot](https://en.wikipedia.org/wiki/Dot_plot_(bioinformatics)). `pafr` makes
+it easy to produce one of these from a .paf alignment: 
 
 ```{r}
 dotplot(prim_alignment)
 ```
 
+```{r}
+dotplot(prim_alignment, label_seqs=TRUE, order_by="qstart")
+```
+
+
+```{r}
+dotplot(prim_alignment, label_seqs=TRUE, order_by="qstart")
+```
 #### Adding annotations
 
 ### Synteny plot
@@ -169,7 +180,7 @@ dotplot(prim_alignment)
 
 ```{r, syny_plot}
 plot_synteny(long_ali, q_chrom="Q_chr3", t_chrom="T_chr4", centre=TRUE)
-```
+``t`
 
 ### Coverage plot
 
