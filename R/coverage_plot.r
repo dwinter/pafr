@@ -1,8 +1,8 @@
 
 #' Plot the regions of one genome that are covered by alignments in a paf flie
 #' 
-#' Each sequence in the focal genome is display as rectange, with regions 
-#' covered by an alignment shaded with the fill_colour as described below.
+#' Each sequence in the focal genome is displayed as rectange, with regions 
+#' covered by an alignment shaded as per the \code{fill} argument described below.
 #' Uncovered regions remain white.
 #'
 #' Note this function uses a \code{\link{theme_coverage_plot}} to style the graph
@@ -11,7 +11,10 @@
 #' @param ali an alignment as read by \code{\link{read_paf}}
 #' @param target logical, if TRUE (defautl) dsiplay coverage for the target
 #' genome, if FALSE for the query
-#' @param fill_colour, colour used for the covered-regions
+#' @param fill,character, how to colour the alignment-blocks. If the character
+#' provided is the name of a column in the alignment, this column will be passed
+#' to \code{\link{ggplot2}} to shade alignment blocks. Otherwise, the character
+#' is treated as a single colour to be used for all alignment blocks.
 #' @param direct_label, logical. If TRUE use geom_text to directly label the
 #' name of the focal sequences. if FALSE no direct labels are drown
 #' @param label_colour character, colour used for direct labels
