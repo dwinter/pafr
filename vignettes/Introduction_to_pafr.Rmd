@@ -180,14 +180,39 @@ dotplot(prim_alignment, label_seqs=TRUE, order_by="qstart")
 
 ```{r, syny_plot}
 plot_synteny(long_ali, q_chrom="Q_chr3", t_chrom="T_chr4", centre=TRUE)
-``t`
+```
 
 ### Coverage plot
+
+The function `plot_coverage` gives a useful way to see how much of a given
+genome is included in a genome alignment. By default, it displays each sequence
+in the target chromosome as a rectangular box, with shaded regions represented
+parts of the target genome that are included in an alignment:
 
 ```{r,cov_plot}
 plot_coverage(prim_alignment)   
 ```
 
-```{r, cov_long}
-plot_coverage(long_ali, fill_colour="steelblue")   
+It is also possible to produce the same plot using the query genome as the
+reference.
+
+
+```{r, cov_target}
+plot_coverage(prim_alignment, target=FALSE)   
+```
+
+#### Coverage by query sequence
+
+Sometimes, in addition to knowing how much of a given genome is represented in a
+whole genome alignment, it is interesting to know which sequences from the other
+genome are aligning. For example, we might want to 'paint' regions of the target
+sequence by which query seqeunce they form an alignment to. The `plot_coverage`
+function can shade the alignment blocks it produces according to any column in
+the alignment. Here is how we do it for query sequence name (i.e. the `qname`
+column), taking advantage of `ggplot`'s `scale_colour_brewer` to use a nice
+palete.
+
+
+```{r, cov_colourful}
+plot_coverage(prim_alignment, fill='qname') + scale_fill_brewer(palette="Set1")
 ```
