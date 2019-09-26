@@ -1,9 +1,5 @@
 context("manipulating pafr objects")
 
-ali_pafr <- read_paf("test_ali.paf")
-ali_tib <- read_paf("test_ali.paf", tibble=TRUE)
-
-
 ali_notag <- read_paf("tagless.paf", tibble=TRUE)
 ali_all_inv <- read_paf("all_inverted.paf", tibble=TRUE)
 

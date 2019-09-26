@@ -1,7 +1,5 @@
 context("Testing plotting... to the extent possible")
 
-ali_pafr <- read_paf("test_ali.paf")
-
 test_that("dotplot works produces a plot", {
     p <- dotplot(ali_pafr)
     expect_is(p, "ggplot")
