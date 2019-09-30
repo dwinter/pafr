@@ -23,7 +23,8 @@ synteny_data <- function(ali, q_chrom, t_chrom, RC=FALSE){
     synt_df
 }
 #' @export 
-highlight_query <- function(ali, bed, ordered_by, fill="yellow", colour="black", alpha=0.6){
+highlight_query <- function(ali, bed, ordered_by, ordering=list(), fill="yellow", colour="black", alpha=0.6){
+    by <- match.arg(orderd_by, by, ordering)
     seq_maps <- order_seqs(ali, ordered_by)
     os = seq_maps[["qmap"]][as.character(bed$chrom)]
     to_plot <- data.frame( qstart = bed$start + os, qend = bed$end + os)
@@ -108,8 +109,7 @@ plot_synteny <- function(ali, q_chrom, t_chrom, centre=TRUE, RC=FALSE,
 #' @importFrom dplyr top_n
 #' @importFrom dplyr group_by
 #' @importFrom utils head
-order_seqs <- function(ali, by = c("size", "qstart", "provided", "asis"), ordering = list() ){    
-    by <- match.arg(by)
+order_seqs <- function(ali, by, ordering = list() ){      
     chrom_lens <- chrom_sizes(ali)
     qsum = sum(chrom_lens[["qlens"]][,2])
     tsum = sum(chrom_lens[["tlens"]][,2])
@@ -168,11 +168,32 @@ dotplot_name_df <- function(seq_map, genome_len){
     )
 }
 
+check_ordering <- function(ali, ordering){
+    q_in_order <- unique(ali[["qname"]]) %in% ordering[[1]]
+    t_in_order <- unique(ali[["tname"]]) %in% ordering[[2]]
+    if(any(!q_in_order)){
+        msg <- paste("Dropping data from sequences absent from ordering:\n",
+                     paste(unique(ali[["qname"]])[!q_in_order], collapse=","))
+        warning(msg, call.=FALSE)
+    }
+    if(any(!t_in_order)){
+        msg <- paste("Dropping data from sequences absent from ordering:\n",
+                     paste(unique(ali[["tname"]])[!t_in_order], collapse=","))
+        warning(msg, call.=FALSE)
+    }
+    return(invisible()) 
+}
+
 #' @import ggplot2 
 #' @export
 dotplot <- function(ali, order_by = c("size", "qstart", "provided", "asis"), label_seqs = FALSE, dashes=TRUE, ordering = list(), alignment_colour="black", xlab = "query", ylab="target", line_size=2){
-  seq_maps <- order_seqs(ali, order_by, ordering) 
-  ali <- add_pos_in_concatentaed_genome(ali, seq_maps)
+    by <- match.arg(order_by)
+    seq_maps <- order_seqs(ali, by, ordering)
+    if(by == "provided"){
+        check_ordering(ali, ordering)
+        ali <- subset(ali, qname %in% ordering[[1]] & tname %in% ordering[[2]])
+    }
+    ali <- add_pos_in_concatentaed_genome(ali, seq_maps)
   
     
   p <- ggplot() + 
