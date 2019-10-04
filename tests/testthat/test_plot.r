@@ -49,6 +49,14 @@ test_that("Ordering sequences to preference erros with missing chroms", {
     expect_error(seq_map <- order_seqs(ali_pafr, "provided", chrom_order))
 })
 
+test_that("Ordering sequences to preference warns on drop", {
+    chrom_order <-  list(
+        c("Q_chr6", "Q_chr1", "Q_chr2", "Q_chr7"), 
+        c("T_chr5", "T_chr3", "T_chr2", "T_chr1")
+    )
+    expect_warning(dotplot(ali, "provided", ordering=chrom_order))
+})
+
 test_that("dotplot options change plot layers", {
     p <- dotplot(ali_pafr)
     p_lab <- dotplot(ali_pafr, label_seqs=TRUE)
