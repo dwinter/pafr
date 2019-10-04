@@ -1,3 +1,14 @@
+#' @export
+read_bed <- function(fname){    
+    res <- read.table(fname, sep="\t", stringsAsFactors=FALSE)
+    if(ncol(res) < 3){
+        stop("Bed file must have at least three columns, data has", ncol(res))
+    }
+    names(res)[1:3] <- c("chrom", "start", "end")
+    res
+}
+
+
 .make_numeric <- function(df, cols){
     for( i in cols){
         df[,i] <- as.numeric(df[,i])
