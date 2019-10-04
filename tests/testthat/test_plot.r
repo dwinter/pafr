@@ -51,10 +51,10 @@ test_that("Ordering sequences to preference erros with missing chroms", {
 
 test_that("Ordering sequences to preference warns on drop", {
     chrom_order <-  list(
-        c("Q_chr6", "Q_chr1", "Q_chr2", "Q_chr7"), 
-        c("T_chr5", "T_chr3", "T_chr2", "T_chr1")
+        c("Q_chr6", "Q_chr1"), 
+        c("T_chr3", "T_chr2")
     )
-    expect_warning(dotplot(ali, "provided", ordering=chrom_order))
+    expect_warning(dotplot(ali_pafr, "provided", ordering=chrom_order))
 })
 
 test_that("dotplot options change plot layers", {
