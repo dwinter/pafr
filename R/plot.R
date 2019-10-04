@@ -23,9 +23,9 @@ synteny_data <- function(ali, q_chrom, t_chrom, RC=FALSE){
     synt_df
 }
 #' @export 
-highlight_query <- function(ali, bed, ordered_by, ordering=list(), fill="yellow", colour="black", alpha=0.6){
-    by <- match.arg(orderd_by, by, ordering)
-    seq_maps <- order_seqs(ali, ordered_by)
+highlight_query <- function(ali, bed, ordered_by = c("size", "qstart", "provided"), ordering=list(), fill="yellow", colour="black", alpha=0.6){
+    by <- match.arg(ordered_by)
+    seq_maps <- order_seqs(ali, by)
     os = seq_maps[["qmap"]][as.character(bed$chrom)]
     to_plot <- data.frame( qstart = bed$start + os, qend = bed$end + os)
     geom_rect(data=to_plot, 
@@ -34,8 +34,9 @@ highlight_query <- function(ali, bed, ordered_by, ordering=list(), fill="yellow"
 }          
     
 #' @export
-highlight_target <- function(ali, bed, ordered_by, fill="yellow", colour="black", alpha=0.6){
-    seq_maps <- order_seqs(ali, ordered_by) 
+highlight_target <- function(ali, bed, ordered_by = c("size", "qstart", "provided"), fill="yellow", colour="black", alpha=0.6){
+    by <- match.arg(ordered_by)
+    seq_maps <- order_seqs(ali, by)
     os = seq_maps[["tmap"]][as.character(bed$chrom)] 
     to_plot <- data.frame( tstart = bed$start + os, tend = bed$end + os) 
     geom_rect(data=to_plot, 
