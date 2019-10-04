@@ -19,6 +19,7 @@ test_that("RC flips only the query chrom", {
 
 
 test_that("Centering moves the target chrom", {
+    p <- plot_synteny(ali_pafr, "Q_chr1", "T_chr2")
     p2 <- plot_synteny(ali_pafr, "Q_chr1", "T_chr2", centre=FALSE)
     old_x <-  p[["layers"]][[1]][["layer_data"]]()[["x"]]
     new_x <- p2[["layers"]][[1]][["layer_data"]]()[["x"]]
