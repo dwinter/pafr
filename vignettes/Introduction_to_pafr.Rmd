@@ -176,7 +176,8 @@ dotplot(prim_alignment, label_seqs=TRUE, order_by="qstart")
 #### Adding annotations
 
 ```{r}
-centro <- read_bed("inst/extdata/Q_centro.bed")
+path_to_centro <- system.file("extdata", "Q_centro.bed", package = "pafr")
+centro <- read_bed(path_to_centro)
 dotplot(prim_alignment, "qstart") + 
     highlight_query(prim_alignment, centro, "qstart")
 ```
