@@ -175,6 +175,18 @@ dotplot(prim_alignment, label_seqs=TRUE, order_by="qstart")
 ```
 #### Adding annotations
 
+```{r}
+centro <- read_bed("inst/extdata/Q_centro.bed")
+dotplot(prim_alignment, "qstart") + 
+    highlight_query(prim_alignment, centro, "qstart")
+```
+
+
+```{r}
+interval <- data.frame(chrom="T_chr3", start = 2000000, end= 3000000)
+dotplot(prim_alignment, label_seqs=TRUE) + 
+    highlight_target(prim_alignment, interval)
+```
 ### Synteny plot
 
 
