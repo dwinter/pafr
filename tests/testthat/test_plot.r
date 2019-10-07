@@ -65,3 +65,13 @@ test_that("dotplot options change plot layers", {
     expect_length(p_lab[["layers"]], 6)
     expect_length(p_nodash[["layers"]], 2)
 })
+
+test_that("Can add highlights to dotplots", {
+    B <- read_bed("test_I.bed")
+    p <- dotplot(ali_pafr) + highlight_query(ali_pafr, B)
+    #previously tested defaul has four layers
+    expect_length(p[["layers"]], 5)
+    mapping <- sapply(p[["layers"]][[5]][["mapping"]], quo_name)
+    expect_equal(unname(maps), c("i_start", "i_end", "0", "22431984"))
+    expect_equal(names(maps), c("xmin", "xmax", "ymin", "ymax"))
+})
