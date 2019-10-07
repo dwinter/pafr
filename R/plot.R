@@ -22,6 +22,31 @@ synteny_data <- function(ali, q_chrom, t_chrom, RC=FALSE){
     synt_df$block_id <- rep(1:length(synt_data), each=5)
     synt_df
 }
+
+
+
+highlight_dotpot <- function(hl_source, ali, bed, ordered_by, odering, fill, colour, alpha){
+    stem <-  if (hl_source == "query") "q" else "t"
+    seq_maps <- order_seqs(ali, ordered_by)
+    os = seq_maps[[paste0(stem, "map")]][as.character(bed$chrom)]
+    to_plot <- data.frame( i_start = bed$start + os, i_end = bed$end + os)
+    if(hl_source == "query"){
+        ystart = 0
+        yend <- seq_maps[["tsum"]]
+        xstart = "i_start"
+        xend = "i_end"        
+    } else {
+        ystart = "i_start"
+        yend = "i_end"        
+        xend <- seq_maps[["qsum"]]
+        xstart = 0
+    }
+
+    geom_rect(data=to_plot,
+              aes_string(xmin=xstart, xmax=xend, ymin=ystart, ymax= yend),
+               fill=fill, colour=colour, alpha=alpha)
+}
+
 #' @export 
 highlight_query <- function(ali, bed, ordered_by = c("size", "qstart", "provided"), ordering=list(), fill="yellow", colour="black", alpha=0.6){
     by <- match.arg(ordered_by)
