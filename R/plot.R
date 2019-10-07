@@ -26,7 +26,7 @@ synteny_data <- function(ali, q_chrom, t_chrom, RC=FALSE){
 
 
 highlight_dotplot <- function(hl_source, ali, bed, ordered_by, odering, fill, colour, alpha){
-    map_n <-  if (hl_source == "query") 1 else 2
+    map_n <-  if (hl_source == "query") 1 else 3
     seq_maps <- order_seqs(ali, ordered_by)
     os = seq_maps[[map_n]][as.character(bed[["chrom"]])]
     to_plot <- data.frame( i_start = bed$start + os, i_end = bed$end + os)
