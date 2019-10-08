@@ -4,7 +4,7 @@ author: "David Winter"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{tutorial}
+  %\VignetteIndexEntry{pafr_tutorial}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -175,13 +175,30 @@ dotplot(prim_alignment, label_seqs=TRUE, order_by="qstart")
 ```
 #### Adding annotations
 
+
+You may have additional infromation about one or both of your genomes that you
+want to use to annotate your dotplots. In this case, we know the locations of
+the centromeres in the query genome. We can use `read_bed` to load these
+locations.
+
 ```{r}
 path_to_centro <- system.file("extdata", "Q_centro.bed", package = "pafr")
 centro <- read_bed(path_to_centro)
-dotplot(prim_alignment, "qstart") + 
-    highlight_query(prim_alignment, centro, "qstart")
+knitr::kable(head(centro))
 ```
 
+In `ggplot` style, we use the `+` symbol to add the results of `highlight_query`
+to a dotplot. Note, in order for the plot to work both the `ordered_by` and
+`ali` arguments must match between the call to `dotplot` and `highlight_query`.
+
+```{r}
+dotplot(prim_alignment, "qstart") + 
+    highlight_query(ali=prim_alignment, bed=centro, ordered_by="qstart")
+```
+
+It's not apparent from the very small intervals plotted above, but 'highlights'
+here are a filled rectange. Plotting a larger rectangle for the target genome
+makes it more clear.
 
 ```{r}
 interval <- data.frame(chrom="T_chr3", start = 2000000, end= 3000000)
@@ -213,6 +230,7 @@ reference.
 ```{r, cov_target}
 plot_coverage(prim_alignment, target=FALSE)   
 ```
+
 
 #### Coverage by query sequence
 
