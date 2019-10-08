@@ -124,14 +124,17 @@ check_ordering <- function(ali, ordering){
 #' @export
 dotplot <- function(ali, order_by = c("size", "qstart", "provided"), label_seqs = FALSE, dashes=TRUE, ordering = list(), alignment_colour="black", xlab = "query", ylab="target", line_size=2){
     by <- match.arg(order_by)
-    seq_maps <- order_seqs(ali, by, ordering)
     if(by == "provided"){
         check_ordering(ali, ordering)
         ali <- subset(ali, qname %in% ordering[[1]] & tname %in% ordering[[2]])
+    #    new_chrom_lens <- chrom_sizes(ali)
+    #    seq_maps[["qsum"]] <- new_chrom_lens[["qlens"]][,2]
+    #    seq_maps[["tsum"]] <- new_chrom_lens[["tlens"]][,2]
     }
+    seq_maps <- order_seqs(ali, by, ordering)
     ali <- add_pos_in_concatentaed_genome(ali, seq_maps)
-  
     
+
   p <- ggplot() + 
       geom_segment(data=subset(ali, strand=="+"), aes(x=concat_qstart, xend=concat_qend, y=concat_tstart, yend=concat_tend), size=line_size, colour=alignment_colour) + 
       geom_segment(data=subset(ali, strand=="-"), aes(x=concat_qend, xend=concat_qstart, y=concat_tstart, yend=concat_tend), size=line_size, colour=alignment_colour) + 
