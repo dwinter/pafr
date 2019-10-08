@@ -1,10 +1,22 @@
+#' Read genomic intervals in bed format.
+#'
+#' @param file_name path to the bed file to be read.
+#' @param tibble, logical. If \code{TRUE} the genomic intervals are returned as 
+#' a tidy \code{tbl_df}.
+#' @return Either a \code{data.frame} or a \code{tbl_df} with at least three 
+#' columns named 'chrom', 'start' and 'end'.
 #' @export
-read_bed <- function(fname){    
-    res <- read.table(fname, sep="\t", stringsAsFactors=FALSE)
+#' @importFrom tibble as_tibble 
+#' @importFrom utils read.table 
+read_bed <- function(file_name, tibble=FALSE){    
+    res <- read.table(file_name, sep="\t", stringsAsFactors=FALSE)
     if(ncol(res) < 3){
         stop("Bed file must have at least three columns, data has", ncol(res))
     }
     names(res)[1:3] <- c("chrom", "start", "end")
+    if(tibble){
+        return(as_tibble(res))
+    }
     res
 }
 
@@ -38,7 +50,16 @@ process_tags <- function(tag_rows){
     as.data.frame(tag_tibble) #base format is df, so force it back here
 }
 
-
+#' Read a genomic alignment in .paf format.
+#'
+#' See the package vingette for detailed information on the file format and its
+#' representation as an R object. 
+#
+#' @param file_name path to the paf file.
+#' @param tibble, logical. If \code{TRUE} the genomic alignments are returned as 
+#' a tidy \code{tbl_df}.
+#' @return Either a \code{pafr} object (which acts as a \code{data.frame} or a 
+#' \code{tbl_df} containing information on genomic alignments.
 #' @importFrom tibble as_tibble 
 #' @export
 read_paf <- function(file_name, tibble=FALSE){

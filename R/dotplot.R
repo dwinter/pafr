@@ -109,7 +109,7 @@ check_ordering <- function(ali, ordering){
 #' seqeuences in margins of the dotplot
 #' @param dashes boolen, if \code{TRUE} add dashes ad borders of query and
 #' target sequences in the dotplot
-#' @param odering If \code{order_by} is set to \code{TRUE},
+#' @param ordering If \code{order_by} is set to \code{TRUE},
 #' this should be set to a list with two elements, sepcifying the order of query
 #' and then target sequences in the doptplot. This option is ignored if
 #' \code{order_by} is set to other values
@@ -152,7 +152,7 @@ dotplot <- function(ali, order_by = c("size", "qstart", "provided"), label_seqs 
 
 }
 
-highlight_dotplot <- function(hl_source, ali, bed, ordered_by, odering, fill, colour, alpha){
+highlight_dotplot <- function(hl_source, ali, bed, ordered_by, ordering, fill, colour, alpha){
     map_n <-  if (hl_source == "query") 1 else 3
     seq_maps <- order_seqs(ali, ordered_by)
     os = seq_maps[[map_n]][as.character(bed[["chrom"]])]
@@ -189,17 +189,21 @@ highlight_query <- function(ali, bed, ordered_by = c("size", "qstart", "provided
 #'
 #' @param ali pafr or tibble containing a genome alignment (as returned by
 #' \code{\link{read_paf}})
-#' @param data.frame containing a bed file, as returned by
+#' @param bed \code{data.frame} or \code{tbl_df} containing a bed file, as returned by
 #' \code{\link{read_bed}}. Should contain three columns, named "chrom", "start" 
 #'  and "end".
-#' @param order_by How are the query and target sequences be ordered in the
+#' @param ordered_by How are the query and target sequences be ordered in the
 #' dotplot this highlight is being added to. This argument should match that
-#' used in \link{\code{dotplot}}.
+#' used in \code{\link{dotplot}}.
+#' @param ordering If \code{order_by} is set to \code{TRUE},
+#' this should be set to a list with two elements, sepcifying the order of query
+#' and then target sequences in the doptplot. This option is ignored if
+#' \code{order_by} is set to other values
 #' @param fill character fill colour for highlight segment
 #' @param colour, character outline colour for highlight segment
 #' @param alpha, character opacity ([0-1]) for highlight segment
 #' @rdname highlight_dotplot
 #' @export
-highlight_target <- function(ali, bed, ordered_by = c("size", "qstart", "provided"), fill="yellow", colour="black", alpha=0.6){
+highlight_target <- function(ali, bed, ordered_by = c("size", "qstart", "provided"), ordering=list(), fill="yellow", colour="black", alpha=0.6){
     highlight_dotplot("target", ali, bed,  match.arg(ordered_by), ordering, fill, colour, alpha)
 }

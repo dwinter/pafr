@@ -41,7 +41,8 @@ plot_synteny <- function(ali, q_chrom, t_chrom, centre=TRUE, RC=FALSE,
     }
     ggplot() + geom_polygon(data=synt_df, aes(x,seq, group=block_id), fill='grey80', colour='black') + 
                geom_rect(data=seq_lens, aes(xmin=start, xmax=end, ymin=bottoms, ymax=tops), colour='black', fill='white') +
-               scale_x_continuous(xlab, label=x_labeller) + ylab(ylab)
+               scale_x_continuous(xlab, labels=x_labeller) + ylab(ylab)
+           
 
 
 } 

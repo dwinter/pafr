@@ -11,16 +11,16 @@ plot_coverage(ali, target = TRUE, fill = "forestgreen",
 \arguments{
 \item{ali}{an alignment as read by \code{\link{read_paf}}}
 
-\item{target}{logical, if TRUE (defautl) dsiplay coverage for the target
+\item{target}{logical, if TRUE  dsiplay coverage for the target
 genome, if FALSE for the query}
 
-\item{fill, character, }{how to colour the alignment-blocks. If the character
+\item{fill, }{character, how to colour the alignment-blocks. If the character
 provided is the name of a column in the alignment, this column will be passed
 to \code{\link{ggplot2}} to shade alignment blocks. Otherwise, the character
 is treated as a single colour to be used for all alignment blocks.}
 
 \item{direct_label, }{logical. If TRUE use geom_text to directly label the
-name of the focal sequences. if FALSE no direct labels are drown}
+name of the focal sequences. if FALSE no direct labels are drawn}
 
 \item{label_colour}{character, colour used for direct labels}
 

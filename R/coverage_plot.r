@@ -9,14 +9,14 @@
 #' using another ggplot theme on the plot may produce unexpected results.
 #'
 #' @param ali an alignment as read by \code{\link{read_paf}}
-#' @param target logical, if TRUE (defautl) dsiplay coverage for the target
+#' @param target logical, if TRUE  dsiplay coverage for the target
 #' genome, if FALSE for the query
-#' @param fill,character, how to colour the alignment-blocks. If the character
+#' @param fill, character, how to colour the alignment-blocks. If the character
 #' provided is the name of a column in the alignment, this column will be passed
 #' to \code{\link{ggplot2}} to shade alignment blocks. Otherwise, the character
 #' is treated as a single colour to be used for all alignment blocks.
 #' @param direct_label, logical. If TRUE use geom_text to directly label the
-#' name of the focal sequences. if FALSE no direct labels are drown
+#' name of the focal sequences. if FALSE no direct labels are drawn
 #' @param label_colour character, colour used for direct labels
 #' @param xlab, character, Name for for x-axis
 #' @param x_labeller function to be used to label x-axis (defaults to
