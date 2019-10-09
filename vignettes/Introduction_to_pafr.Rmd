@@ -165,14 +165,21 @@ it easy to produce one of these from a .paf alignment:
 dotplot(prim_alignment)
 ```
 
+#### Altering the order of sequences in the dotplot
+
 ```{r}
 dotplot(prim_alignment, label_seqs=TRUE, order_by="qstart")
 ```
 
 
 ```{r}
-dotplot(prim_alignment, label_seqs=TRUE, order_by="qstart")
+to_keep <- list(
+        c("Q_chr1", "Q_chr5", "Q_chr4", "Q_chr6"),
+        c("T_chr2", "T_chr5", "T_chr3", "T_chr6")
+)
+dotplot(prim_alignment, label_seqs=TRUE, order_by="provided", ordering=to_keep)
 ```
+
 #### Adding annotations
 
 
@@ -205,6 +212,7 @@ interval <- data.frame(chrom="T_chr3", start = 2000000, end= 3000000)
 dotplot(prim_alignment, label_seqs=TRUE) + 
     highlight_target(prim_alignment, interval)
 ```
+
 ### Synteny plot
 
 
