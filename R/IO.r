@@ -55,7 +55,7 @@ process_tags <- function(tag_rows) {
 #
 #' @param file_name path to the paf file.
 #' @param tibble, logical. If \code{TRUE} the genomic alignments are returned as
-#' a tidy \code{tbl_df
+#' a tidy \code{tbl_df}
 #' @return Either a \code{pafr} object (which acts as a \code{data.frame} or a
 #' \code{tbl_df} containing information on genomic alignments.
 #' @importFrom tibble as_tibble

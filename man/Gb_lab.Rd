@@ -19,7 +19,7 @@ Kb_lab(x)
 A character vector with with scale labels
 }
 \description{
-For use with \code{\link{ggplot2}},
+For use with \code{\link{ggplot2}}
 }
 \examples{
 \dontrun{

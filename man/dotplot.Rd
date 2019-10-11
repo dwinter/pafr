@@ -12,7 +12,7 @@ dotplot(ali, order_by = c("size", "qstart", "provided"), label_seqs = FALSE,
 \item{ali}{pafr or tibble containing the genome alignment (as returned by
 \code{\link{read_paf}})}
 
-\item{order_by}{How should the query and target sequences be ordered in the 
+\item{order_by}{How should the query and target sequences be ordered in the
 dotplot. One of 'size' (smallest-to-largest), 'qstart' (query organised
 smallest to largest, target by first match in the query genome or 'provided'
 (ordering specified in \code{ordering} argument}
@@ -36,7 +36,7 @@ section in the dotplot (defaults to black).}
 \item{ylab}{character The y-axis label (defaults to "target").}
 
 \item{line_size}{the width of the line used to represent an alignment in the
-dotplot (defaults to 2).}
+dotplot (defaults to 2)}
 }
 \description{
 Generate a dotplot from a paf alignment.

@@ -30,11 +30,11 @@ name of the focal sequences. if FALSE no direct labels are drawn}
 \code{\link{Mb_lab}}}
 }
 \description{
-Each sequence in the focal genome is displayed as rectange, with regions 
-covered by an alignment shaded as per the \code{fill} argument described below.
-Uncovered regions remain white.
+Each sequence in the focal genome is displayed as rectange, with regions
+covered by an alignment shaded as per the \code{fill} argument described
+below. Uncovered regions remain white.
 }
 \details{
-Note this function uses a \code{\link{theme_coverage_plot}} to style the graph
-using another ggplot theme on the plot may produce unexpected results.
+Note this function uses a \code{\link{theme_coverage_plot}} to style the
+graph using another ggplot theme on the plot may produce unexpected results.
 }

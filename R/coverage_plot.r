@@ -22,9 +22,9 @@
 #' @param x_labeller function to be used to label x-axis (defaults to
 #' \code{\link{Mb_lab}}
 #' @export
-plot_coverage <- function(ali, targeti = TRUE, fill = "forestgreen",
+plot_coverage <- function(ali, target = TRUE, fill = "forestgreen",
                           direct_label = TRUE, label_colour = "black",
-                          xlab = "Position in sequence", x_labeller = Mb_lab){
+                          xlab = "Position in sequence", x_labeller = Mb_lab) {
     cs <- chrom_sizes(ali)
     #first ID the appropriate columsns to use in the plot (target or query
     #seqeunces and the locatoins of alignments on those sequences).
@@ -66,6 +66,7 @@ plot_coverage <- function(ali, targeti = TRUE, fill = "forestgreen",
                            color =label_colour) +
             theme_coverage_plot(facet_labs=FALSE)
         return(p)
+    }
     p  + theme_coverage_plot()
 }
 
@@ -75,7 +76,7 @@ plot_coverage <- function(ali, targeti = TRUE, fill = "forestgreen",
 #' @export
 theme_coverage_plot <- function(facet_labs = TRUE) {
     theme <- theme_bw()
-    heme$axis.title.y <- element_blank()
+    theme$axis.title.y <- element_blank()
     theme$axis.text.y <- element_blank()
     theme$axis.ticks.y <- element_blank()
     if (!facet_labs) {

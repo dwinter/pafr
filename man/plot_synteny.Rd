@@ -4,7 +4,7 @@
 \alias{plot_synteny}
 \title{Plot synteny between a query and target sequence in a paf alignment}
 \usage{
-plot_synteny(ali, q_chrom, t_chrom, centre = TRUE, RC = FALSE,
+plot_synteny(ali, q_chrom, t_chrom, centre = TRUE, rc = FALSE,
   xlab = "Position in query", ylab = "", x_labeller = Mb_lab)
 }
 \arguments{
@@ -19,7 +19,7 @@ plot_synteny(ali, q_chrom, t_chrom, centre = TRUE, RC = FALSE,
 sequence so it is centred on the query. If not, both sequences start at
 position zero}
 
-\item{RC}{logical, if TRUE, use the reverse and complement for the target
+\item{rc}{logical, if TRUE, use the reverse and complement for the target
 sequence}
 
 \item{xlab, }{character, Name for for x-axis}
