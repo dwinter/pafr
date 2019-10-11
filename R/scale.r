@@ -1,6 +1,6 @@
 #' Number formatters for scales in base-pairs
 #'
-#' For use with \code{\link{ggplot2}}, 
+#' For use with \code{\link{ggplot2}} 
 #' @param x The data (in base-pairs) to be fromated as as either Gb, Mb or Kb
 #' @return A character vector with with scale labels
 #' @examples
@@ -10,13 +10,12 @@
 #'}
 #' @export
 #' @rdname Gb_lab
-Gb_lab <- function(x) paste(x/1e9, "Gb")
+Gb_lab <- function(x) paste(x / 1e9, "Gb")
 
 #' @export
 #' @rdname Gb_lab
-Mb_lab <- function(x) paste(x/1e6, "Mb")
+Mb_lab <- function(x) paste(x / 1e6, "Mb")
 
 #' @export
 #' @rdname Gb_lab
-Kb_lab <- function(x) paste(x/1e3, "Kb")
-
+Kb_lab <- function(x) paste(x / 1e3, "Kb")

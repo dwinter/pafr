@@ -13,7 +13,7 @@ test_that("synteny data can be extracted", {
 })
 
 test_that("RC flips only the query chrom", {
-    d2 <- synteny_data(ali_pafr, "Q_chr1", "T_chr2", RC=TRUE)
+    d2 <- synteny_data(ali_pafr, "Q_chr1", "T_chr2", rc = TRUE)
     expect_equal(d2[["x"]], c(660794, 665479, 669374, 664689, 660794))
 })
 
