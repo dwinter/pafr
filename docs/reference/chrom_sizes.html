@@ -150,7 +150,28 @@ the length of each sequence</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='no'>ali</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='read_paf.html'>read_paf</a></span>( <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='st'>"extdata"</span>, <span class='st'>"fungi.paf"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"pafr"</span>) )
-<span class='fu'>chrom_lens</span>(<span class='no'>ali</span>)</div><div class='output co'>#&gt; <span class='error'>Error in chrom_lens(ali): could not find function "chrom_lens"</span></div></pre>
+<span class='fu'>chrom_sizes</span>(<span class='no'>ali</span>)</div><div class='output co'>#&gt; $qlens
+#&gt;       qname    qlen
+#&gt; 1    Q_chr1 6273420
+#&gt; 388  Q_chr2 5852505
+#&gt; 792  Q_chr3 4992232
+#&gt; 1226 Q_chr4 4808386
+#&gt; 1654 Q_chr5 4708905
+#&gt; 2005 Q_chr6 4343484
+#&gt; 2315 Q_chr7 3141109
+#&gt; 2486 Q_chrm   85999
+#&gt; 
+#&gt; $tlens
+#&gt;       tname    tlen
+#&gt; 1    T_chr2 5893594
+#&gt; 2    T_chr5 4620715
+#&gt; 59   T_chr6 3360039
+#&gt; 64   T_chr4 4649703
+#&gt; 75   T_chr1 6377790
+#&gt; 76   T_chr3 5539885
+#&gt; 79   T_chr7 3267564
+#&gt; 2486 T_chrm  111040
+#&gt; </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

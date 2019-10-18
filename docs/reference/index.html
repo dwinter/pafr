@@ -129,40 +129,36 @@
     <tbody>
       <tr>
         <th colspan="2">
-          <h2 id="section-all-functions" class="hasAnchor"><a href="#section-all-functions" class="anchor"></a>All functions</h2>
-          <p class="section-desc"></p>
+          <h2 id="section-reading-files-into-r" class="hasAnchor"><a href="#section-reading-files-into-r" class="anchor"></a>Reading files into R</h2>
+          <p class="section-desc"><p>Functions for reading aligments and genomic intervals</p></p>
         </th>
       </tr>
       <tr>
         
         <td>
-          <p><code><a href="Gb_lab.html">Gb_lab()</a></code> <code><a href="Gb_lab.html">Mb_lab()</a></code> <code><a href="Gb_lab.html">Kb_lab()</a></code> </p>
+          <p><code><a href="read_paf.html">read_paf()</a></code> </p>
         </td>
-        <td><p>Number formatters for scales in base-pairs</p></td>
+        <td><p>Read a genomic alignment in .paf format.</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="chrom_sizes.html">chrom_sizes()</a></code> </p>
+          <p><code><a href="read_bed.html">read_bed()</a></code> </p>
         </td>
-        <td><p>Extract the sizes of all sequences in a paf alignment</p></td>
-      </tr><tr>
+        <td><p>Read genomic intervals in bed format.</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-plotting-alignments" class="hasAnchor"><a href="#section-plotting-alignments" class="anchor"></a>Plotting alignments</h2>
+          <p class="section-desc"><p>Functions to produce ggplot visualisations of genome-aligments</p></p>
+        </th>
+      </tr>
+      <tr>
         
         <td>
           <p><code><a href="dotplot.html">dotplot()</a></code> </p>
         </td>
         <td><p>Generate a dotplot from a paf alignment.</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="filter_secondary_alignments.html">filter_secondary_alignments()</a></code> </p>
-        </td>
-        <td><p>Remove secondary alignments form a pafr alignment</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="highlight_dotplot.html">highlight_query()</a></code> <code><a href="highlight_dotplot.html">highlight_target()</a></code> </p>
-        </td>
-        <td><p>Highlight segments of a query or target genome in a dotplot</p></td>
       </tr><tr>
         
         <td>
@@ -178,21 +174,41 @@
       </tr><tr>
         
         <td>
-          <p><code><a href="read_bed.html">read_bed()</a></code> </p>
+          <p><code><a href="highlight_dotplot.html">highlight_query()</a></code> <code><a href="highlight_dotplot.html">highlight_target()</a></code> </p>
         </td>
-        <td><p>Read genomic intervals in bed format.</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="read_paf.html">read_paf()</a></code> </p>
-        </td>
-        <td><p>Read a genomic alignment in .paf format.</p></td>
+        <td><p>Highlight segments of a query or target genome in a dotplot</p></td>
       </tr><tr>
         
         <td>
           <p><code><a href="theme_coverage_plot.html">theme_coverage_plot()</a></code> </p>
         </td>
         <td><p>A minimalistic ggplot2 theme designed for use with genome coverage plots</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="Gb_lab.html">Gb_lab()</a></code> <code><a href="Gb_lab.html">Mb_lab()</a></code> <code><a href="Gb_lab.html">Kb_lab()</a></code> </p>
+        </td>
+        <td><p>Number formatters for scales in base-pairs</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-utility-functions" class="hasAnchor"><a href="#section-utility-functions" class="anchor"></a>Utility functions</h2>
+          <p class="section-desc"><p>Helper functions</p></p>
+        </th>
+      </tr>
+      <tr>
+        
+        <td>
+          <p><code><a href="filter_secondary_alignments.html">filter_secondary_alignments()</a></code> </p>
+        </td>
+        <td><p>Remove secondary alignments form a pafr alignment</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="chrom_sizes.html">chrom_sizes()</a></code> </p>
+        </td>
+        <td><p>Extract the sizes of all sequences in a paf alignment</p></td>
       </tr>
     </tbody>
     </table>
@@ -201,7 +217,9 @@
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      <li><a href="#section-all-functions">All functions</a></li>
+      <li><a href="#section-reading-files-into-r">Reading files into R</a></li>
+      <li><a href="#section-plotting-alignments">Plotting alignments</a></li>
+      <li><a href="#section-utility-functions">Utility functions</a></li>
     </ul>
   </div>
 </div>
