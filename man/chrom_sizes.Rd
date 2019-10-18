@@ -18,3 +18,7 @@ the length of each sequence
 \description{
 Extract the sizes of all sequences in a paf alignment
 }
+\examples{
+ali <- read_paf( system.file("extdata", "fungi.paf", package = "pafr") )
+chrom_lens(ali)
+}

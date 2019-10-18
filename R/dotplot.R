@@ -9,6 +9,9 @@
 #' @return list with two elements (tlens and qlens). Each element is a
 #' data.frame with one column of sequence names and another column containing
 #' the length of each sequence
+#' @examples
+#' ali <- read_paf( system.file("extdata", "fungi.paf", package = "pafr") )
+#' chrom_lens(ali)
 #' @export
 chrom_sizes <- function(ali) {
     res <- list(qlens = unique(ali[, c("qname", "qlen")]),
@@ -20,7 +23,11 @@ chrom_sizes <- function(ali) {
 }
 
 
-
+# Internal function used for concatenating sequences into a single ordering,
+# used by dotplot and associated functions. Returns a list of four elements,
+# which represent the starting positions of each sequence in a concatinated
+# alignment and the total length of the query and targets sequences
+#
 #' @importFrom dplyr top_n
 #' @importFrom dplyr group_by
 #' @importFrom utils head
@@ -48,18 +55,18 @@ order_seqs <- function(ali, by, ordering = list()) {
                          c(0, head(cumsum(longest_by_target$tlen[t_idx]), -1))))        
     } else if (by == "provided") {
         if (length(ordering) != 2) {
-            stop("To use 'provided' sequence ordering argument 'ordering' must by a list with two character vectors")             
+            stop("To use 'provided' sequence ordering argument 'ordering' must by a list with two character vectors")
         }
         qord <- ordering[[1]]
         tord <- ordering[[2]]
         q_idx <- match(qord, chrom_lens[["qlens"]][["qname"]])
         if (any(is.na(q_idx))) {
-            msg <- paste("Sequence(s) provided for ordering are not present in alignment:\n",qord[is.na(q_idx)], "\n")
+            msg <- paste("Sequence(s) provided for ordering are not present in alignment:\n", qord[is.na(q_idx)], "\n")
             stop(msg)
         }
         t_idx <- match(tord, chrom_lens[["tlens"]][["tname"]])
         if (any(is.na(t_idx))) {
-            msg <- paste("Sequence(s) provided for ordering are not present in alignment:\n",tord[is.na(t_idx)], "\n")
+            msg <- paste("Sequence(s) provided for ordering are not present in alignment:\n", tord[is.na(t_idx)], "\n")
             stop(msg)
         }
         qmap <- structure(.Names = chrom_lens[["qlens"]][q_idx, 1],
@@ -84,6 +91,7 @@ dotplot_name_df <- function(seq_map, genome_len) {
     data.frame(seq_name = names(seq_map),
                centre = seq_map + diff(c(seq_map, genome_len) / 2))
 }
+
 
 check_ordering <- function(ali, ordering) {
     q_in_order <- unique(ali[["qname"]]) %in% ordering[[1]]
@@ -124,6 +132,11 @@ check_ordering <- function(ali, ordering) {
 #' @param line_size the width of the line used to represent an alignment in the
 #' dotplot (defaults to 2)
 #' @import ggplot2
+#' @examples
+#' ali <- read_paf( system.file("extdata", "fungi.paf", package = "pafr") )
+#' dotplot(ali)
+#' dotplot(ali) + theme_bw()
+#' dotplot(ali, label_seqs=TRUE, order_by="qstart", alignment_colour="blue")
 #' @export
 dotplot <- function(ali, order_by = c("size", "qstart", "provided"),
                     label_seqs = FALSE, dashes = TRUE, ordering = list(),
@@ -219,8 +232,18 @@ highlight_query <- function(ali, bed,
 #' @param colour, character outline colour for highlight segment
 #' @param alpha, character opacity ([0-1]) for highlight segment
 #' @rdname highlight_dotplot
+#' @examples
+#' ali <- read_paf( system.file("extdata", "fungi.paf", package = "pafr") )
+#' cen <- read_bed(system.file("extdata", "Q_centro.bed", package = "pafr"))
+#' dotplot(ali) + highlight_query(ali, cen)
+#' interval <- data.frame(chrom="T_chr3", start = 2000000, end= 3000000)
+#' dotplot(ali, label_seqs=TRUE) + 
+#'    highlight_target(ali, interval)
 #' @export
-highlight_target <- function(ali, bed, ordered_by = c("size", "qstart", "provided"), ordering=list(), fill="yellow", colour="black", alpha=0.6){
+highlight_target <- function(ali, bed, 
+                             ordered_by = c("size", "qstart", "provided"), 
+                             ordering=list(), 
+                             fill="yellow", colour="black", alpha=0.6){
     highlight_dotplot("target", ali, bed,  
                       match.arg(ordered_by), ordering, fill, colour, alpha)
 }

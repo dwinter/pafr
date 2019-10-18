@@ -1,15 +1,34 @@
 #' Read genomic intervals in bed format.
 #'
+#' The first three columns of the file specified by \code{file_name} must
+#' contain  data in teh the standard bed-format (i.e. a genomic interval
+#' represented as 0-based half-open interval with seq-id,start and end position)
+#' These columns will be renamed to 'chrom', 'start' and 'end' respectively. Any
+#' otehr columsn present in the data will be left unmodified.
+#' 
+#' The file is read in to memberory thorugh \code{\link{read.table}}, with the
+#' argeument  \code{sep} set to \code{'\t'} and \code{stringsAsFactors} set to
+#' FALSE. All other arguments are left as default, but arguments can be passd
+#' from \code{read_bed} to \code{read.table}.
+
 #' @param file_name path to the bed file to be read.
 #' @param tibble, logical. If \code{TRUE} the genomic intervals are returned as
 #' a tidy \code{tbl_df}.
+#' @param ... other arugments pased to \code{read.table}
 #' @return Either a \code{data.frame} or a \code{tbl_df} with at least three
 #' columns named 'chrom', 'start' and 'end'.
-#' @export
 #' @importFrom tibble as_tibble
 #' @importFrom utils read.table
-read_bed <- function(file_name, tibble = FALSE) {
-    res <- read.table(file_name, sep = "\t", stringsAsFactors = FALSE)
+#' @examples
+#' bed_path <- system.file("extdata", "Q_centro.bed", package="pafr")
+#' centro <- read_bed(bed_path)
+#' centro
+#' # Can pass arguments to read.table
+#' miss_two <- read_bed(bed_path, skip=2)
+#' miss_two 
+#' @export
+read_bed <- function(file_name, tibble = FALSE, ...) {
+    res <- read.table(file_name, sep = "\t", stringsAsFactors = FALSE, ...)
     if (ncol(res) < 3) {
         stop("Bed file must have at least three columns, data has", ncol(res))
     }
@@ -28,6 +47,9 @@ read_bed <- function(file_name, tibble = FALSE) {
     df
 }
 
+# paf tags encode their data type. This function returns the function
+# responsible for concerting the 'character' representation of tags value into
+# the appropirate type (used by process tags and read_paf).
 tag_to_type_fxn <- function(tag_tokens) {
     if (tag_tokens[[2]] %in% c("f", "H", "i")) {
         return(as.numeric)
@@ -59,6 +81,9 @@ process_tags <- function(tag_rows) {
 #' @return Either a \code{pafr} object (which acts as a \code{data.frame} or a
 #' \code{tbl_df} containing information on genomic alignments.
 #' @importFrom tibble as_tibble
+#' @examples
+#' ali <- read_paf( system.file("extdata", "fungi.paf", package = "pafr") )
+#' ali
 #' @export
 read_paf <- function(file_name, tibble=FALSE) {
     lines <- scan(file_name, "", sep = "\n", quiet = TRUE)
@@ -71,6 +96,8 @@ read_paf <- function(file_name, tibble=FALSE) {
                           "alen", "mapq")
 
     res <- .make_numeric(res, c(2, 3, 4, 7:12))
+    #first 12 columns are always the paf alignment. Anything after this is a
+    #tag.
     if (any(lengths(tokens) > 12)) {
         raw_tags <- sapply(tokens, function(x) paste(x[13:length(x)]))
         res <- cbind.data.frame(res, process_tags(raw_tags))

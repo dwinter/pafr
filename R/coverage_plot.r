@@ -21,6 +21,11 @@
 #' @param xlab, character, Name for for x-axis
 #' @param x_labeller function to be used to label x-axis (defaults to
 #' \code{\link{Mb_lab}}
+#' @examples
+#' ali <- read_paf( system.file("extdata", "fungi.paf", package = "pafr") )
+#' plot_coverage(ali)
+#' plot_coverage(ali, fill='qname', direct_label=FALSE) + 
+#'    scale_fill_brewer(palette="Set1")
 #' @export
 plot_coverage <- function(ali, target = TRUE, fill = "forestgreen",
                           direct_label = TRUE, label_colour = "black",
@@ -56,14 +61,14 @@ plot_coverage <- function(ali, target = TRUE, fill = "forestgreen",
         p <- p + geom_rect(data = ali, aes_string(xmin = spos, xmax = epos, ymin = -0.95, ymax = 0.95), fill = fill)
     }
     #However we make the plot, it needs some polish:
-    p <- p + scale_x_continuous(xlab, labels=x_labeller) +
+    p <- p + scale_x_continuous(xlab, labels = x_labeller) +
         facet_grid(seq_name ~ .)
     #finally label it one way or another and return.
     if (direct_label) {
         biggest <- max(u_chroms$seq_len)
         p <- p + geom_text(data = u_chroms,
-                           aes(x = biggest/10,y = 0, label = seq_name),
-                           color =label_colour) +
+                           aes(x = biggest / 10,y = 0, label = seq_name),
+                           color = label_colour) +
             theme_coverage_plot(facet_labs=FALSE)
         return(p)
     }
@@ -71,10 +76,21 @@ plot_coverage <- function(ali, target = TRUE, fill = "forestgreen",
 }
 
 #' A minimalistic ggplot2 theme designed for use with genome coverage plots
+#'
+#' This theme is used be default when \code{\link{plot_coverage}} is called,
+#' so you should usually only call this function to modify the appearence of the
+#' coverage plot.
 #' @param facet_labs, logical. If TRUE (default) label sequences using the facet
-#' labes. If FALSE sequences are labeled directly using \code{\link{geom_text}}
+#' labels. If FALSE sequences are labeled directly using 
+#' \code{\link[ggplot2]{geom_text}}
+#' @param show_legend, logical. If TRUE (default) label display any legend
+#' associated with the fill parameter of \code{plot_coverage}. If FALSE 
+#' do not display a legend.
+#' @examples
+#' ali <- read_paf( system.file("extdata", "fungi.paf", package = "pafr") )
+#' plot_coverage(ali) + theme_coverage_plot(show_legend = FALSE)
 #' @export
-theme_coverage_plot <- function(facet_labs = TRUE) {
+theme_coverage_plot <- function(facet_labs = TRUE, show_legend = TRUE) {
     theme <- theme_bw()
     theme$axis.title.y <- element_blank()
     theme$axis.text.y <- element_blank()
@@ -82,6 +98,9 @@ theme_coverage_plot <- function(facet_labs = TRUE) {
     if (!facet_labs) {
           theme$strip.background <- element_blank()
           theme$strip.text <- element_blank()
+    }
+    if (!show_legend) {
+        theme$legend.position <- "none"
     }
     theme
 }

@@ -38,3 +38,9 @@ below. Uncovered regions remain white.
 Note this function uses a \code{\link{theme_coverage_plot}} to style the
 graph using another ggplot theme on the plot may produce unexpected results.
 }
+\examples{
+ali <- read_paf( system.file("extdata", "fungi.paf", package = "pafr") )
+plot_coverage(ali)
+plot_coverage(ali, fill='qname', direct_label=FALSE) + 
+   scale_fill_brewer(palette="Set1")
+}

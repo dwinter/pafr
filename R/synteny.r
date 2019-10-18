@@ -12,7 +12,12 @@
 #' @param xlab, character, Name for for x-axis
 #' @param ylab, character, Name for for x-axus
 #' @param x_labeller function to be used to label x-axis (defaults to
-#' @return A ggplot object dsplaying synteny between query and target sequences
+#' @return A ggplot object displaying synteny between query and target sequences
+#' @examples
+#' ali <- read_paf( system.file("extdata", "fungi.paf", package = "pafr") )
+#' plot_syntenty(q_chrom="Q_chr3", t_chrom="T_chr4", centre=TRUE)
+#' plot_synteny(long_ali, q_chrom="Q_chr5", t_chrom="T_chr5", centre=TRUE)
+#' plot_synteny(long_ali, q_chrom="Q_chr5", t_chrom="T_chr5", centre=TRUE, rc=TRUE)
 #' @export
 plot_synteny <- function(ali, q_chrom, t_chrom, centre = TRUE, rc = FALSE, 
                          xlab = "Position in query", ylab = "",
@@ -49,7 +54,7 @@ plot_synteny <- function(ali, q_chrom, t_chrom, centre = TRUE, rc = FALSE,
                scale_x_continuous(xlab, labels = x_labeller) + ylab(ylab)
 }
 
-      
+# internal function to convert alignments into polygon co-ordinates for plotting      
 synteny_data <- function(ali, q_chrom, t_chrom, rc = FALSE) {
     to_plot <- subset(ali, qname == q_chrom & tname == t_chrom)
     if (rc) {

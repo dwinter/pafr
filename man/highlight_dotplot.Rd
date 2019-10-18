@@ -40,3 +40,11 @@ Adding \code{higlight_query} or \code{highlight_target} to a dotplot call
 (see examples below) will add a rectangular 'highlight' corresponding to a
 particular genomic interval in the corresponding genome.
 }
+\examples{
+ali <- read_paf( system.file("extdata", "fungi.paf", package = "pafr") )
+cen <- read_bed(system.file("extdata", "Q_centro.bed", package = "pafr"))
+dotplot(ali) + highlight_query(ali, cen)
+interval <- data.frame(chrom="T_chr3", start = 2000000, end= 3000000)
+dotplot(ali, label_seqs=TRUE) + 
+   highlight_target(ali, interval)
+}

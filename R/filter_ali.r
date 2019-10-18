@@ -3,6 +3,10 @@
 #' returned by \code{\link{read_paf}}
 #' @param remove_inversions, logical, if \code{TRUE} also remove inversions (tp
 #' flag 'I' or 'i') from alignment.
+#' @examples
+#' ali <- read_paf( system.file("extdata", "fungi.paf", package = "pafr") ) 
+#' ali
+#' filter_secondary_alignments(ali)
 #' @export
 filter_secondary_alignments <- function(ali, remove_inversions=FALSE) {
     if ("tp" %in% names(ali)) {
@@ -11,5 +15,5 @@ filter_secondary_alignments <- function(ali, remove_inversions=FALSE) {
         }
         return(ali[ali$tp %in% c("I", "i", "P"), ])
     }
-    stop("No 'tp' flag in alignment, can filter secondary alignments")
+    stop("No 'tp' flag in alignment, cannot filter secondary alignments")
 }

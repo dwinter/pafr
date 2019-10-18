@@ -41,3 +41,9 @@ dotplot (defaults to 2)}
 \description{
 Generate a dotplot from a paf alignment.
 }
+\examples{
+ali <- read_paf( system.file("extdata", "fungi.paf", package = "pafr") )
+dotplot(ali)
+dotplot(ali) + theme_bw()
+dotplot(ali, label_seqs=TRUE, order_by="qstart", alignment_colour="blue")
+}

@@ -4,12 +4,23 @@
 \alias{theme_coverage_plot}
 \title{A minimalistic ggplot2 theme designed for use with genome coverage plots}
 \usage{
-theme_coverage_plot(facet_labs = TRUE)
+theme_coverage_plot(facet_labs = TRUE, show_legend = TRUE)
 }
 \arguments{
 \item{facet_labs, }{logical. If TRUE (default) label sequences using the facet
-labes. If FALSE sequences are labeled directly using \code{\link{geom_text}}}
+labels. If FALSE sequences are labeled directly using 
+\code{\link[ggplot2]{geom_text}}}
+
+\item{show_legend, }{logical. If TRUE (default) label display any legend
+associated with the fill parameter of \code{plot_coverage}. If FALSE 
+do not display a legend.}
 }
 \description{
-A minimalistic ggplot2 theme designed for use with genome coverage plots
+This theme is used be default when \code{\link{plot_coverage}} is called,
+so you should usually only call this function to modify the appearence of the
+coverage plot.
+}
+\examples{
+ali <- read_paf( system.file("extdata", "fungi.paf", package = "pafr") )
+plot_coverage(ali) + theme_coverage_plot(show_legend = FALSE)
 }

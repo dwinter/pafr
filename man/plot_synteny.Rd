@@ -29,8 +29,14 @@ sequence}
 \item{x_labeller}{function to be used to label x-axis (defaults to}
 }
 \value{
-A ggplot object dsplaying synteny between query and target sequences
+A ggplot object displaying synteny between query and target sequences
 }
 \description{
 Plot synteny between a query and target sequence in a paf alignment
+}
+\examples{
+ali <- read_paf( system.file("extdata", "fungi.paf", package = "pafr") )
+plot_syntenty(q_chrom="Q_chr3", t_chrom="T_chr4", centre=TRUE)
+plot_synteny(long_ali, q_chrom="Q_chr5", t_chrom="T_chr5", centre=TRUE)
+plot_synteny(long_ali, q_chrom="Q_chr5", t_chrom="T_chr5", centre=TRUE, rc=TRUE)
 }
