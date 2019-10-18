@@ -20,5 +20,5 @@ Extract the sizes of all sequences in a paf alignment
 }
 \examples{
 ali <- read_paf( system.file("extdata", "fungi.paf", package = "pafr") )
-chrom_size(ali)
+chrom_sizes(ali)
 }

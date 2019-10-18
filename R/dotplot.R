@@ -11,7 +11,7 @@
 #' the length of each sequence
 #' @examples
 #' ali <- read_paf( system.file("extdata", "fungi.paf", package = "pafr") )
-#' chrom_size(ali)
+#' chrom_sizes(ali)
 #' @export
 chrom_sizes <- function(ali) {
     res <- list(qlens = unique(ali[, c("qname", "qlen")]),
