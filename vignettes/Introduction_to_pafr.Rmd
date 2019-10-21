@@ -18,35 +18,34 @@ knitr::opts_chunk$set(
 ```
 
 
+## Reading in data with `read_paf`
 
-
-## Reading data with `read_paf`
-
-`pafr` deals with data stored in the Pairwise mApping Format (PAF), as 
-used by `minimap2` and other whole-genome aligners. PAF is a plain text
+`pafr` processes data stored in the **P**airwise m**A**pping **F**ormat (PAF), as 
+produced by `minimap2` and other whole-genome aligners. PAF is a plain text
 tabular format where each row represents an alignment between two sequences. 
 Each `.paf` file has at least the following 12 columns.
 
 
-| **Column** | **Data type** | **Description**
-|--------|-----------|---------------------------------------------------------|
-| 1      | string    | Query sequence name                                     |
-| 2      | int       | Query sequence length                                   |
-| 3      | int       | Query start coordinate (0-based)                        |
-| 4      | int       | Query end coordinate (0-based)                          |
-| 5      | char      | ‘+’ if query/target on the same strand; ‘-’ if opposite |
-| 6      | string    | Target sequence name                                    |
-| 7      | int       | Target sequence length                                  |
-| 8      | int       | Target start coordinate on the original strand          |
-| 9      | int       | Target end coordinate on the original strand            |
-| 10     | int       | Number of matching bases in the mapping                 |
-| 11     | int       | Number bases, including gaps, in the mapping            |
-| 12     | int       | Mapping quality (0-255 with 255 for missing)            |
+| **Column** | **Name**   | **Data type** | **Description**                                         |
+|------------|------------|---------------|---------------------------------------------------------|
+| 1          | qname      | string        | Query sequence name                                     |
+| 2          | qlen       | int           | Query sequence length                                   |
+| 3          | qstart     | int           | Query start coordinate (0-based)                        |
+| 4          | qend       | int           | Query end coordinate (0-based)                          |
+| 5          | strand     | char          | ‘+’ if query/target on the same strand; ‘-’ if opposite |
+| 6          | tname      | string        | Target sequence name                                    |
+| 7          | tlen       | int           | Target sequence length                                  |
+| 8          | tstart     | int           | Target start coordinate on the original strand          |
+| 9          | tend       | int           | Target end coordinate on the original strand            |
+| 10         | nmatch     | int           | Number of matching bases in the mapping                 |
+| 11         | alen       | int           | Number of bases, including gaps, in the mapping         |
+| 12         | mapq       | int           | Mapping quality (0-255, with 255 if missing)            |
+
 
 In addition, each row can have a variable number of 'tags', which share a simliar
-format to those used SAM files [See the SAM specification (pdf)](https://samtools.github.io/hts-specs/SAMtags.pdf).
+format to those used in SAM files [See the SAM specification (pdf)](https://samtools.github.io/hts-specs/SAMtags.pdf).
 
-`pafr` provides the function `read_paf` to read alignments into an R session.
+`pafr` provides the function `read_paf` to read `.paf` alignments into an R session.
 
 
 ```{r read}
@@ -55,43 +54,29 @@ path_to_fungal_alignment <- system.file("extdata", "fungi.paf", package = "pafr"
 ali <- read_paf(path_to_fungal_alignment)
 ```
 
-By default, the object returned by read_paf behaves almost exactly like a base R
-`data.frame`. In fact, the only difference is this object prints a nice summary
-of the object content when called directly or printed (rather than the thousands
-of lines it might contain):
+By default, the object returned by `read_paf` behaves almost exactly like a base R
+`data.frame`. In fact, the only difference is that this object prints a nice summary
+of the object contents when called directly or printed (rather than the thousands
+of lines the file might contain):
 
 
 ```{r print}
 ali
 ```
 
-In this case there is a total of 35Mb of aligned-genome, coming from 8 query
-and 8 target sequences.`read_paf` gives the 12 core columns of the PAF format 
-the following column names.
+In this case, there is a total of 35 Mb of aligned genome sequence, representing 8 query
+and 8 target sequences. `read_paf` lists the 12 columns of the file PAF format with
+column names labeled as in the table above.
 
-
-| Column | Name   | Data type | Description                                             |
-|--------|--------|-----------|---------------------------------------------------------|
-| 1      | qname  | string    | Query sequence name                                     |
-| 2      | qlen   | int       | Query sequence length                                   |
-| 3      | qstart | int       | Query start coordinate (0-based)                        |
-| 4      | qend   | int       | Query end coordinate (0-based)                          |
-| 5      | strand | char      | ‘+’ if query/target on the same strand; ‘-’ if opposite |
-| 6      | tname  | string    | Target sequence name                                    |
-| 7      | tlen   | int       | Target sequence length                                  |
-| 8      | tstart | int       | Target start coordinate on the original strand          |
-| 9      | tend   | int       | Target end coordinate on the original strand            |
-| 10     | nmatch | int       | Number of matching bases in the mapping                 |
-| 11     | alen   | int       | Number bases, including gaps, in the mapping            |
-| 12     | mapq   | int       | Mapping quality (0-255 with 255 for missing)            |
-
-In addition, any tags present in the file will be included as a column. The tags
+In addition, any tags present in the `.paf` file will be included as an additional column. The tags
 used by `minimap2` [are documented
-here](https://lh3.github.io/minimap2/minimap2.html) or in the man page for that
-program. One interesting tag for this alignment is `dv`, which encodes the
-approximate per-base difference between query and target sequence. We can use
-this tag to visualize the relatinship between alignment-length and sequence
-divergence. Because the alignment data is stored in a `data.frame` we can pass
+here](https://lh3.github.io/minimap2/minimap2.html) and also in the `man` page for that
+program. 
+
+One interesting tag for this particular alignment is `dv`, which encodes the
+approximate per-base difference ('divergence') between the query and target sequences. We can use
+this tag to visualize the relationship between alignment length and sequence
+divergence. Because the alignment information is stored in a `data.frame`, we can pass
 it directly to `ggplot2`:
 
 
@@ -106,22 +91,25 @@ ggplot(ali, aes(alen, dv)) +
     theme_pubr()
 ```
 
-There are a lot of short alignments, some of which are very
-divergent. But there are also so very long alignments, which all show high
+We can see that there are many short alignments, some of which are very
+divergent. But there are also some very long alignments, which all show high
 similarity. 
 
-Because the `pafr` object is effectively a `data.frame`, we can use normal R
-functions to inspect or analyse it. For example, let's calculate the mean
-divergence-level for alignments featuring each query sequence.
+Because the `pafr` object is effectively a `data.frame`, we can again use standard R
+functions to inspect or analyse it. For example, we can calculate the mean
+divergence level for alignments featuring each query sequence.
+<!---
+David: what do you mean by "alignments featuring each query sequence"?
+-->
 
 ```{r, compare_q}
 by_q <- aggregate(dv ~ qname, data=ali, FUN=mean)
 knitr::kable(by_q)
 ```
 
-Interestingly enough, `Q_chrm` is the mitochondrial genome, so appears the
-mitochrondial genome diplays less diveregnce than any of the chromosomes in this 
-case.
+Interestingly enough, `Q_chrm` is the mitochondrial genome, so it appears that the
+mitochrondial genome diplays less diveregnce than any of the autosomal chromosomes in this 
+particular species.
 
 
 ## Filtering and subsetting alignments
