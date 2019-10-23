@@ -1,5 +1,5 @@
 ---
-title: "Using pafr to read, manipulate and plot genome alignments in the PAF format"
+title: "pafr: reading, manipulating and plotting genome alignments in the PAF format"
 author: "David Winter"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
@@ -26,7 +26,7 @@ tabular format where each row represents an alignment between two sequences.
 Each `.paf` file has at least the following 12 columns.
 
 
-| **Column** | **Name**   | **Data type** | **Description**                                         |
+| **Column** | **Name**   | **Data Type** | **Description**                                         |
 |------------|------------|---------------|---------------------------------------------------------|
 | 1          | qname      | string        | Query sequence name                                     |
 | 2          | qlen       | int           | Query sequence length                                   |
@@ -42,7 +42,7 @@ Each `.paf` file has at least the following 12 columns.
 | 12         | mapq       | int           | Mapping quality (0-255, with 255 if missing)            |
 
 
-In addition, each row can have a variable number of 'tags', which share a simliar
+In addition, each row can have a variable number of 'tags', which share a similar
 format to those used in SAM files [See the SAM specification (pdf)](https://samtools.github.io/hts-specs/SAMtags.pdf).
 
 `pafr` provides the function `read_paf` to read `.paf` alignments into an R session.
@@ -64,11 +64,11 @@ of lines the file might contain):
 ali
 ```
 
-In this case, there is a total of 35 Mb of aligned genome sequence, representing 8 query
-and 8 target sequences. `read_paf` lists the 12 columns of the file PAF format with
-column names labeled as in the table above.
+For the worked example, a total of 35 Mb of aligned genome sequence is represented by 8 query
+and 8 target sequences. `read_paf` lists the 12 columns of the PAF file with
+column names labelled as in the table above.
 
-In addition, any tags present in the `.paf` file will be included as an additional column. The tags
+Any tags present in the `.paf` file are included as an additional column. The tags
 used by `minimap2` [are documented
 here](https://lh3.github.io/minimap2/minimap2.html) and also in the `man` page for that
 program. 
@@ -77,7 +77,7 @@ One interesting tag for this particular alignment is `dv`, which encodes the
 approximate per-base difference ('divergence') between the query and target sequences. We can use
 this tag to visualize the relationship between alignment length and sequence
 divergence. Because the alignment information is stored in a `data.frame`, we can pass
-it directly to `ggplot2`:
+this information directly to `ggplot2`:
 
 
 ```{r, alen}
@@ -92,8 +92,8 @@ ggplot(ali, aes(alen, dv)) +
 ```
 
 We can see that there are many short alignments, some of which are very
-divergent. But there are also some very long alignments, which all show high
-similarity. 
+divergent. But there are also some very long alignments, all of which show high
+similarity.
 
 Because the `pafr` object is effectively a `data.frame`, we can again use standard R
 functions to inspect or analyse it. For example, we can calculate the mean
@@ -108,30 +108,32 @@ knitr::kable(by_q)
 ```
 
 Interestingly enough, `Q_chrm` is the mitochondrial genome, so it appears that the
-mitochrondial genome diplays less diveregnce than any of the autosomal chromosomes in this 
-particular species.
+mitochondrial genome displays less divergence than any of the autosomal chromosomes in this particular species.
 
 
 ## Filtering and subsetting alignments
 
-Often the first thing you will want to do after reading in some data is get rid
-of low-quality, short and otherwise not-ideal alignments. `minimap2` uses the 
-`tp` (type of alignment) tag to mark secondary alignments (i.e. possible
-alignments between the query and target sequence that are not the best possible
-alignment for those regions). The function `filter_secondary_alignments` removes
-non-primary alignments from a `pafr object`. Let's use it to filter our `ali`
-object and see how many alignments (i.e. rows of data) we lose as a result:
+Often the first thing you will want to do after reading in data is to drop
+low-quality, short or otherwise non-ideal alignments. `minimap2` uses the 
+`tp` ('type of alignment') tag to mark secondary alignments (*i.e.*, possible
+alignments between the query and target sequences that are not the best possible
+alignments for those regions). The function `filter_secondary_alignments` removes
+non-primary alignments from a `pafr object`. 
+
+We can use this function to filter our `ali` object and see how many alignments
+(*i.e.*, rows of data) are removed as a result:
 
 ```{r, prim_only}
 prim_alignment <- filter_secondary_alignments(ali)
 nrow(ali) - nrow(prim_alignment)
 ```
 
-In some cases you might want to remove alignments with low mapping quality, high
-divergence, short length or some other property. Again, because the `pafr`
-object behaves like a  `data.frame` you can use your favourite base `R` or
-`tidyverse` functions to do this. Here I remove short alignments and those with
-a low mapping quality score:
+In some cases, you may want to remove alignments with low mapping quality, high
+divergence, short length or some other specific property. Again, because the `pafr`
+object behaves like a  `data.frame`, you can use your favourite base `R` or
+`tidyverse` functions to do this. 
+
+Here, we are removing short alignments and those with low mapping quality scores:
 
 
 ```{r, remove_short}
@@ -139,39 +141,44 @@ long_ali <- subset(ali, alen > 1e4 & mapq > 40)
 long_ali
 ```
 
-Note, this has removed quite a lot of data (thousands of alignments and ~ 10Mb
-of sequence).
+Note that this operation has removed quite a large amount of data (thousands of 
+alignments and ~10 Mb of sequence). It is important to keep track of these kinds of
+data losses after filtering.
+
 
 ## Plotting alignments 
 
-One of the major aims of `pafr` is to generate compelling visualisatoins of 
-genomic alignments. To this end, the he package implements three types of 
-genomic visualizatoin, making use of the `ggplot2` plotting environment. Alhough 
-`ggplot2` is powerful visualizatoin tool, we found producing high-quality plots 
-of genome alignments was difficult, requring the use of many different layers
-and transformations to datasets. The visualisation functions provided by `pafr`
-automate the process of transoformating data and adding layers to a plot. Each
-of tehse functoins returns `ggplot2` plots, which can then be modified by the
-addition of ggplot layers, scales and themes.
+A major aim of `pafr` is to generate compelling visualisations of 
+genomic alignments. To this end, the package implements three types of 
+genomic graphics, making use of the `ggplot2` plotting environment. 
 
-### Dotplot
+Although `ggplot2` is a powerful visualisation tool, we found that producing high-quality plots of genome alignments was difficult, requiring the use of many different layers
+and multiple transformations to datasets. The visualisation functions provided by `pafr`
+automate the process of transforming data into a useable form and adding layers to plots. Each
+of these functions returns `ggplot2` plots, which can then be modified by the
+addition of further ggplot layers, scales and themes. These figures are, therefore, incredible modifiable.
+
+
+### Dot plot
 
 Often the most useful visualization of a genome alignment is the
-[dotplot](https://en.wikipedia.org/wiki/Dot_plot_(bioinformatics)). `pafr` makes
-it easy to produce one of these from a .paf alignment: 
+[dot plot](https://en.wikipedia.org/wiki/Dot_plot_(bioinformatics)). `pafr` makes
+it easy to produce a dot plot from a `.paf` alignment: 
 
 ```{r dotplot_plain, fig.height=6}
 dotplot(prim_alignment)
 ```
 
-#### Altering the order of sequences in the dotplot
 
-The defaul plot is quite bare, with each aligned segment shown as a dark line
-and the borders of the sequences in the query and target genomes are dashed
-lines. Additional arguments to `dotplot` allow us to modify the plot. In this
-case we can add labels for each query and target squence (`label_seqs`) and
-changes the order in which target sequences appear. Because the dotplot being
-produced here is a ggplot object, we can use `theme_bw()` to change the plots
+#### Altering the order of sequences in the dot plot
+
+The default plot is quite sparse, with each aligned segment shown as a dark line
+and the borders of the sequences in the query and target genomes as dashed
+lines. Additional arguments to `dotplot` let us modify the plot. 
+
+For instance, we can add labels for each query and target sequence (`label_seqs`) and
+changes the order in which target sequences appear. Because the dot plot
+produced here is a ggplot object, we can use `theme_bw()` to change the plot
 theme too.
 
 
@@ -179,14 +186,14 @@ theme too.
 dotplot(prim_alignment, label_seqs=TRUE, order_by="qstart") + theme_bw()
 ```
 
-The argument `order_by` takes three possible values: "size", "qstart" or 
-"provided". "Size"(the default value) simply lines up query and target sequences
-from largest to smallest. "qstart" keeps the query sequences ordered by size,
+The argument `order_by` takes three possible values: 'size', 'qstart' or 
+'provided'. 'Size' (the default value) simply lines up query and target sequences
+from largest to smallest. 'qstart' keeps the query sequences ordered by size,
 but rearranges the targets by where they match to query sequences. For
-example, `T_chr5` is moved to the second sequence in the above plot, as it
-matches to the first query chromosome. If `ordered_by` is set to "provided" you
-need provide a list with two elements (the order of query and then target
-sequences) to the function. This approach can also be used to down-sample an
+example, `T_chr5` is moved to the second sequence in the plot above, as it
+matches the first query chromosome. If `ordered_by` is set to 'provided', you
+need to provide a list to the function with two elements: the order of the query, and then target,
+sequences. This approach can also be used to down-sample an
 alignment to only a few focal sequences.
 
 
@@ -198,13 +205,14 @@ to_keep <- list(
 dotplot(prim_alignment, label_seqs=TRUE, order_by="provided", ordering=to_keep)
 ```
 
+
 #### Adding annotations
 
-
 You may have additional information about one or both of your genomes that you
-want to use to annotate your dotplots. In this case, we know the locations of
-the centromeres in the query genome. We can use `read_bed` to load these
-locations.
+want annotate on your dot plots. 
+
+For instance, here we know the locations of the centromeres in the query genome. 
+We can use `read_bed` to load these locations into `pafr`.
 
 ```{r}
 path_to_centro <- system.file("extdata", "Q_centro.bed", package = "pafr")
@@ -212,8 +220,12 @@ centro <- read_bed(path_to_centro)
 knitr::kable(head(centro))
 ```
 
+<!-- 
+David: I got a bit lost with the paragraph below. Expand a bit on what's going on?
+-->
+
 In `ggplot` style, we use the `+` symbol to add the results of `highlight_query`
-to a dotplot. Note, in order for the plot to work both the `ordered_by` and
+to a dot plot. Note that for the plot to work, both the `ordered_by` and
 `ali` arguments must match between the call to `dotplot` and `highlight_query`.
 
 ```{r highlight, fig.height=6}
@@ -221,33 +233,35 @@ dotplot(prim_alignment, "qstart") +
     highlight_query(ali=prim_alignment, bed=centro, ordered_by="qstart")
 ```
 
-It's not apparent from the very small intervals plotted above, but 'highlights'
-here are a filled rectangle. Plotting a larger rectangle for the target genome
-makes it more clear.
+It is not apparent from the very small intervals plotted above, but 'highlights'
+here are filled rectangles. Plotting a larger rectangle for the target genome
+makes this clearer.
 
 ```{r highlight_t, fig.height=6}
-interval <- data.frame(chrom="T_chr3", start = 2000000, end= 3000000)
+interval <- data.frame(chrom="T_chr3", start=2000000, end=3000000)
 dotplot(prim_alignment, label_seqs=TRUE) + 
     highlight_target(prim_alignment, interval)
 ```
 
+
 ### Synteny plot
 
-The dotplot gives us a 'whole genome' view of a genomic alignment. Very often we
-will also want to zoom down to look at how regions of two particular chromosomes
+The dot plot gives us a 'whole genome' view of a genomic alignment. Very often, however, we
+will also want to zoom in to look at how specific regions of two particular chromosomes
 are aligned to each other. The function `plot_synteny` provides a way to
-visualize alignments at this level. Lets compare regions of query chromosome 3
-and target chromosome 4.
+visualize alignments at this level. 
+
+For example, we can compare regions of query chromosome 3 and target chromosome 4.
 
 ```{r, fig.height = 4}
 plot_synteny(long_ali, q_chrom="Q_chr3", t_chrom="T_chr4", centre=TRUE) +
     theme_bw()
 ```
 
-In this plot, each sequence is represented as a white box and each alignment
-is a grey segment connecting the regions of those sequences that align to each
-other. In this case, the alignment is quite straightforward. The plot looks less
-clear when most of the alignments are in reverse-and-complement.
+In this plot, each sequence is represented by a white box and each alignment
+is a grey segment connecting those sequences that align to each
+other. In this case, the alignment is quite straightforward. However, the plot looks less
+clear when most of the alignments are in reverse-and-complement format.
 
 ```{r, fig.height = 4}
 plot_synteny(long_ali, q_chrom="Q_chr5", t_chrom="T_chr5", centre=TRUE) +
@@ -255,18 +269,20 @@ plot_synteny(long_ali, q_chrom="Q_chr5", t_chrom="T_chr5", centre=TRUE) +
 
 ```
 
-The simple answer in these cases is to set the argument `rc` to `TRUE`, forcing
+The simple solution in these cases is to set the argument `rc` to `TRUE`, forcing
 the target sequence to be flipped.
 
 ```{r, fig.height = 4}
 plot_synteny(long_ali, q_chrom="Q_chr5", t_chrom="T_chr5", centre=TRUE, rc=TRUE) +
     theme_bw()
 ```
+
+
 ### Coverage plot
 
 The function `plot_coverage` gives a useful way to see how much of a given
 genome is included in a genome alignment. By default, it displays each sequence
-in the target chromosome as a rectangular box, with shaded regions represented
+in the target chromosome as a rectangular box, with shaded regions representing
 parts of the target genome that are included in an alignment:
 
 ```{r,cov_plot}
@@ -285,13 +301,15 @@ plot_coverage(prim_alignment, target=FALSE)
 #### Coverage by query sequence
 
 Sometimes, in addition to knowing how much of a given genome is represented in a
-whole genome alignment, it is interesting to know which sequences from the other
+whole genome alignment, it can be interesting to know which sequences from the other
 genome are aligning. For example, we might want to 'paint' regions of the target
-sequence by which query seqeunce they form an alignment to. The `plot_coverage`
+sequence by which query sequence they form an alignment to. The `plot_coverage`
 function can shade the alignment blocks it produces according to any column in
-the alignment. Here is how we do it for query sequence name (i.e. the `qname`
-column), taking advantage of `ggplot`'s `scale_colour_brewer` to use a nice
-palete.
+the alignment. 
+
+For example, this is how we could paint genomes for query sequence name (*i.e.*, the `qname`
+column), taking advantage of `ggplot`'s `scale_colour_brewer` to use a nice colour
+palette.
 
 
 ```{r, cov_colourful}
