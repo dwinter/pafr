@@ -1,28 +1,27 @@
-
-#' Plot the regions of one genome that are covered by alignments in a paf flie
+#' Plot the regions of one genome that are covered by alignments in a paf file
 #'
-#' Each sequence in the focal genome is displayed as rectange, with regions
+#' Each sequence in the focal genome is displayed as a rectangle, with regions
 #' covered by an alignment shaded as per the \code{fill} argument described
 #' below. Uncovered regions remain white.
 #'
-#' Note this function uses a \code{\link{theme_coverage_plot}} to style the
-#' graph using another ggplot theme on the plot may produce unexpected results.
+#' Note that this function uses \code{\link{theme_coverage_plot}} to style the
+#' graph. Using another ggplot theme on the plot may produce unexpected results.
 #'
-#' @param ali an alignment as read by \code{\link{read_paf}}
-#' @param target logical, if TRUE  dsiplay coverage for the target
-#' genome, if FALSE for the query
-#' @param fill, character, how to colour the alignment-blocks. If the character
+#' @param ali alignment  An alignment as read by \code{\link{read_paf}}
+#' @param target logical  If TRUE, display coverage for the target
+#' genome; if FALSE, display coverage for the query
+#' @param fill character  How to colour the alignment blocks. If the character
 #' provided is the name of a column in the alignment, this column will be passed
 #' to \code{\link{ggplot2}} to shade alignment blocks. Otherwise, the character
 #' is treated as a single colour to be used for all alignment blocks.
-#' @param direct_label, logical. If TRUE use geom_text to directly label the
-#' name of the focal sequences. if FALSE no direct labels are drawn
-#' @param label_colour character, colour used for direct labels
-#' @param xlab, character, Name for for x-axis
-#' @param x_labeller function to be used to label x-axis (defaults to
+#' @param direct_label logical  If TRUE, use geom_text to directly label the
+#' name of the focal sequences; if FALSE, no direct labels are drawn
+#' @param label_colour character  Colour used for direct labels
+#' @param xlab string  Name for the x-axis
+#' @param x_labeller function  Function to be used to label the x-axis (defaults to
 #' \code{\link{Mb_lab}}
 #' @examples
-#' ali <- read_paf( system.file("extdata", "fungi.paf", package = "pafr") )
+#' ali <- read_paf( system.file("extdata", "fungi.paf", package="pafr") )
 #' plot_coverage(ali)
 #' plot_coverage(ali, fill='qname', direct_label=FALSE) + 
 #'    scale_fill_brewer(palette="Set1")
@@ -77,18 +76,18 @@ plot_coverage <- function(ali, target = TRUE, fill = "forestgreen",
 
 #' A minimalistic ggplot2 theme designed for use with genome coverage plots
 #'
-#' This theme is used be default when \code{\link{plot_coverage}} is called,
+#' This theme is used as the default when \code{\link{plot_coverage}} is called,
 #' so you should usually only call this function to modify the appearence of the
 #' coverage plot.
-#' @param facet_labs, logical. If TRUE (default) label sequences using the facet
-#' labels. If FALSE sequences are labeled directly using 
+#' @param facet_labs logical  If TRUE (default), label sequences using the facet
+#' labels; if FALSE, sequences are labeled directly using 
 #' \code{\link[ggplot2]{geom_text}}
-#' @param show_legend, logical. If TRUE (default) label display any legend
-#' associated with the fill parameter of \code{plot_coverage}. If FALSE 
-#' do not display a legend.
+#' @param show_legend logical  If TRUE (default), label display any legend
+#' associated with the fill parameter of \code{plot_coverage}; if FALSE, 
+#' do not display a legend
 #' @examples
-#' ali <- read_paf( system.file("extdata", "fungi.paf", package = "pafr") )
-#' plot_coverage(ali) + theme_coverage_plot(show_legend = FALSE)
+#' ali <- read_paf( system.file("extdata", "fungi.paf", package="pafr") )
+#' plot_coverage(ali) + theme_coverage_plot(show_legend=FALSE)
 #' @export
 theme_coverage_plot <- function(facet_labs = TRUE, show_legend = TRUE) {
     theme <- theme_bw()
