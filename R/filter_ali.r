@@ -1,10 +1,10 @@
-#' Remove secondary alignments form a pafr alignment
-#' @param ali genomic alignment in \code{pafr} or \code{tbl_df} format, as
+#' Remove secondary alignments from a pafr alignment
+#' @param ali  Genomic alignment in \code{pafr} or \code{tbl_df} format, as
 #' returned by \code{\link{read_paf}}
-#' @param remove_inversions, logical, if \code{TRUE} also remove inversions (tp
-#' flag 'I' or 'i') from alignment.
+#' @param remove_inversions logical  If TRUE, also remove inversions (tp
+#' flag 'I' or 'i') from the alignment
 #' @examples
-#' ali <- read_paf( system.file("extdata", "fungi.paf", package = "pafr") ) 
+#' ali <- read_paf( system.file("extdata", "fungi.paf", package="pafr") ) 
 #' ali
 #' filter_secondary_alignments(ali)
 #' @export
