@@ -1,20 +1,20 @@
-#' Plot synteny between a query and target sequence in a paf alignment
+#' Plot synteny between a query and target sequence in a PAF alignment
 #' 
 #' @param ali pafr or tibble containing the genome alignment (as returned by
 #' \code{\link{read_paf}})
-#' @param q_chrom character, name for the query sequence
-#' @param t_chrom character, name for the target sequence
-#' @param rc logical, if TRUE, use the reverse and complement for the target
+#' @param q_chrom character  Name for the query sequence
+#' @param t_chrom character  Name for the target sequence
+#' @param rc logical  If TRUE, use the reverse and complement for the target
 #' sequence
-#' @param centre, logical, if TRUE (default) adjust the position of the target 
-#' sequence so it is centred on the query. If not, both sequences start at
+#' @param centre logical  If TRUE (default), adjust the position of the target 
+#' sequence, so it is centred on the query. If not, both sequences start at
 #' position zero
-#' @param xlab, character, Name for for x-axis
-#' @param ylab, character, Name for for x-axus
-#' @param x_labeller function to be used to label x-axis (defaults to
-#' @return A ggplot object displaying synteny between query and target sequences
+#' @param xlab string  Name for the x-axis
+#' @param ylab string  Name for the y-axis
+#' @param x_labeller  Function to be used to label the x-axis
+#' @return  A ggplot object that displays synteny between query and target sequences
 #' @examples
-#' ali <- read_paf( system.file("extdata", "fungi.paf", package = "pafr") )
+#' ali <- read_paf( system.file("extdata", "fungi.paf", package="pafr") )
 #' long_ali <- subset(ali, alen > 1e4)
 #' plot_synteny(long_ali, q_chrom="Q_chr3", t_chrom="T_chr4", centre=TRUE)
 #' plot_synteny(long_ali, q_chrom="Q_chr5", t_chrom="T_chr5", centre=TRUE)
