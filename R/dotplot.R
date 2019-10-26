@@ -1,16 +1,12 @@
-
-
-
-
 #' Extract the sizes of all sequences in a paf alignment
 #'
 #' @param ali pafr or tibble containing the genome alignment (as returned by
 #' \code{\link{read_paf}})
-#' @return list with two elements (tlens and qlens). Each element is a
-#' data.frame with one column of sequence names and another column containing
+#' @return list with two elements (tlens and qlens)  Each element is a
+#' dataframe with one column of sequence names and another column containing
 #' the length of each sequence
 #' @examples
-#' ali <- read_paf( system.file("extdata", "fungi.paf", package = "pafr") )
+#' ali <- read_paf( system.file("extdata", "fungi.paf", package="pafr") )
 #' chrom_sizes(ali)
 #' @export
 chrom_sizes <- function(ali) {
@@ -23,10 +19,10 @@ chrom_sizes <- function(ali) {
 }
 
 
-# Internal function used for concatenating sequences into a single ordering,
+# Internal function used to concatenate sequences into a single ordering,
 # used by dotplot and associated functions. Returns a list of four elements,
-# which represent the starting positions of each sequence in a concatinated
-# alignment and the total length of the query and targets sequences
+# which represent the starting positions of each sequence in a concatenated
+# alignment and the total length of the query and target sequences.
 #
 #' @importFrom dplyr top_n
 #' @importFrom dplyr group_by
@@ -109,31 +105,31 @@ check_ordering <- function(ali, ordering) {
     return(invisible())
 }
 
-#' Generate a dotplot from a paf alignment.
+#' Generate a dot plot from a paf alignment
 #'
 #' @param ali pafr or tibble containing the genome alignment (as returned by
 #' \code{\link{read_paf}})
-#' @param order_by How should the query and target sequences be ordered in the
-#' dotplot. One of 'size' (smallest-to-largest), 'qstart' (query organised
-#' smallest to largest, target by first match in the query genome or 'provided'
-#' (ordering specified in \code{ordering} argument
-#' @param label_seqs boolean, if \code{TRUE} label centre of query and target
-#' seqeuences in margins of the dotplot
-#' @param dashes boolen, if \code{TRUE} add dashes ad borders of query and
-#' target sequences in the dotplot
-#' @param ordering If \code{order_by} is set to \code{TRUE},
-#' this should be set to a list with two elements, sepcifying the order of query
-#' and then target sequences in the doptplot. This option is ignored if
+#' @param order_by  How the query and target sequences should be ordered in the
+#' dot plot. Option must be one of 'size' (smallest-to-largest), 'qstart' (query organised
+#' smallest to largest, target by first match in the query genome) or 'provided'
+#' (ordering as specified in the \code{ordering} argument)
+#' @param label_seqs boolean  If TRUE, label centre of query and target
+#' sequences in margins of the dot plot
+#' @param dashes boolean  If TRUE, add dashes to borders of query and
+#' target sequences in the dot plot
+#' @param ordering If \code{order_by} is set to TRUE,
+#' this variable should be a list with two elements specifying the order of query
+#' and then target sequences in the dot plot. This option is ignored if
 #' \code{order_by} is set to other values
-#' @param alignment_colour character, the colour used to draw each aligned
-#' section in the dotplot (defaults to black).
-#' @param xlab character The x-axis label (defaults to "query").
-#' @param ylab character The y-axis label (defaults to "target").
-#' @param line_size the width of the line used to represent an alignment in the
-#' dotplot (defaults to 2)
+#' @param alignment_colour character  The colour used to draw each aligned
+#' section in the dot plot (defaults to black)
+#' @param xlab character  The x-axis label (defaults to 'query')
+#' @param ylab character  The y-axis label (defaults to 'target')
+#' @param line_size  The width of the line used to represent an alignment in the
+#' dot plot (defaults to 2)
 #' @import ggplot2
 #' @examples
-#' ali <- read_paf( system.file("extdata", "fungi.paf", package = "pafr") )
+#' ali <- read_paf( system.file("extdata", "fungi.paf", package="pafr") )
 #' dotplot(ali)
 #' dotplot(ali) + theme_bw()
 #' dotplot(ali, label_seqs=TRUE, order_by="qstart", alignment_colour="blue")
@@ -209,34 +205,34 @@ highlight_query <- function(ali, bed,
                       match.arg(ordered_by), ordering, fill, colour, alpha)
 }
   
-#' Highlight segments of a query or target genome in a dotplot
+#' Highlight segments of a query or target genome in a dot plot
 #'
 #' This plot is intended to be used in conjunction with \code{link{dotplot}}.
-#' Adding \code{higlight_query} or \code{highlight_target} to a dotplot call
+#' Adding \code{higlight_query} or \code{highlight_target} to a dotplot function call
 #' (see examples below) will add a rectangular 'highlight' corresponding to a
 #' particular genomic interval in the corresponding genome.
 #'
 #' @param ali pafr or tibble containing a genome alignment (as returned by
 #' \code{\link{read_paf}})
 #' @param bed \code{data.frame} or \code{tbl_df} containing a bed file, as returned by
-#' \code{\link{read_bed}}. Should contain three columns, named "chrom", "start" 
-#'  and "end".
-#' @param ordered_by How are the query and target sequences be ordered in the
-#' dotplot this highlight is being added to. This argument should match that
+#' \code{\link{read_bed}}. Should contain three columns named 'chrom', 'start' 
+#'  and 'end'
+#' @param ordered_by  How the query and target sequences are ordered in the
+#' dot plot that this highlight is being added to. This argument should match that
 #' used in \code{\link{dotplot}}.
-#' @param ordering If \code{order_by} is set to \code{TRUE},
-#' this should be set to a list with two elements, sepcifying the order of query
-#' and then target sequences in the doptplot. This option is ignored if
+#' @param ordering  If \code{order_by} is set to TRUE,
+#' this should be a list with two elements that specify the order of query
+#' and then target sequences in the dot plot. This option is ignored if
 #' \code{order_by} is set to other values
-#' @param fill character fill colour for highlight segment
-#' @param colour, character outline colour for highlight segment
-#' @param alpha, character opacity ([0-1]) for highlight segment
+#' @param fill character  Fill colour for highlight segment
+#' @param colour character  Outline colour for highlight segment
+#' @param alpha character  Opacity ([0-1]) for highlight segment
 #' @rdname highlight_dotplot
 #' @examples
-#' ali <- read_paf( system.file("extdata", "fungi.paf", package = "pafr") )
-#' cen <- read_bed(system.file("extdata", "Q_centro.bed", package = "pafr"))
+#' ali <- read_paf( system.file("extdata", "fungi.paf", package="pafr") )
+#' cen <- read_bed(system.file("extdata", "Q_centro.bed", package="pafr"))
 #' dotplot(ali) + highlight_query(ali, cen)
-#' interval <- data.frame(chrom="T_chr3", start = 2000000, end= 3000000)
+#' interval <- data.frame(chrom="T_chr3", start=2000000, end=3000000)
 #' dotplot(ali, label_seqs=TRUE) + 
 #'    highlight_target(ali, interval)
 #' @export
