@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Read a genomic alignment in .paf format. — read_paf • pafr</title>
+<title>Read a genomic alignment in PAF format — read_paf • pafr</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -32,9 +32,9 @@
 
 
 
-<meta property="og:title" content="Read a genomic alignment in .paf format. — read_paf" />
+<meta property="og:title" content="Read a genomic alignment in PAF format — read_paf" />
 
-<meta property="og:description" content="See the package vingette for detailed information on the file format and its
+<meta property="og:description" content="See the package vignette for detailed information on the file format and its
 representation as an R object." />
 <meta name="twitter:card" content="summary" />
 
@@ -90,7 +90,7 @@ representation as an R object." />
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/Introduction_to_pafr.html">Using pafr to read, manipulate and plot genome alignments in the PAF format</a>
+      <a href="../articles/Introduction_to_pafr.html">pafr: reading, manipulating and plotting genome alignments in the PAF format</a>
     </li>
   </ul>
 </li>
@@ -119,14 +119,14 @@ representation as an R object." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Read a genomic alignment in .paf format.</h1>
+    <h1>Read a genomic alignment in PAF format</h1>
     <small class="dont-index">Source: <a href='https://github.com/dwinter/pafr/blob/master/R/IO.r'><code>R/IO.r</code></a></small>
     <div class="hidden name"><code>read_paf.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>See the package vingette for detailed information on the file format and its
+    <p>See the package vignette for detailed information on the file format and its
 representation as an R object.</p>
     
     </div>
@@ -138,23 +138,23 @@ representation as an R object.</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>file_name</th>
-      <td><p>path to the paf file.</p></td>
+      <td><p>Path to the .paf file</p></td>
     </tr>
     <tr>
-      <th>tibble, </th>
-      <td><p>logical. If <code>TRUE</code> the genomic alignments are returned as
+      <th>tibble</th>
+      <td><p>logical  If TRUE, the genomic alignments are returned as
 a tidy <code>tbl_df</code></p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Either a <code>pafr</code> object (which acts as a <code>data.frame</code> or a
-<code>tbl_df</code> containing information on genomic alignments.</p>
+    <p>Either a <code>pafr</code> object, which acts as a <code>data.frame</code>, or a
+<code>tbl_df</code> containing information on genomic alignments</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>ali</span> <span class='kw'>&lt;-</span> <span class='fu'>read_paf</span>( <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='st'>"extdata"</span>, <span class='st'>"fungi.paf"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"pafr"</span>) )
+    <pre class="examples"><div class='input'><span class='no'>ali</span> <span class='kw'>&lt;-</span> <span class='fu'>read_paf</span>( <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='st'>"extdata"</span>, <span class='st'>"fungi.paf"</span>, <span class='kw'>package</span><span class='kw'>=</span><span class='st'>"pafr"</span>) )
 <span class='no'>ali</span></div><div class='output co'>#&gt; pafr object with 2501 alignments (36.5Mb)
 #&gt;  8 query seqs
 #&gt;  8 target seqs

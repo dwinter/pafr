@@ -2,7 +2,7 @@
 % Please edit documentation in R/dotplot.R
 \name{dotplot}
 \alias{dotplot}
-\title{Generate a dotplot from a paf alignment.}
+\title{Generate a dot plot from a paf alignment}
 \usage{
 dotplot(ali, order_by = c("size", "qstart", "provided"), label_seqs = FALSE,
   dashes = TRUE, ordering = list(), alignment_colour = "black",
@@ -12,37 +12,37 @@ dotplot(ali, order_by = c("size", "qstart", "provided"), label_seqs = FALSE,
 \item{ali}{pafr or tibble containing the genome alignment (as returned by
 \code{\link{read_paf}})}
 
-\item{order_by}{How should the query and target sequences be ordered in the
-dotplot. One of 'size' (smallest-to-largest), 'qstart' (query organised
-smallest to largest, target by first match in the query genome or 'provided'
-(ordering specified in \code{ordering} argument}
+\item{order_by}{How the query and target sequences should be ordered in the
+dot plot. Option must be one of 'size' (smallest-to-largest), 'qstart' (query organised
+smallest to largest, target by first match in the query genome) or 'provided'
+(ordering as specified in the \code{ordering} argument)}
 
-\item{label_seqs}{boolean, if \code{TRUE} label centre of query and target
-seqeuences in margins of the dotplot}
+\item{label_seqs}{boolean  If TRUE, label centre of query and target
+sequences in margins of the dot plot}
 
-\item{dashes}{boolen, if \code{TRUE} add dashes ad borders of query and
-target sequences in the dotplot}
+\item{dashes}{boolean  If TRUE, add dashes to borders of query and
+target sequences in the dot plot}
 
-\item{ordering}{If \code{order_by} is set to \code{TRUE},
-this should be set to a list with two elements, sepcifying the order of query
-and then target sequences in the doptplot. This option is ignored if
+\item{ordering}{If \code{order_by} is set to TRUE,
+this variable should be a list with two elements specifying the order of query
+and then target sequences in the dot plot. This option is ignored if
 \code{order_by} is set to other values}
 
-\item{alignment_colour}{character, the colour used to draw each aligned
-section in the dotplot (defaults to black).}
+\item{alignment_colour}{character  The colour used to draw each aligned
+section in the dot plot (defaults to black)}
 
-\item{xlab}{character The x-axis label (defaults to "query").}
+\item{xlab}{character  The x-axis label (defaults to 'query')}
 
-\item{ylab}{character The y-axis label (defaults to "target").}
+\item{ylab}{character  The y-axis label (defaults to 'target')}
 
-\item{line_size}{the width of the line used to represent an alignment in the
-dotplot (defaults to 2)}
+\item{line_size}{The width of the line used to represent an alignment in the
+dot plot (defaults to 2)}
 }
 \description{
-Generate a dotplot from a paf alignment.
+Generate a dot plot from a paf alignment
 }
 \examples{
-ali <- read_paf( system.file("extdata", "fungi.paf", package = "pafr") )
+ali <- read_paf( system.file("extdata", "fungi.paf", package="pafr") )
 dotplot(ali)
 dotplot(ali) + theme_bw()
 dotplot(ali, label_seqs=TRUE, order_by="qstart", alignment_colour="blue")

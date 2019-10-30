@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Highlight segments of a query or target genome in a dotplot — highlight_query • pafr</title>
+<title>Highlight segments of a query or target genome in a dot plot — highlight_query • pafr</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -32,10 +32,10 @@
 
 
 
-<meta property="og:title" content="Highlight segments of a query or target genome in a dotplot — highlight_query" />
+<meta property="og:title" content="Highlight segments of a query or target genome in a dot plot — highlight_query" />
 
 <meta property="og:description" content="This plot is intended to be used in conjunction with link{dotplot}.
-Adding higlight_query or highlight_target to a dotplot call
+Adding higlight_query or highlight_target to a dotplot function call
 (see examples below) will add a rectangular 'highlight' corresponding to a
 particular genomic interval in the corresponding genome." />
 <meta name="twitter:card" content="summary" />
@@ -92,7 +92,7 @@ particular genomic interval in the corresponding genome." />
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/Introduction_to_pafr.html">Using pafr to read, manipulate and plot genome alignments in the PAF format</a>
+      <a href="../articles/Introduction_to_pafr.html">pafr: reading, manipulating and plotting genome alignments in the PAF format</a>
     </li>
   </ul>
 </li>
@@ -121,7 +121,7 @@ particular genomic interval in the corresponding genome." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Highlight segments of a query or target genome in a dotplot</h1>
+    <h1>Highlight segments of a query or target genome in a dot plot</h1>
     <small class="dont-index">Source: <a href='https://github.com/dwinter/pafr/blob/master/R/dotplot.R'><code>R/dotplot.R</code></a></small>
     <div class="hidden name"><code>highlight_dotplot.Rd</code></div>
     </div>
@@ -129,7 +129,7 @@ particular genomic interval in the corresponding genome." />
     <div class="ref-description">
     
     <p>This plot is intended to be used in conjunction with <code>link{dotplot}</code>.
-Adding <code>higlight_query</code> or <code>highlight_target</code> to a dotplot call
+Adding <code>higlight_query</code> or <code>highlight_target</code> to a dotplot function call
 (see examples below) will add a rectangular 'highlight' corresponding to a
 particular genomic interval in the corresponding genome.</p>
     
@@ -152,41 +152,41 @@ particular genomic interval in the corresponding genome.</p>
     <tr>
       <th>bed</th>
       <td><p><code>data.frame</code> or <code>tbl_df</code> containing a bed file, as returned by
-<code><a href='read_bed.html'>read_bed</a></code>. Should contain three columns, named "chrom", "start" 
- and "end".</p></td>
+<code><a href='read_bed.html'>read_bed</a></code>. Should contain three columns named 'chrom', 'start' 
+ and 'end'</p></td>
     </tr>
     <tr>
       <th>ordered_by</th>
-      <td><p>How are the query and target sequences be ordered in the
-dotplot this highlight is being added to. This argument should match that
+      <td><p>How the query and target sequences are ordered in the
+dot plot that this highlight is being added to. This argument should match that
 used in <code><a href='dotplot.html'>dotplot</a></code>.</p></td>
     </tr>
     <tr>
       <th>ordering</th>
-      <td><p>If <code>order_by</code> is set to <code>TRUE</code>,
-this should be set to a list with two elements, sepcifying the order of query
-and then target sequences in the doptplot. This option is ignored if
+      <td><p>If <code>order_by</code> is set to TRUE,
+this should be a list with two elements that specify the order of query
+and then target sequences in the dot plot. This option is ignored if
 <code>order_by</code> is set to other values</p></td>
     </tr>
     <tr>
       <th>fill</th>
-      <td><p>character fill colour for highlight segment</p></td>
+      <td><p>character  Fill colour for highlight segment</p></td>
     </tr>
     <tr>
-      <th>colour, </th>
-      <td><p>character outline colour for highlight segment</p></td>
+      <th>colour</th>
+      <td><p>character  Outline colour for highlight segment</p></td>
     </tr>
     <tr>
-      <th>alpha, </th>
-      <td><p>character opacity ([0-1]) for highlight segment</p></td>
+      <th>alpha</th>
+      <td><p>character  Opacity ([0-1]) for highlight segment</p></td>
     </tr>
     </table>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>ali</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='read_paf.html'>read_paf</a></span>( <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='st'>"extdata"</span>, <span class='st'>"fungi.paf"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"pafr"</span>) )
-<span class='no'>cen</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='read_bed.html'>read_bed</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='st'>"extdata"</span>, <span class='st'>"Q_centro.bed"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"pafr"</span>))
-<span class='fu'><a href='dotplot.html'>dotplot</a></span>(<span class='no'>ali</span>) + <span class='fu'>highlight_query</span>(<span class='no'>ali</span>, <span class='no'>cen</span>)</div><div class='img'><img src='highlight_dotplot-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='no'>interval</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(<span class='kw'>chrom</span><span class='kw'>=</span><span class='st'>"T_chr3"</span>, <span class='kw'>start</span> <span class='kw'>=</span> <span class='fl'>2000000</span>, <span class='kw'>end</span><span class='kw'>=</span> <span class='fl'>3000000</span>)
+    <pre class="examples"><div class='input'><span class='no'>ali</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='read_paf.html'>read_paf</a></span>( <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='st'>"extdata"</span>, <span class='st'>"fungi.paf"</span>, <span class='kw'>package</span><span class='kw'>=</span><span class='st'>"pafr"</span>) )
+<span class='no'>cen</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='read_bed.html'>read_bed</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='st'>"extdata"</span>, <span class='st'>"Q_centro.bed"</span>, <span class='kw'>package</span><span class='kw'>=</span><span class='st'>"pafr"</span>))
+<span class='fu'><a href='dotplot.html'>dotplot</a></span>(<span class='no'>ali</span>) + <span class='fu'>highlight_query</span>(<span class='no'>ali</span>, <span class='no'>cen</span>)</div><div class='img'><img src='highlight_dotplot-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='no'>interval</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(<span class='kw'>chrom</span><span class='kw'>=</span><span class='st'>"T_chr3"</span>, <span class='kw'>start</span><span class='kw'>=</span><span class='fl'>2000000</span>, <span class='kw'>end</span><span class='kw'>=</span><span class='fl'>3000000</span>)
 <span class='fu'><a href='dotplot.html'>dotplot</a></span>(<span class='no'>ali</span>, <span class='kw'>label_seqs</span><span class='kw'>=</span><span class='fl'>TRUE</span>) +
    <span class='fu'>highlight_target</span>(<span class='no'>ali</span>, <span class='no'>interval</span>)</div><div class='img'><img src='highlight_dotplot-2.png' alt='' width='700' height='433' /></div></pre>
   </div>

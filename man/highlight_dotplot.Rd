@@ -3,7 +3,7 @@
 \name{highlight_query}
 \alias{highlight_query}
 \alias{highlight_target}
-\title{Highlight segments of a query or target genome in a dotplot}
+\title{Highlight segments of a query or target genome in a dot plot}
 \usage{
 highlight_query(ali, bed, ordered_by = c("size", "qstart", "provided"),
   ordering = list(), fill = "yellow", colour = "black", alpha = 0.6)
@@ -16,35 +16,35 @@ highlight_target(ali, bed, ordered_by = c("size", "qstart", "provided"),
 \code{\link{read_paf}})}
 
 \item{bed}{\code{data.frame} or \code{tbl_df} containing a bed file, as returned by
-\code{\link{read_bed}}. Should contain three columns, named "chrom", "start" 
- and "end".}
+\code{\link{read_bed}}. Should contain three columns named 'chrom', 'start' 
+ and 'end'}
 
-\item{ordered_by}{How are the query and target sequences be ordered in the
-dotplot this highlight is being added to. This argument should match that
+\item{ordered_by}{How the query and target sequences are ordered in the
+dot plot that this highlight is being added to. This argument should match that
 used in \code{\link{dotplot}}.}
 
-\item{ordering}{If \code{order_by} is set to \code{TRUE},
-this should be set to a list with two elements, sepcifying the order of query
-and then target sequences in the doptplot. This option is ignored if
+\item{ordering}{If \code{order_by} is set to TRUE,
+this should be a list with two elements that specify the order of query
+and then target sequences in the dot plot. This option is ignored if
 \code{order_by} is set to other values}
 
-\item{fill}{character fill colour for highlight segment}
+\item{fill}{character  Fill colour for highlight segment}
 
-\item{colour, }{character outline colour for highlight segment}
+\item{colour}{character  Outline colour for highlight segment}
 
-\item{alpha, }{character opacity ([0-1]) for highlight segment}
+\item{alpha}{character  Opacity ([0-1]) for highlight segment}
 }
 \description{
 This plot is intended to be used in conjunction with \code{link{dotplot}}.
-Adding \code{higlight_query} or \code{highlight_target} to a dotplot call
+Adding \code{higlight_query} or \code{highlight_target} to a dotplot function call
 (see examples below) will add a rectangular 'highlight' corresponding to a
 particular genomic interval in the corresponding genome.
 }
 \examples{
-ali <- read_paf( system.file("extdata", "fungi.paf", package = "pafr") )
-cen <- read_bed(system.file("extdata", "Q_centro.bed", package = "pafr"))
+ali <- read_paf( system.file("extdata", "fungi.paf", package="pafr") )
+cen <- read_bed(system.file("extdata", "Q_centro.bed", package="pafr"))
 dotplot(ali) + highlight_query(ali, cen)
-interval <- data.frame(chrom="T_chr3", start = 2000000, end= 3000000)
+interval <- data.frame(chrom="T_chr3", start=2000000, end=3000000)
 dotplot(ali, label_seqs=TRUE) + 
    highlight_target(ali, interval)
 }

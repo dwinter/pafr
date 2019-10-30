@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Plot the regions of one genome that are covered by alignments in a paf flie — plot_coverage • pafr</title>
+<title>Plot the regions of one genome that are covered by alignments in a paf file — plot_coverage • pafr</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -32,9 +32,9 @@
 
 
 
-<meta property="og:title" content="Plot the regions of one genome that are covered by alignments in a paf flie — plot_coverage" />
+<meta property="og:title" content="Plot the regions of one genome that are covered by alignments in a paf file — plot_coverage" />
 
-<meta property="og:description" content="Each sequence in the focal genome is displayed as rectange, with regions
+<meta property="og:description" content="Each sequence in the focal genome is displayed as a rectangle, with regions
 covered by an alignment shaded as per the fill argument described
 below. Uncovered regions remain white." />
 <meta name="twitter:card" content="summary" />
@@ -91,7 +91,7 @@ below. Uncovered regions remain white." />
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/Introduction_to_pafr.html">Using pafr to read, manipulate and plot genome alignments in the PAF format</a>
+      <a href="../articles/Introduction_to_pafr.html">pafr: reading, manipulating and plotting genome alignments in the PAF format</a>
     </li>
   </ul>
 </li>
@@ -120,14 +120,14 @@ below. Uncovered regions remain white." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Plot the regions of one genome that are covered by alignments in a paf flie</h1>
+    <h1>Plot the regions of one genome that are covered by alignments in a paf file</h1>
     <small class="dont-index">Source: <a href='https://github.com/dwinter/pafr/blob/master/R/coverage_plot.r'><code>R/coverage_plot.r</code></a></small>
     <div class="hidden name"><code>plot_coverage.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Each sequence in the focal genome is displayed as rectange, with regions
+    <p>Each sequence in the focal genome is displayed as a rectangle, with regions
 covered by an alignment shaded as per the <code>fill</code> argument described
 below. Uncovered regions remain white.</p>
     
@@ -142,48 +142,48 @@ below. Uncovered regions remain white.</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>ali</th>
-      <td><p>an alignment as read by <code><a href='read_paf.html'>read_paf</a></code></p></td>
+      <td><p>alignment  An alignment as read by <code><a href='read_paf.html'>read_paf</a></code></p></td>
     </tr>
     <tr>
       <th>target</th>
-      <td><p>logical, if TRUE  dsiplay coverage for the target
-genome, if FALSE for the query</p></td>
+      <td><p>logical  If TRUE, display coverage for the target
+genome; if FALSE, display coverage for the query</p></td>
     </tr>
     <tr>
-      <th>fill, </th>
-      <td><p>character, how to colour the alignment-blocks. If the character
+      <th>fill</th>
+      <td><p>character  How to colour the alignment blocks. If the character
 provided is the name of a column in the alignment, this column will be passed
 to <code>ggplot2</code> to shade alignment blocks. Otherwise, the character
 is treated as a single colour to be used for all alignment blocks.</p></td>
     </tr>
     <tr>
-      <th>direct_label, </th>
-      <td><p>logical. If TRUE use geom_text to directly label the
-name of the focal sequences. if FALSE no direct labels are drawn</p></td>
+      <th>direct_label</th>
+      <td><p>logical  If TRUE, use geom_text to directly label the
+name of the focal sequences; if FALSE, no direct labels are drawn</p></td>
     </tr>
     <tr>
       <th>label_colour</th>
-      <td><p>character, colour used for direct labels</p></td>
+      <td><p>character  Colour used for direct labels</p></td>
     </tr>
     <tr>
-      <th>xlab, </th>
-      <td><p>character, Name for for x-axis</p></td>
+      <th>xlab</th>
+      <td><p>string  Name for the x-axis</p></td>
     </tr>
     <tr>
       <th>x_labeller</th>
-      <td><p>function to be used to label x-axis (defaults to
+      <td><p>function  Function to be used to label the x-axis (defaults to
 <code><a href='Gb_lab.html'>Mb_lab</a></code></p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Note this function uses a <code><a href='theme_coverage_plot.html'>theme_coverage_plot</a></code> to style the
-graph using another ggplot theme on the plot may produce unexpected results.</p>
+    <p>Note that this function uses <code><a href='theme_coverage_plot.html'>theme_coverage_plot</a></code> to style the
+graph. Using another ggplot theme on the plot may produce unexpected results.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>ali</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='read_paf.html'>read_paf</a></span>( <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='st'>"extdata"</span>, <span class='st'>"fungi.paf"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"pafr"</span>) )
+    <pre class="examples"><div class='input'><span class='no'>ali</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='read_paf.html'>read_paf</a></span>( <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='st'>"extdata"</span>, <span class='st'>"fungi.paf"</span>, <span class='kw'>package</span><span class='kw'>=</span><span class='st'>"pafr"</span>) )
 <span class='fu'>plot_coverage</span>(<span class='no'>ali</span>)</div><div class='img'><img src='plot_coverage-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>plot_coverage</span>(<span class='no'>ali</span>, <span class='kw'>fill</span><span class='kw'>=</span><span class='st'>'qname'</span>, <span class='kw'>direct_label</span><span class='kw'>=</span><span class='fl'>FALSE</span>) +
    <span class='fu'>scale_fill_brewer</span>(<span class='kw'>palette</span><span class='kw'>=</span><span class='st'>"Set1"</span>)</div><div class='img'><img src='plot_coverage-2.png' alt='' width='700' height='433' /></div></pre>
   </div>

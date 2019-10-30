@@ -11,14 +11,14 @@ chrom_sizes(ali)
 \code{\link{read_paf}})}
 }
 \value{
-list with two elements (tlens and qlens). Each element is a
-data.frame with one column of sequence names and another column containing
+list with two elements (tlens and qlens)  Each element is a
+dataframe with one column of sequence names and another column containing
 the length of each sequence
 }
 \description{
 Extract the sizes of all sequences in a paf alignment
 }
 \examples{
-ali <- read_paf( system.file("extdata", "fungi.paf", package = "pafr") )
+ali <- read_paf( system.file("extdata", "fungi.paf", package="pafr") )
 chrom_sizes(ali)
 }

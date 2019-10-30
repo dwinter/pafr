@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Plot synteny between a query and target sequence in a paf alignment — plot_synteny • pafr</title>
+<title>Plot synteny between a query and target sequence in a PAF alignment — plot_synteny • pafr</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -32,9 +32,9 @@
 
 
 
-<meta property="og:title" content="Plot synteny between a query and target sequence in a paf alignment — plot_synteny" />
+<meta property="og:title" content="Plot synteny between a query and target sequence in a PAF alignment — plot_synteny" />
 
-<meta property="og:description" content="Plot synteny between a query and target sequence in a paf alignment" />
+<meta property="og:description" content="Plot synteny between a query and target sequence in a PAF alignment" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -89,7 +89,7 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/Introduction_to_pafr.html">Using pafr to read, manipulate and plot genome alignments in the PAF format</a>
+      <a href="../articles/Introduction_to_pafr.html">pafr: reading, manipulating and plotting genome alignments in the PAF format</a>
     </li>
   </ul>
 </li>
@@ -118,14 +118,14 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Plot synteny between a query and target sequence in a paf alignment</h1>
+    <h1>Plot synteny between a query and target sequence in a PAF alignment</h1>
     <small class="dont-index">Source: <a href='https://github.com/dwinter/pafr/blob/master/R/synteny.r'><code>R/synteny.r</code></a></small>
     <div class="hidden name"><code>plot_synteny.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Plot synteny between a query and target sequence in a paf alignment</p>
+    <p>Plot synteny between a query and target sequence in a PAF alignment</p>
     
     </div>
 
@@ -142,44 +142,44 @@
     </tr>
     <tr>
       <th>q_chrom</th>
-      <td><p>character, name for the query sequence</p></td>
+      <td><p>character  Name for the query sequence</p></td>
     </tr>
     <tr>
       <th>t_chrom</th>
-      <td><p>character, name for the target sequence</p></td>
+      <td><p>character  Name for the target sequence</p></td>
     </tr>
     <tr>
-      <th>centre, </th>
-      <td><p>logical, if TRUE (default) adjust the position of the target 
-sequence so it is centred on the query. If not, both sequences start at
+      <th>centre</th>
+      <td><p>logical  If TRUE (default), adjust the position of the target 
+sequence, so it is centred on the query. If not, both sequences start at
 position zero</p></td>
     </tr>
     <tr>
       <th>rc</th>
-      <td><p>logical, if TRUE, use the reverse and complement for the target
+      <td><p>logical  If TRUE, use the reverse and complement for the target
 sequence</p></td>
     </tr>
     <tr>
-      <th>xlab, </th>
-      <td><p>character, Name for for x-axis</p></td>
+      <th>xlab</th>
+      <td><p>string  Name for the x-axis</p></td>
     </tr>
     <tr>
-      <th>ylab, </th>
-      <td><p>character, Name for for x-axus</p></td>
+      <th>ylab</th>
+      <td><p>string  Name for the y-axis</p></td>
     </tr>
     <tr>
       <th>x_labeller</th>
-      <td><p>function to be used to label x-axis (defaults to</p></td>
+      <td><p>Function to be used to label the x-axis</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A ggplot object displaying synteny between query and target sequences</p>
+    <p>A ggplot object that displays synteny between query and target sequences</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>ali</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='read_paf.html'>read_paf</a></span>( <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='st'>"extdata"</span>, <span class='st'>"fungi.paf"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"pafr"</span>) )
+    <pre class="examples"><div class='input'><span class='no'>ali</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='read_paf.html'>read_paf</a></span>( <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='st'>"extdata"</span>, <span class='st'>"fungi.paf"</span>, <span class='kw'>package</span><span class='kw'>=</span><span class='st'>"pafr"</span>) )
 <span class='no'>long_ali</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/subset.html'>subset</a></span>(<span class='no'>ali</span>, <span class='no'>alen</span> <span class='kw'>&gt;</span> <span class='fl'>1e4</span>)
 <span class='fu'>plot_synteny</span>(<span class='no'>long_ali</span>, <span class='kw'>q_chrom</span><span class='kw'>=</span><span class='st'>"Q_chr3"</span>, <span class='kw'>t_chrom</span><span class='kw'>=</span><span class='st'>"T_chr4"</span>, <span class='kw'>centre</span><span class='kw'>=</span><span class='fl'>TRUE</span>)</div><div class='img'><img src='plot_synteny-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>plot_synteny</span>(<span class='no'>long_ali</span>, <span class='kw'>q_chrom</span><span class='kw'>=</span><span class='st'>"Q_chr5"</span>, <span class='kw'>t_chrom</span><span class='kw'>=</span><span class='st'>"T_chr5"</span>, <span class='kw'>centre</span><span class='kw'>=</span><span class='fl'>TRUE</span>)</div><div class='img'><img src='plot_synteny-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>plot_synteny</span>(<span class='no'>long_ali</span>, <span class='kw'>q_chrom</span><span class='kw'>=</span><span class='st'>"Q_chr5"</span>, <span class='kw'>t_chrom</span><span class='kw'>=</span><span class='st'>"T_chr5"</span>, <span class='kw'>centre</span><span class='kw'>=</span><span class='fl'>TRUE</span>, <span class='kw'>rc</span><span class='kw'>=</span><span class='fl'>TRUE</span>)</div><div class='img'><img src='plot_synteny-3.png' alt='' width='700' height='433' /></div></pre>
   </div>

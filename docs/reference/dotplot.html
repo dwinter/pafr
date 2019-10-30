@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Generate a dotplot from a paf alignment. — dotplot • pafr</title>
+<title>Generate a dot plot from a paf alignment — dotplot • pafr</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -32,9 +32,9 @@
 
 
 
-<meta property="og:title" content="Generate a dotplot from a paf alignment. — dotplot" />
+<meta property="og:title" content="Generate a dot plot from a paf alignment — dotplot" />
 
-<meta property="og:description" content="Generate a dotplot from a paf alignment." />
+<meta property="og:description" content="Generate a dot plot from a paf alignment" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -89,7 +89,7 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/Introduction_to_pafr.html">Using pafr to read, manipulate and plot genome alignments in the PAF format</a>
+      <a href="../articles/Introduction_to_pafr.html">pafr: reading, manipulating and plotting genome alignments in the PAF format</a>
     </li>
   </ul>
 </li>
@@ -118,14 +118,14 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Generate a dotplot from a paf alignment.</h1>
+    <h1>Generate a dot plot from a paf alignment</h1>
     <small class="dont-index">Source: <a href='https://github.com/dwinter/pafr/blob/master/R/dotplot.R'><code>R/dotplot.R</code></a></small>
     <div class="hidden name"><code>dotplot.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Generate a dotplot from a paf alignment.</p>
+    <p>Generate a dot plot from a paf alignment</p>
     
     </div>
 
@@ -143,51 +143,51 @@
     </tr>
     <tr>
       <th>order_by</th>
-      <td><p>How should the query and target sequences be ordered in the
-dotplot. One of 'size' (smallest-to-largest), 'qstart' (query organised
-smallest to largest, target by first match in the query genome or 'provided'
-(ordering specified in <code>ordering</code> argument</p></td>
+      <td><p>How the query and target sequences should be ordered in the
+dot plot. Option must be one of 'size' (smallest-to-largest), 'qstart' (query organised
+smallest to largest, target by first match in the query genome) or 'provided'
+(ordering as specified in the <code>ordering</code> argument)</p></td>
     </tr>
     <tr>
       <th>label_seqs</th>
-      <td><p>boolean, if <code>TRUE</code> label centre of query and target
-seqeuences in margins of the dotplot</p></td>
+      <td><p>boolean  If TRUE, label centre of query and target
+sequences in margins of the dot plot</p></td>
     </tr>
     <tr>
       <th>dashes</th>
-      <td><p>boolen, if <code>TRUE</code> add dashes ad borders of query and
-target sequences in the dotplot</p></td>
+      <td><p>boolean  If TRUE, add dashes to borders of query and
+target sequences in the dot plot</p></td>
     </tr>
     <tr>
       <th>ordering</th>
-      <td><p>If <code>order_by</code> is set to <code>TRUE</code>,
-this should be set to a list with two elements, sepcifying the order of query
-and then target sequences in the doptplot. This option is ignored if
+      <td><p>If <code>order_by</code> is set to TRUE,
+this variable should be a list with two elements specifying the order of query
+and then target sequences in the dot plot. This option is ignored if
 <code>order_by</code> is set to other values</p></td>
     </tr>
     <tr>
       <th>alignment_colour</th>
-      <td><p>character, the colour used to draw each aligned
-section in the dotplot (defaults to black).</p></td>
+      <td><p>character  The colour used to draw each aligned
+section in the dot plot (defaults to black)</p></td>
     </tr>
     <tr>
       <th>xlab</th>
-      <td><p>character The x-axis label (defaults to "query").</p></td>
+      <td><p>character  The x-axis label (defaults to 'query')</p></td>
     </tr>
     <tr>
       <th>ylab</th>
-      <td><p>character The y-axis label (defaults to "target").</p></td>
+      <td><p>character  The y-axis label (defaults to 'target')</p></td>
     </tr>
     <tr>
       <th>line_size</th>
-      <td><p>the width of the line used to represent an alignment in the
-dotplot (defaults to 2)</p></td>
+      <td><p>The width of the line used to represent an alignment in the
+dot plot (defaults to 2)</p></td>
     </tr>
     </table>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>ali</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='read_paf.html'>read_paf</a></span>( <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='st'>"extdata"</span>, <span class='st'>"fungi.paf"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"pafr"</span>) )
+    <pre class="examples"><div class='input'><span class='no'>ali</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='read_paf.html'>read_paf</a></span>( <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='st'>"extdata"</span>, <span class='st'>"fungi.paf"</span>, <span class='kw'>package</span><span class='kw'>=</span><span class='st'>"pafr"</span>) )
 <span class='fu'>dotplot</span>(<span class='no'>ali</span>)</div><div class='img'><img src='dotplot-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>dotplot</span>(<span class='no'>ali</span>) + <span class='fu'>theme_bw</span>()</div><div class='img'><img src='dotplot-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>dotplot</span>(<span class='no'>ali</span>, <span class='kw'>label_seqs</span><span class='kw'>=</span><span class='fl'>TRUE</span>, <span class='kw'>order_by</span><span class='kw'>=</span><span class='st'>"qstart"</span>, <span class='kw'>alignment_colour</span><span class='kw'>=</span><span class='st'>"blue"</span>)</div><div class='img'><img src='dotplot-3.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

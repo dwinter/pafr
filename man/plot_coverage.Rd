@@ -2,44 +2,44 @@
 % Please edit documentation in R/coverage_plot.r
 \name{plot_coverage}
 \alias{plot_coverage}
-\title{Plot the regions of one genome that are covered by alignments in a paf flie}
+\title{Plot the regions of one genome that are covered by alignments in a paf file}
 \usage{
 plot_coverage(ali, target = TRUE, fill = "forestgreen",
   direct_label = TRUE, label_colour = "black",
   xlab = "Position in sequence", x_labeller = Mb_lab)
 }
 \arguments{
-\item{ali}{an alignment as read by \code{\link{read_paf}}}
+\item{ali}{alignment  An alignment as read by \code{\link{read_paf}}}
 
-\item{target}{logical, if TRUE  dsiplay coverage for the target
-genome, if FALSE for the query}
+\item{target}{logical  If TRUE, display coverage for the target
+genome; if FALSE, display coverage for the query}
 
-\item{fill, }{character, how to colour the alignment-blocks. If the character
+\item{fill}{character  How to colour the alignment blocks. If the character
 provided is the name of a column in the alignment, this column will be passed
 to \code{\link{ggplot2}} to shade alignment blocks. Otherwise, the character
 is treated as a single colour to be used for all alignment blocks.}
 
-\item{direct_label, }{logical. If TRUE use geom_text to directly label the
-name of the focal sequences. if FALSE no direct labels are drawn}
+\item{direct_label}{logical  If TRUE, use geom_text to directly label the
+name of the focal sequences; if FALSE, no direct labels are drawn}
 
-\item{label_colour}{character, colour used for direct labels}
+\item{label_colour}{character  Colour used for direct labels}
 
-\item{xlab, }{character, Name for for x-axis}
+\item{xlab}{string  Name for the x-axis}
 
-\item{x_labeller}{function to be used to label x-axis (defaults to
+\item{x_labeller}{function  Function to be used to label the x-axis (defaults to
 \code{\link{Mb_lab}}}
 }
 \description{
-Each sequence in the focal genome is displayed as rectange, with regions
+Each sequence in the focal genome is displayed as a rectangle, with regions
 covered by an alignment shaded as per the \code{fill} argument described
 below. Uncovered regions remain white.
 }
 \details{
-Note this function uses a \code{\link{theme_coverage_plot}} to style the
-graph using another ggplot theme on the plot may produce unexpected results.
+Note that this function uses \code{\link{theme_coverage_plot}} to style the
+graph. Using another ggplot theme on the plot may produce unexpected results.
 }
 \examples{
-ali <- read_paf( system.file("extdata", "fungi.paf", package = "pafr") )
+ali <- read_paf( system.file("extdata", "fungi.paf", package="pafr") )
 plot_coverage(ali)
 plot_coverage(ali, fill='qname', direct_label=FALSE) + 
    scale_fill_brewer(palette="Set1")

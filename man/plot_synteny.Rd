@@ -2,7 +2,7 @@
 % Please edit documentation in R/synteny.r
 \name{plot_synteny}
 \alias{plot_synteny}
-\title{Plot synteny between a query and target sequence in a paf alignment}
+\title{Plot synteny between a query and target sequence in a PAF alignment}
 \usage{
 plot_synteny(ali, q_chrom, t_chrom, centre = TRUE, rc = FALSE,
   xlab = "Position in query", ylab = "", x_labeller = Mb_lab)
@@ -11,31 +11,31 @@ plot_synteny(ali, q_chrom, t_chrom, centre = TRUE, rc = FALSE,
 \item{ali}{pafr or tibble containing the genome alignment (as returned by
 \code{\link{read_paf}})}
 
-\item{q_chrom}{character, name for the query sequence}
+\item{q_chrom}{character  Name for the query sequence}
 
-\item{t_chrom}{character, name for the target sequence}
+\item{t_chrom}{character  Name for the target sequence}
 
-\item{centre, }{logical, if TRUE (default) adjust the position of the target 
-sequence so it is centred on the query. If not, both sequences start at
+\item{centre}{logical  If TRUE (default), adjust the position of the target 
+sequence, so it is centred on the query. If not, both sequences start at
 position zero}
 
-\item{rc}{logical, if TRUE, use the reverse and complement for the target
+\item{rc}{logical  If TRUE, use the reverse and complement for the target
 sequence}
 
-\item{xlab, }{character, Name for for x-axis}
+\item{xlab}{string  Name for the x-axis}
 
-\item{ylab, }{character, Name for for x-axus}
+\item{ylab}{string  Name for the y-axis}
 
-\item{x_labeller}{function to be used to label x-axis (defaults to}
+\item{x_labeller}{Function to be used to label the x-axis}
 }
 \value{
-A ggplot object displaying synteny between query and target sequences
+A ggplot object that displays synteny between query and target sequences
 }
 \description{
-Plot synteny between a query and target sequence in a paf alignment
+Plot synteny between a query and target sequence in a PAF alignment
 }
 \examples{
-ali <- read_paf( system.file("extdata", "fungi.paf", package = "pafr") )
+ali <- read_paf( system.file("extdata", "fungi.paf", package="pafr") )
 long_ali <- subset(ali, alen > 1e4)
 plot_synteny(long_ali, q_chrom="Q_chr3", t_chrom="T_chr4", centre=TRUE)
 plot_synteny(long_ali, q_chrom="Q_chr5", t_chrom="T_chr5", centre=TRUE)

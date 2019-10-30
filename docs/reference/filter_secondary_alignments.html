@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Remove secondary alignments form a pafr alignment — filter_secondary_alignments • pafr</title>
+<title>Remove secondary alignments from a pafr alignment — filter_secondary_alignments • pafr</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -32,9 +32,9 @@
 
 
 
-<meta property="og:title" content="Remove secondary alignments form a pafr alignment — filter_secondary_alignments" />
+<meta property="og:title" content="Remove secondary alignments from a pafr alignment — filter_secondary_alignments" />
 
-<meta property="og:description" content="Remove secondary alignments form a pafr alignment" />
+<meta property="og:description" content="Remove secondary alignments from a pafr alignment" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -89,7 +89,7 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/Introduction_to_pafr.html">Using pafr to read, manipulate and plot genome alignments in the PAF format</a>
+      <a href="../articles/Introduction_to_pafr.html">pafr: reading, manipulating and plotting genome alignments in the PAF format</a>
     </li>
   </ul>
 </li>
@@ -118,14 +118,14 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Remove secondary alignments form a pafr alignment</h1>
+    <h1>Remove secondary alignments from a pafr alignment</h1>
     <small class="dont-index">Source: <a href='https://github.com/dwinter/pafr/blob/master/R/filter_ali.r'><code>R/filter_ali.r</code></a></small>
     <div class="hidden name"><code>filter_secondary_alignments.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Remove secondary alignments form a pafr alignment</p>
+    <p>Remove secondary alignments from a pafr alignment</p>
     
     </div>
 
@@ -136,19 +136,19 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>ali</th>
-      <td><p>genomic alignment in <code>pafr</code> or <code>tbl_df</code> format, as
+      <td><p>Genomic alignment in <code>pafr</code> or <code>tbl_df</code> format, as
 returned by <code><a href='read_paf.html'>read_paf</a></code></p></td>
     </tr>
     <tr>
-      <th>remove_inversions, </th>
-      <td><p>logical, if <code>TRUE</code> also remove inversions (tp
-flag 'I' or 'i') from alignment.</p></td>
+      <th>remove_inversions</th>
+      <td><p>logical  If TRUE, also remove inversions (tp
+flag 'I' or 'i') from the alignment</p></td>
     </tr>
     </table>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>ali</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='read_paf.html'>read_paf</a></span>( <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='st'>"extdata"</span>, <span class='st'>"fungi.paf"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"pafr"</span>) )
+    <pre class="examples"><div class='input'><span class='no'>ali</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='read_paf.html'>read_paf</a></span>( <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='st'>"extdata"</span>, <span class='st'>"fungi.paf"</span>, <span class='kw'>package</span><span class='kw'>=</span><span class='st'>"pafr"</span>) )
 <span class='no'>ali</span></div><div class='output co'>#&gt; pafr object with 2501 alignments (36.5Mb)
 #&gt;  8 query seqs
 #&gt;  8 target seqs

@@ -4,7 +4,7 @@
 \alias{Gb_lab}
 \alias{Mb_lab}
 \alias{Kb_lab}
-\title{Number formatters for scales in base-pairs}
+\title{Number formatters for scales in base pairs}
 \usage{
 Gb_lab(x)
 
@@ -13,10 +13,10 @@ Mb_lab(x)
 Kb_lab(x)
 }
 \arguments{
-\item{x}{The data (in base-pairs) to be fromated as as either Gb, Mb or Kb}
+\item{x}{The data (in base pairs) to be formatted as Gb, Mb or Kb}
 }
 \value{
-A character vector with with scale labels
+A character vector with scale labels
 }
 \description{
 For use with \code{\link{ggplot2}}

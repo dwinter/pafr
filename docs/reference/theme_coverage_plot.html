@@ -34,7 +34,7 @@
 
 <meta property="og:title" content="A minimalistic ggplot2 theme designed for use with genome coverage plots — theme_coverage_plot" />
 
-<meta property="og:description" content="This theme is used be default when plot_coverage is called,
+<meta property="og:description" content="This theme is used as the default when plot_coverage is called,
 so you should usually only call this function to modify the appearence of the
 coverage plot." />
 <meta name="twitter:card" content="summary" />
@@ -91,7 +91,7 @@ coverage plot." />
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/Introduction_to_pafr.html">Using pafr to read, manipulate and plot genome alignments in the PAF format</a>
+      <a href="../articles/Introduction_to_pafr.html">pafr: reading, manipulating and plotting genome alignments in the PAF format</a>
     </li>
   </ul>
 </li>
@@ -127,7 +127,7 @@ coverage plot." />
 
     <div class="ref-description">
     
-    <p>This theme is used be default when <code><a href='plot_coverage.html'>plot_coverage</a></code> is called,
+    <p>This theme is used as the default when <code><a href='plot_coverage.html'>plot_coverage</a></code> is called,
 so you should usually only call this function to modify the appearence of the
 coverage plot.</p>
     
@@ -139,23 +139,23 @@ coverage plot.</p>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>facet_labs, </th>
-      <td><p>logical. If TRUE (default) label sequences using the facet
-labels. If FALSE sequences are labeled directly using 
+      <th>facet_labs</th>
+      <td><p>logical  If TRUE (default), label sequences using the facet
+labels; if FALSE, sequences are labeled directly using 
 <code><a href='https://ggplot2.tidyverse.org/reference/geom_text.html'>geom_text</a></code></p></td>
     </tr>
     <tr>
-      <th>show_legend, </th>
-      <td><p>logical. If TRUE (default) label display any legend
-associated with the fill parameter of <code>plot_coverage</code>. If FALSE 
-do not display a legend.</p></td>
+      <th>show_legend</th>
+      <td><p>logical  If TRUE (default), label display any legend
+associated with the fill parameter of <code>plot_coverage</code>; if FALSE, 
+do not display a legend</p></td>
     </tr>
     </table>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>ali</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='read_paf.html'>read_paf</a></span>( <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='st'>"extdata"</span>, <span class='st'>"fungi.paf"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"pafr"</span>) )
-<span class='fu'><a href='plot_coverage.html'>plot_coverage</a></span>(<span class='no'>ali</span>) + <span class='fu'>theme_coverage_plot</span>(<span class='kw'>show_legend</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='img'><img src='theme_coverage_plot-1.png' alt='' width='700' height='433' /></div></pre>
+    <pre class="examples"><div class='input'><span class='no'>ali</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='read_paf.html'>read_paf</a></span>( <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='st'>"extdata"</span>, <span class='st'>"fungi.paf"</span>, <span class='kw'>package</span><span class='kw'>=</span><span class='st'>"pafr"</span>) )
+<span class='fu'><a href='plot_coverage.html'>plot_coverage</a></span>(<span class='no'>ali</span>) + <span class='fu'>theme_coverage_plot</span>(<span class='kw'>show_legend</span><span class='kw'>=</span><span class='fl'>FALSE</span>)</div><div class='img'><img src='theme_coverage_plot-1.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

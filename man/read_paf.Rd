@@ -2,25 +2,25 @@
 % Please edit documentation in R/IO.r
 \name{read_paf}
 \alias{read_paf}
-\title{Read a genomic alignment in .paf format.}
+\title{Read a genomic alignment in PAF format}
 \usage{
 read_paf(file_name, tibble = FALSE)
 }
 \arguments{
-\item{file_name}{path to the paf file.}
+\item{file_name}{Path to the .paf file}
 
-\item{tibble, }{logical. If \code{TRUE} the genomic alignments are returned as
+\item{tibble}{logical  If TRUE, the genomic alignments are returned as
 a tidy \code{tbl_df}}
 }
 \value{
-Either a \code{pafr} object (which acts as a \code{data.frame} or a
-\code{tbl_df} containing information on genomic alignments.
+Either a \code{pafr} object, which acts as a \code{data.frame}, or a
+\code{tbl_df} containing information on genomic alignments
 }
 \description{
-See the package vingette for detailed information on the file format and its
+See the package vignette for detailed information on the file format and its
 representation as an R object.
 }
 \examples{
-ali <- read_paf( system.file("extdata", "fungi.paf", package = "pafr") )
+ali <- read_paf( system.file("extdata", "fungi.paf", package="pafr") )
 ali
 }

@@ -2,33 +2,33 @@
 % Please edit documentation in R/IO.r
 \name{read_bed}
 \alias{read_bed}
-\title{Read genomic intervals in bed format.}
+\title{Read genomic intervals in bed format}
 \usage{
 read_bed(file_name, tibble = FALSE, ...)
 }
 \arguments{
-\item{file_name}{path to the bed file to be read.}
+\item{file_name}{Path to the bed file to be read in}
 
-\item{tibble, }{logical. If \code{TRUE} the genomic intervals are returned as
+\item{tibble}{logical  If TRUE, the genomic intervals are returned as
 a tidy \code{tbl_df}.}
 
-\item{...}{other arugments pased to \code{read.table}}
+\item{...}{Other arugments passed to \code{read.table}}
 }
 \value{
 Either a \code{data.frame} or a \code{tbl_df} with at least three
-columns named 'chrom', 'start' and 'end'.
+columns named 'chrom', 'start' and 'end'
 }
 \description{
 The first three columns of the file specified by \code{file_name} must
-contain  data in teh the standard bed-format (i.e. a genomic interval
-represented as 0-based half-open interval with seq-id,start and end position)
-These columns will be renamed to 'chrom', 'start' and 'end' respectively. Any
-otehr columsn present in the data will be left unmodified.
+contain data in the standard bed format (i.e., a genomic interval
+represented by 0-based half-open interval with seq-id, start and end position). 
+These columns will be renamed to 'chrom', 'start' and 'end', respectively. Any
+other columns present in the data will be left unmodified.
 }
 \details{
-The file is read in to memberory thorugh \code{\link{read.table}}, with the
-argeument  \code{sep} set to \code{'\t'} and \code{stringsAsFactors} set to
-FALSE. All other arguments are left as default, but arguments can be passd
+The file is read into memory with \code{\link{read.table}}, with the
+argument \code{sep} set to \code{'\t'} and \code{stringsAsFactors} set to
+FALSE. All other arguments are left as default, but arguments can be passed
 from \code{read_bed} to \code{read.table}.
 }
 \examples{
