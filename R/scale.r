@@ -13,9 +13,9 @@
 Gb_lab <- function(x) paste(x / 1e9, "Gb")
 
 #' @export
-#' @rdname Mb_lab
+#' @rdname Gb_lab
 Mb_lab <- function(x) paste(x / 1e6, "Mb")
 
 #' @export
-#' @rdname Kb_lab
+#' @rdname Gb_lab
 Kb_lab <- function(x) paste(x / 1e3, "Kb")
