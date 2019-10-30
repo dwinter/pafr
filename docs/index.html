@@ -87,11 +87,11 @@
 <div class="page-header"><h1 class="hasAnchor">
 <a href="#pafr" class="anchor"></a>pafr</h1></div>
 <p>Read, manipulate and visualize ‘Pairwise mApping Format’ data in R</p>
-<div id="under-contstruction" class="section level2">
+<div id="under-construction" class="section level2">
 <h2 class="hasAnchor">
-<a href="#under-contstruction" class="anchor"></a>Under contstruction</h2>
-<p>This package is in the process of being turned from reseach code into a nice usable package. The package is now feature-complete, but is still no entirely documented and likely has bugs that need to be fixed.</p>
-<p>Nevertheless, you can check out the code and run it for youself. Here’s how to make a basic whole-genome dotplot from a PAF file:</p>
+<a href="#under-construction" class="anchor"></a>Under construction</h2>
+<p>This package is in the process of being turned from research code into a nice usable package. The package is now feature-complete, and all functions are documented. However, there may still be bugs in the code that haven’t been exposed by our tests and it is possible we will introduce breaking-changes in the future.</p>
+<p>Nevertheless, we’d appreciate feedback from anyone that might the package. Having installed the package, making a whole-genome dotplot is as simple as reading in an alignment and calling <code>dotplot</code>:.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(pafr, <span class="dt">quietly=</span><span class="ot">TRUE</span>)
 test_alignment &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span>(<span class="st">"extdata"</span>, <span class="st">"fungi.paf"</span>, <span class="dt">package=</span><span class="st">"pafr"</span>)
 ali &lt;-<span class="st"> </span><span class="kw"><a href="reference/read_paf.html">read_paf</a></span>(test_alignment)
@@ -101,14 +101,32 @@ ali &lt;-<span class="st"> </span><span class="kw"><a href="reference/read_paf.h
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
-<p>If you want to play with the code already here, you can install this package using devtools</p>
+<p>The package is not yet available on CRAN, but we will keep the master branch of this repository stable. You can install using devtools</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#install.packages(devtools)</span>
 devtools<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/devtools/man/install_github.html">install_github</a></span>(<span class="st">"dwinter/pafr"</span>)</code></pre></div>
 </div>
-<div id="bugsissues" class="section level2">
+<div id="plots" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bugsissues" class="anchor"></a>Bugs/Issues</h2>
+<a href="#plots" class="anchor"></a>Plots</h2>
+<p>In addition to the dotplot demonstrated above, the package impliments two classes of genomic visualization</p>
+<div id="synteny-plot" class="section level3">
+<h3 class="hasAnchor">
+<a href="#synteny-plot" class="anchor"></a>Synteny plot</h3>
+<p>The synteny plot displays alignments between one query and one target sequence in a given paf file. Using the alignment above, we first filter short alignments then plot regions that align between query chromosome “Q_chr4” and target “T_chr4”:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">long_ali &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/subset.html">subset</a></span>(ali, alen <span class="op">&gt;</span><span class="st"> </span><span class="fl">1e4</span>)
+<span class="kw"><a href="reference/plot_synteny.html">plot_synteny</a></span>(long_ali, <span class="dt">q_chrom=</span><span class="st">"Q_chr3"</span>, <span class="dt">t_chrom=</span><span class="st">"T_chr4"</span>, <span class="dt">centre=</span><span class="ot">TRUE</span>)</code></pre></div>
+<p><img src="reference/figures/README-synteny-1.png"></p>
+</div>
+<div id="coverage-plot" class="section level3">
+<h3 class="hasAnchor">
+<a href="#coverage-plot" class="anchor"></a>Coverage plot</h3>
+<p>The coverage plot displays all sequences in either the query or target genome, shading those regions of each sequence that are covered by at least one alignment. This can be a useful in identifying how alternative genome assemblies differ from each other, or visualizing differences between related genomes.</p>
+<p>In this example we visualize the query sequences in our alignment, and shade each alignment according to target-sequence involved in the alignment.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="reference/plot_coverage.html">plot_coverage</a></span>(long_ali, <span class="dt">fill=</span><span class="st">'qname'</span>) <span class="op">+</span>
+<span class="st">   </span><span class="kw">scale_fill_brewer</span>(<span class="dt">palette=</span><span class="st">"Set1"</span>)</code></pre></div>
+<p><img src="reference/figures/README-coverage-1.png"> ## Bugs/Issues</p>
 <p>Please use the issue tracker on this repo to let us know about any bugs or issues that arise as you use this package.</p>
+</div>
 </div>
 </div>
 
