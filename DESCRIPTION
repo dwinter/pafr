@@ -5,12 +5,15 @@ Authors@R: c(
     person("David", "Winter", 
             email = "david.winter@gmail.com", 
             role = c("aut", "cre"), 
-            comment  = c(ORCID = "0000-0002-6165-0029")
-    ),
+            comment  = c(ORCID = "0000-0002-6165-0029")),
     person("Kate", "Lee", 
             email = "K.Lee3@massey.ac.nz", 
             role = c("ctb"), 
-            comment  = c(ORCID = "")))
+            comment  = c(ORCID = "")),
+    person("Murray", "Cox", 
+            email = "m.p.cox@massey.ac.nz", 
+            role = c("ctb"), 
+            comment  = c(ORCID = "0000-0003-1936-0236")))
 Description: Provides functions to read pairwise sequence alignments in the 'PAF' format used by 'minimap2' and 'miniasm'. 
 Depends:
     R (>= 3.4.4),
