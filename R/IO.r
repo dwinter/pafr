@@ -81,13 +81,14 @@ process_tags <- function(tag_rows) {
 #' @return Either a \code{pafr} object, which acts as a \code{data.frame}, or a
 #' \code{tbl_df} containing information on genomic alignments
 #' @importFrom tibble as_tibble
+#' @importFrom stringr str_split
 #' @examples
 #' ali <- read_paf( system.file("extdata", "fungi.paf", package="pafr") )
 #' ali
 #' @export
 read_paf <- function(file_name, tibble=FALSE) {
-    lines <- scan(file_name, "", sep = "\n", quiet = TRUE)
-    tokens <-  strsplit(lines, "\t")
+    lines <- readLines(file_name)
+    tokens <-  str_split(lines, "\t")
     res <- do.call(rbind.data.frame, 
                    c(lapply(tokens, "[", 1:12), 
                    stringsAsFactors = FALSE))
