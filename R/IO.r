@@ -47,21 +47,29 @@ read_bed <- function(file_name, tibble = FALSE, ...) {
     df
 }
 
+
 # paf tags encode their data type. This function returns the function
 # responsible for changing the 'character' representation of tag values into
 # the appropriate type (used by process tags and read_paf).
-tag_to_type_fxn <- function(tag_tokens) {
-    if (tag_tokens[[2]] %in% c("f", "H", "i")) {
-        return(as.numeric)
-    }
-    identity
-}
+#tag_to_type_fxn <- function(tag_tokens) {96 - 33.87
+#    if (tag_tokens[[2]] %in% c("f", "H", "i")) {
+#        return(as.numeric)
+#    }
+#    identity
+#}
 
-.one_tag_row <- function(tags) {
-    tokens <- strsplit(tags, ":")
-    F <- sapply(tokens, tag_to_type_fxn)
-    structure(lapply(1:(length(tokens)),
-          function(i) F[[i]](tokens[[i]][3])), .Names = sapply(tokens, "[[", 1))
+.one_tag_row_new <- function(tags, tag_type_env) {
+    tokens <- str_split(tags, ":")
+    res <- vector("list", length(tokens))
+    for(i in seq_along(tokens)){
+        triplet <- tokens[[i]]
+        if( !exists(triplet[2], tag_type_env)){
+            #record the type of this tag
+            tag_type_env[[ triplet[1] ]] <- triplet[2]
+        }
+        res[i] <- structure(triplet[3], .Names=triplet[1])
+    }
+    res
 }
 
 #' @importFrom dplyr bind_rows
@@ -109,6 +117,8 @@ read_paf <- function(file_name, tibble=FALSE) {
     class(res) <- c("pafr", "data.frame")
     res
 }
+
+
 
 #' @export
 print.pafr <- function(x, ...) {
