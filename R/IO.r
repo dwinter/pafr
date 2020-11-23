@@ -73,9 +73,38 @@ read_bed <- function(file_name, tibble = FALSE, ...) {
 }
 
 #' @importFrom dplyr bind_rows
-process_tags <- function(tag_rows) {
+process_tags_old <- function(tag_rows) {
     tag_tibble <- dplyr::bind_rows(lapply(tag_rows, .one_tag_row))
     as.data.frame(tag_tibble) #base format is df, so force it back here
+}
+
+
+#' @importFrom dplyr bind_rows
+process_tags <- function(raw_tags){
+    tags <- character()
+    to_numeric <- integer()
+    res <- list()
+    n <- length(raw_tags)
+    t_idx <- 0
+    split_tags <- lapply(raw_tags, str_split, ":")
+    for(ali_idx in seq_along(split_tags)) {
+        for(tag in split_tags[[ali_idx]]){
+            if ( !(tag[1] %in% tags) ){
+                t_idx <- t_idx + 1
+                if( tag[2] %in% c("f", "H", "i")){
+                    to_numeric <- c(to_numeric, t_idx)
+                }
+                res[[ tag[1] ]] <- rep(NA, n)
+                tags <- c(tags, tag[1])
+            }
+            res[[ tag[1] ]][ali_idx] <- tag[3]
+        }
+    }
+    
+    for(i in to_numeric){
+        res[[i]] <- as.numeric(res[[i]])
+    }
+    bind_rows(res)
 }
 
 #' Read a genomic alignment in PAF format
