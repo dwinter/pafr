@@ -126,14 +126,18 @@ process_tags <- function(raw_tags){
 read_paf <- function(file_name, tibble=FALSE, include_tags=TRUE) {
     lines <- readLines(file_name)
     tokens <-  str_split(lines, "\t")
-    res <- do.call(rbind.data.frame, 
-                   c(lapply(tokens, "[", 1:12), 
-                   stringsAsFactors = FALSE))
-    names(res) <- c("qname", "qlen", "qstart", "qend", "strand",
-                          "tname", "tlen", "tstart", "tend", "nmatch",
-                          "alen", "mapq")
-
-    res <- .make_numeric(res, c(2, 3, 4, 7:12))
+    paf_cols <- lapply(tokens, "[", 1:12)
+    col_names <- c("qname", "qlen", "qstart", "qend", "strand",
+                   "tname", "tlen", "tstart", "tend", "nmatch",
+                   "alen", "mapq")
+    #bind_rows is a decent amount faster then do.call(rbind.data.frame, ...),
+    # but requres a named vector.. because reasons? Even with this extra set
+    # this is faster than rbind.data.frame
+    for(i in seq_along(paf_cols)){
+        attr(paf_cols[[i]], "names") <- col_names
+    }
+    res <- bind_rows(paf_cols)
+    res <- .make_numeric(as.data.frame(res), c(2, 3, 4, 7:12))
     #first 12 columns are always the paf alignment. Anything after this is a
     #tag.
     if(include_tags){
