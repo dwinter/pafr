@@ -42,7 +42,7 @@ read_bed <- function(file_name, tibble = FALSE, ...) {
 
 .make_numeric <- function(df, cols) {
     for (i in cols) {
-        df[, i] <- as.numeric(df[, i])
+        df[[i]] <- as.numeric(df[[i]])
     }
     df
 }
@@ -125,7 +125,12 @@ process_tags <- function(raw_tags){
 #' @export
 read_paf <- function(file_name, tibble=FALSE, include_tags=TRUE) {
     lines <- readLines(file_name)
-    tokens <-  str_split(lines, "\t")
+    if( include_tags ){
+        tokens <- str_split(lines, "\t")
+
+    } else {
+        tokens <-  str_split(lines, "\t", 13)
+    }
     paf_cols <- lapply(tokens, "[", 1:12)
     col_names <- c("qname", "qlen", "qstart", "qend", "strand",
                    "tname", "tlen", "tstart", "tend", "nmatch",
@@ -149,12 +154,63 @@ read_paf <- function(file_name, tibble=FALSE, include_tags=TRUE) {
     if (tibble) {
         return(as_tibble(res))
     }
+    class(res) <- c("pafr", class(res))
+    res
+}
+
+#;
+as_paf <- function(paf_data_frame){
+    #lets be assertive
+    if( ncol(paf_data_frame) != 12 ){
+        stop("data.frame should be in paf format, with 12 columns")
+    }
+    col_names <- c("qname", "qlen", "qstart", "qend", "strand",
+                   "tname", "tlen", "tstart", "tend", "nmatch",
+                   "alen", "mapq")
+  as_paf <- function(paf_data_frame){
+    #lets be assertive
+    if( nrow(paf_data_frame) != 12 ){
+        stop("data.frame should be in paf format, with 12 columns")
+    }
+    col_names <- c("qname", "qlen", "qstart", "qend", "strand",
+                   "tname", "tlen", "tstart", "tend", "nmatch",
+                   "alen", "mapq")
+    for(col_idx in c(2:4, 7:12)){
+        if( !(is_numericable(paf_data_frame[[col_idx]]) ) ){
+            msg <- paste0("Column", col_idx, "('", col_names[col_idx], 
+                          "should be numeric or convertable to numeric without creating NAs")
+            stop(msg)
+        }
+    }
+    #ok, looks good
+    res <- .make_numeric(paf_data_frame, c(2, 3, 4, 7:12))
+    names(res) <- col_names
+    class(res) <- c("pafr", "data.frame")
+    res
+}    #ok, looks good
+    res <- .make_numeric(paf_data_frame, c(2, 3, 4, 7:12))
+    names(res) <- col_names
     class(res) <- c("pafr", "data.frame")
     res
 }
 
+#'is a vector, possibly in character form, able to be treated as a numeric?
+is_numericable <- function(vec){
+    UseMethod("is_numericable", vec)
+}
 
+is_numericable.character <- function(vec){
+    suppressWarnings(res <- as.numeric(vec))
+    !(any(is.na(res)))
+}
 
+is_numericable.numeric <- function(vec){
+    TRUE
+}
+
+is_numericable.factor <- function(vec){
+    is_numericable(as.character(vec))
+}
 #' @export
 print.pafr <- function(x, ...) {
     if (nrow(x) == 1) {
