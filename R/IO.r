@@ -86,9 +86,9 @@ process_tags <- function(raw_tags){
     res <- list()
     n <- length(raw_tags)
     t_idx <- 0
-    split_tags <- lapply(raw_tags, str_split, ":")
-    for(ali_idx in seq_along(split_tags)) {
-        for(tag in split_tags[[ali_idx]]){
+    for(ali_idx in seq_along(raw_tags)) {
+        split_tags <- str_split(raw_tags[[ali_idx]], ":")
+        for(tag in split_tags){
             if ( !(tag[1] %in% tags) ){
                 t_idx <- t_idx + 1
                 if( tag[2] %in% c("f", "H", "i")){
@@ -123,7 +123,7 @@ process_tags <- function(raw_tags){
 #' ali <- read_paf( system.file("extdata", "fungi.paf", package="pafr") )
 #' ali
 #' @export
-read_paf <- function(file_name, tibble=FALSE) {
+read_paf <- function(file_name, tibble=FALSE, include_tags=TRUE) {
     lines <- readLines(file_name)
     tokens <-  str_split(lines, "\t")
     res <- do.call(rbind.data.frame, 
@@ -136,9 +136,11 @@ read_paf <- function(file_name, tibble=FALSE) {
     res <- .make_numeric(res, c(2, 3, 4, 7:12))
     #first 12 columns are always the paf alignment. Anything after this is a
     #tag.
-    if (any(lengths(tokens) > 12)) {
-        raw_tags <- sapply(tokens, function(x) paste(x[13:length(x)]))
-        res <- cbind.data.frame(res, process_tags(raw_tags))
+    if(include_tags){
+      if (any(lengths(tokens) > 12)) {
+            raw_tags <- sapply(tokens, function(x) paste(x[13:length(x)]))
+            res <- cbind.data.frame(res, process_tags(raw_tags))
+        }
     }
     if (tibble) {
         return(as_tibble(res))
