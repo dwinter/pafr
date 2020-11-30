@@ -8,23 +8,29 @@
 
 <title>Read genomic intervals in bed format — read_bed • pafr</title>
 
+
 <!-- jquery -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous" />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous" />
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
+
+<!-- bootstrap-toc -->
+<link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script>
 
 <!-- headroom.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -32,14 +38,14 @@
 
 
 
-<meta property="og:title" content="Read genomic intervals in bed format — read_bed" />
 
+<meta property="og:title" content="Read genomic intervals in bed format — read_bed" />
 <meta property="og:description" content="The first three columns of the file specified by file_name must
 contain data in the standard bed format (i.e., a genomic interval
 represented by 0-based half-open interval with seq-id, start and end position). 
 These columns will be renamed to 'chrom', 'start' and 'end', respectively. Any
 other columns present in the data will be left unmodified." />
-<meta name="twitter:card" content="summary" />
+
 
 
 
@@ -56,7 +62,7 @@ other columns present in the data will be left unmodified." />
 
   </head>
 
-  <body>
+  <body data-spy="scroll" data-target="#toc">
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -85,26 +91,16 @@ other columns present in the data will be left unmodified." />
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    Articles
-     
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
-    <li>
-      <a href="../articles/Introduction_to_pafr.html">pafr: reading, manipulating and plotting genome alignments in the PAF format</a>
-    </li>
-  </ul>
+<li>
+  <a href="../articles/index.html">Articles</a>
 </li>
 <li>
   <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/dwinter/pafr">
+  <a href="https://github.com/dwinter/pafr/">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -128,17 +124,15 @@ other columns present in the data will be left unmodified." />
     </div>
 
     <div class="ref-description">
-    
     <p>The first three columns of the file specified by <code>file_name</code> must
 contain data in the standard bed format (i.e., a genomic interval
 represented by 0-based half-open interval with seq-id, start and end position). 
 These columns will be renamed to 'chrom', 'start' and 'end', respectively. Any
 other columns present in the data will be left unmodified.</p>
-    
     </div>
 
-    <pre class="usage"><span class='fu'>read_bed</span>(<span class='no'>file_name</span>, <span class='kw'>tibble</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)</pre>
-    
+    <pre class="usage"><span class='fu'>read_bed</span><span class='op'>(</span><span class='va'>file_name</span>, tibble <span class='op'>=</span> <span class='cn'>FALSE</span>, <span class='va'>...</span><span class='op'>)</span></pre>
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -156,24 +150,23 @@ a tidy <code>tbl_df</code>.</p></td>
       <td><p>Other arugments passed to <code>read.table</code></p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>Either a <code>data.frame</code> or a <code>tbl_df</code> with at least three
 columns named 'chrom', 'start' and 'end'</p>
-    
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>The file is read into memory with <code><a href='https://rdrr.io/r/utils/read.table.html'>read.table</a></code>, with the
 argument <code>sep</code> set to <code>'\t'</code> and <code>stringsAsFactors</code> set to
 FALSE. All other arguments are left as default, but arguments can be passed
 from <code>read_bed</code> to <code>read.table</code>.</p>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>bed_path</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='st'>"extdata"</span>, <span class='st'>"Q_centro.bed"</span>, <span class='kw'>package</span><span class='kw'>=</span><span class='st'>"pafr"</span>)
-<span class='no'>centro</span> <span class='kw'>&lt;-</span> <span class='fu'>read_bed</span>(<span class='no'>bed_path</span>)
-<span class='no'>centro</span></div><div class='output co'>#&gt;    chrom   start     end
+    <pre class="examples"><div class='input'><span class='va'>bed_path</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span><span class='st'>"extdata"</span>, <span class='st'>"Q_centro.bed"</span>, package<span class='op'>=</span><span class='st'>"pafr"</span><span class='op'>)</span>
+<span class='va'>centro</span> <span class='op'>&lt;-</span> <span class='fu'>read_bed</span><span class='op'>(</span><span class='va'>bed_path</span><span class='op'>)</span>
+<span class='va'>centro</span>
+</div><div class='output co'>#&gt;    chrom   start     end
 #&gt; 1 Q_chr1 1305119 1325119
 #&gt; 2 Q_chr2 3311000 3331000
 #&gt; 3 Q_chr5 1780000 1800000
@@ -181,26 +174,19 @@ from <code>read_bed</code> to <code>read.table</code>.</p>
 #&gt; 5 Q_chr4  951000  971000
 #&gt; 6 Q_chr7  449000  469000
 #&gt; 7 Q_chr3  625000  645000</div><div class='input'><span class='co'># Can pass arguments to read.table</span>
-<span class='no'>miss_two</span> <span class='kw'>&lt;-</span> <span class='fu'>read_bed</span>(<span class='no'>bed_path</span>, <span class='kw'>skip</span><span class='kw'>=</span><span class='fl'>2</span>)
-<span class='no'>miss_two</span></div><div class='output co'>#&gt;    chrom   start     end
+<span class='va'>miss_two</span> <span class='op'>&lt;-</span> <span class='fu'>read_bed</span><span class='op'>(</span><span class='va'>bed_path</span>, skip<span class='op'>=</span><span class='fl'>2</span><span class='op'>)</span>
+<span class='va'>miss_two</span> 
+</div><div class='output co'>#&gt;    chrom   start     end
 #&gt; 1 Q_chr5 1780000 1800000
 #&gt; 2 Q_chr6 1005337 1025337
 #&gt; 3 Q_chr4  951000  971000
 #&gt; 4 Q_chr7  449000  469000
 #&gt; 5 Q_chr3  625000  645000</div></pre>
   </div>
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <h2>Contents</h2>
-    <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
-      
-      <li><a href="#value">Value</a></li>
-
-      <li><a href="#details">Details</a></li>
-      
-      <li><a href="#examples">Examples</a></li>
-    </ul>
-
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 </div>
 
@@ -211,7 +197,7 @@ from <code>read_bed</code> to <code>read.table</code>.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

@@ -6,19 +6,19 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>pafr: reading, manipulating and plotting genome alignments in the PAF format • pafr</title>
-<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous">
-<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
+<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
+<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
 <script src="../pkgdown.js"></script><meta property="og:title" content="pafr: reading, manipulating and plotting genome alignments in the PAF format">
-<meta property="og:description" content="">
-<meta name="twitter:card" content="summary">
+<meta property="og:description" content="pafr">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
 </head>
-<body>
+<body data-spy="scroll" data-target="#toc">
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -46,17 +46,8 @@
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    Articles
-     
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="../articles/Introduction_to_pafr.html">pafr: reading, manipulating and plotting genome alignments in the PAF format</a>
-    </li>
-  </ul>
+  <a href="../articles/index.html">Articles</a>
 </li>
 <li>
   <a href="../news/index.html">Changelog</a>
@@ -64,7 +55,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/dwinter/pafr">
+  <a href="https://github.com/dwinter/pafr/">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -79,13 +70,14 @@
 
       
 
-      </header><div class="row">
+      </header><link href="Introduction_to_pafr_files/anchor-sections-1.0/anchor-sections.css" rel="stylesheet">
+<script src="Introduction_to_pafr_files/anchor-sections-1.0/anchor-sections.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1>pafr: reading, manipulating and plotting genome alignments in the PAF format</h1>
+      <h1 data-toc-skip>pafr: reading, manipulating and plotting genome alignments in the PAF format</h1>
                         <h4 class="author">David Winter</h4>
             
-            <h4 class="date">2019-10-30</h4>
+            <h4 class="date">2020-12-01</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/dwinter/pafr/blob/master/vignettes/Introduction_to_pafr.Rmd"><code>vignettes/Introduction_to_pafr.Rmd</code></a></small>
       <div class="hidden name"><code>Introduction_to_pafr.Rmd</code></div>
@@ -181,37 +173,42 @@
 </tr>
 </tbody>
 </table>
-<p>In addition, each row can have a variable number of ‘tags’, which share a similar format to those used in SAM files <a href="https://samtools.github.io/hts-specs/SAMtags.pdf">See the SAM specification (pdf)</a>.</p>
+<p>In addition, each row can have a variable number of 'tags', which share a similar format to those used in SAM files <a href="https://samtools.github.io/hts-specs/SAMtags.pdf">See the SAM specification (pdf)</a>.</p>
 <p><code>pafr</code> provides the function <code>read_paf</code> to read <code>.paf</code> alignments into an R session.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(pafr)</code></pre></div>
+<div class="sourceCode"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/dwinter/pafr">pafr</a></span><span class="op">)</span></code></pre></div>
 <pre><code>## Loading required package: ggplot2</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">path_to_fungal_alignment &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span>(<span class="st">"extdata"</span>, <span class="st">"fungi.paf"</span>, <span class="dt">package =</span> <span class="st">"pafr"</span>)
-ali &lt;-<span class="st"> </span><span class="kw"><a href="../reference/read_paf.html">read_paf</a></span>(path_to_fungal_alignment)</code></pre></div>
+<div class="sourceCode"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">path_to_fungal_alignment</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"fungi.paf"</span>, package <span class="op">=</span> <span class="st">"pafr"</span><span class="op">)</span>
+<span class="va">ali</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/read_paf.html">read_paf</a></span><span class="op">(</span><span class="va">path_to_fungal_alignment</span><span class="op">)</span></code></pre></div>
 <p>By default, the object returned by <code>read_paf</code> behaves almost exactly like a base R <code>data.frame</code>. In fact, the only difference is that this object prints a nice summary of the object contents when called directly or printed (rather than the thousands of lines the file might contain):</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ali</code></pre></div>
+<div class="sourceCode"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">ali</span></code></pre></div>
 <pre><code>## pafr object with 2501 alignments (36.5Mb)
 ##  8 query seqs
 ##  8 target seqs
 ##  11 tags: NM, ms, AS, nn, tp, cm, s1, s2, dv, cg, zd</code></pre>
 <p>For the worked example, a total of 35 Mb of aligned genome sequence is represented by 8 query and 8 target sequences. <code>read_paf</code> lists the 12 columns of the PAF file with column names labelled as in the table above.</p>
 <p>Any tags present in the <code>.paf</code> file are included as an additional column. The tags used by <code>minimap2</code> <a href="https://lh3.github.io/minimap2/minimap2.html">are documented here</a> and also in the <code>man</code> page for that program.</p>
-<p>One interesting tag for this particular alignment is <code>dv</code>, which encodes the approximate per-base difference (‘divergence’) between the query and target sequences. We can use this tag to visualize the relationship between alignment length and sequence divergence. Because the alignment information is stored in a <code>data.frame</code>, we can pass this information directly to <code>ggplot2</code>:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(ggplot2)
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(ggpubr)</code></pre></div>
-<pre><code>## Loading required package: magrittr</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(ali, <span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(alen, dv)) <span class="op">+</span><span class="st"> </span>
-<span class="st">    </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span>(<span class="dt">alpha=</span><span class="fl">0.6</span>, <span class="dt">colour=</span><span class="st">"steelblue"</span>, <span class="dt">size=</span><span class="dv">2</span>) <span class="op">+</span><span class="st"> </span>
-<span class="st">    </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_x_continuous</a></span>(<span class="st">"Alignment length (kb)"</span>, <span class="dt">label =</span>  <span class="cf">function</span>(x) x<span class="op">/</span><span class="st"> </span><span class="fl">1e3</span>) <span class="op">+</span>
-<span class="st">    </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_y_continuous</a></span>(<span class="st">"Per base divergence"</span>) <span class="op">+</span><span class="st"> </span>
-<span class="st">    </span><span class="kw"><a href="https://rdrr.io/pkg/ggpubr/man/theme_pubr.html">theme_pubr</a></span>()</code></pre></div>
+<p>One interesting tag for this particular alignment is <code>dv</code>, which encodes the approximate per-base difference ('divergence') between the query and target sequences. We can use this tag to visualize the relationship between alignment length and sequence divergence. Because the alignment information is stored in a <code>data.frame</code>, we can pass this information directly to <code>ggplot2</code>:</p>
+<div class="sourceCode"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://rpkgs.datanovia.com/ggpubr/">ggpubr</a></span><span class="op">)</span>
+
+<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">ali</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">alen</span>, <span class="va">dv</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span>alpha<span class="op">=</span><span class="fl">0.6</span>, colour<span class="op">=</span><span class="st">"steelblue"</span>, size<span class="op">=</span><span class="fl">2</span><span class="op">)</span> <span class="op">+</span> 
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_x_continuous</a></span><span class="op">(</span><span class="st">"Alignment length (kb)"</span>, label <span class="op">=</span>  <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="va">x</span><span class="op">/</span> <span class="fl">1e3</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_y_continuous</a></span><span class="op">(</span><span class="st">"Per base divergence"</span><span class="op">)</span> <span class="op">+</span> 
+    <span class="fu"><a href="https://rpkgs.datanovia.com/ggpubr/reference/theme_pubr.html">theme_pubr</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <pre><code>## Warning: Removed 52 rows containing missing values (geom_point).</code></pre>
 <p><img src="Introduction_to_pafr_files/figure-html/alen-1.png" width="576" style="display: block; margin: auto;"></p>
 <p>We can see that there are many short alignments, some of which are very divergent. But there are also some very long alignments, all of which show high similarity.</p>
 <p>Because the <code>pafr</code> object is effectively a <code>data.frame</code>, we can again use standard R functions to inspect or analyse it. For example, we can calculate the mean divergence level for alignments featuring each query sequence. <!---
 David: what do you mean by "alignments featuring each query sequence"?
 --></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">by_q &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/aggregate.html">aggregate</a></span>(dv <span class="op">~</span><span class="st"> </span>qname, <span class="dt">data=</span>ali, <span class="dt">FUN=</span>mean)
-knitr<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span>(by_q)</code></pre></div>
+<div class="sourceCode"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">by_q</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/aggregate.html">aggregate</a></span><span class="op">(</span><span class="va">dv</span> <span class="op">~</span> <span class="va">qname</span>, data<span class="op">=</span><span class="va">ali</span>, FUN<span class="op">=</span><span class="va">mean</span><span class="op">)</span>
+<span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span><span class="va">by_q</span><span class="op">)</span></code></pre></div>
 <table class="table">
 <thead><tr class="header">
 <th align="left">qname</th>
@@ -257,15 +254,17 @@ knitr<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/kni
 <div id="filtering-and-subsetting-alignments" class="section level2">
 <h2 class="hasAnchor">
 <a href="#filtering-and-subsetting-alignments" class="anchor"></a>Filtering and subsetting alignments</h2>
-<p>Often the first thing you will want to do after reading in data is to drop low-quality, short or otherwise non-ideal alignments. <code>minimap2</code> uses the <code>tp</code> (‘type of alignment’) tag to mark secondary alignments (<em>i.e.</em>, possible alignments between the query and target sequences that are not the best possible alignments for those regions). The function <code>filter_secondary_alignments</code> removes non-primary alignments from a <code>pafr object</code>.</p>
+<p>Often the first thing you will want to do after reading in data is to drop low-quality, short or otherwise non-ideal alignments. <code>minimap2</code> uses the <code>tp</code> ('type of alignment') tag to mark secondary alignments (<em>i.e.</em>, possible alignments between the query and target sequences that are not the best possible alignments for those regions). The function <code>filter_secondary_alignments</code> removes non-primary alignments from a <code>pafr object</code>.</p>
 <p>We can use this function to filter our <code>ali</code> object and see how many alignments (<em>i.e.</em>, rows of data) are removed as a result:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">prim_alignment &lt;-<span class="st"> </span><span class="kw"><a href="../reference/filter_secondary_alignments.html">filter_secondary_alignments</a></span>(ali)
-<span class="kw"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span>(ali) <span class="op">-</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span>(prim_alignment)</code></pre></div>
+<div class="sourceCode"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">prim_alignment</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/filter_secondary_alignments.html">filter_secondary_alignments</a></span><span class="op">(</span><span class="va">ali</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">ali</span><span class="op">)</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">prim_alignment</span><span class="op">)</span></code></pre></div>
 <pre><code>## [1] 339</code></pre>
 <p>In some cases, you may want to remove alignments with low mapping quality, high divergence, short length or some other specific property. Again, because the <code>pafr</code> object behaves like a <code>data.frame</code>, you can use your favourite base <code>R</code> or <code>tidyverse</code> functions to do this.</p>
 <p>Here, we are removing short alignments and those with low mapping quality scores:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">long_ali &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/subset.html">subset</a></span>(ali, alen <span class="op">&gt;</span><span class="st"> </span><span class="fl">1e4</span> <span class="op">&amp;</span><span class="st"> </span>mapq <span class="op">&gt;</span><span class="st"> </span><span class="dv">40</span>)
-long_ali</code></pre></div>
+<div class="sourceCode"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">long_ali</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html">subset</a></span><span class="op">(</span><span class="va">ali</span>, <span class="va">alen</span> <span class="op">&gt;</span> <span class="fl">1e4</span> <span class="op">&amp;</span> <span class="va">mapq</span> <span class="op">&gt;</span> <span class="fl">40</span><span class="op">)</span>
+<span class="va">long_ali</span></code></pre></div>
 <pre><code>## pafr object with 419 alignments (26.8Mb)
 ##  8 query seqs
 ##  8 target seqs
@@ -276,26 +275,29 @@ long_ali</code></pre></div>
 <h2 class="hasAnchor">
 <a href="#plotting-alignments" class="anchor"></a>Plotting alignments</h2>
 <p>A major aim of <code>pafr</code> is to generate compelling visualisations of genomic alignments. To this end, the package implements three types of genomic graphics, making use of the <code>ggplot2</code> plotting environment.</p>
-<p>Although <code>ggplot2</code> is a powerful visualisation tool, we found that producing high-quality plots of genome alignments was difficult, requiring the use of many different layers and multiple transformations to datasets. The visualisation functions provided by <code>pafr</code> automate the process of transforming data into a useable form and adding layers to plots. Each of these functions returns <code>ggplot2</code> plots, which can then be modified by the addition of further ggplot layers, scales and themes. These figures are, therefore, incredible modifiable.</p>
+<p>Although <code>ggplot2</code> is a powerful visualisation tool, we found that producing high-quality plots of genome alignments was difficult, requiring the use of many different layers and multiple transformations to datasets. The visualisation functions provided by <code>pafr</code> automate the process of transforming data into a useable form and adding layers to plots. Each of these functions returns <code>ggplot2</code> plots, which can then be modified by the addition of further ggplot layers, scales and themes.</p>
 <div id="dot-plot" class="section level3">
 <h3 class="hasAnchor">
 <a href="#dot-plot" class="anchor"></a>Dot plot</h3>
 <p>Often the most useful visualization of a genome alignment is the <a href="https://en.wikipedia.org/wiki/Dot_plot_(bioinformatics)">dot plot</a>. <code>pafr</code> makes it easy to produce a dot plot from a <code>.paf</code> alignment:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/dotplot.html">dotplot</a></span>(prim_alignment)</code></pre></div>
+<div class="sourceCode"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/dotplot.html">dotplot</a></span><span class="op">(</span><span class="va">prim_alignment</span><span class="op">)</span></code></pre></div>
 <p><img src="Introduction_to_pafr_files/figure-html/dotplot_plain-1.png" width="576" style="display: block; margin: auto;"></p>
 <div id="altering-the-order-of-sequences-in-the-dot-plot" class="section level4">
 <h4 class="hasAnchor">
 <a href="#altering-the-order-of-sequences-in-the-dot-plot" class="anchor"></a>Altering the order of sequences in the dot plot</h4>
 <p>The default plot is quite sparse, with each aligned segment shown as a dark line and the borders of the sequences in the query and target genomes as dashed lines. Additional arguments to <code>dotplot</code> let us modify the plot.</p>
 <p>For instance, we can add labels for each query and target sequence (<code>label_seqs</code>) and changes the order in which target sequences appear. Because the dot plot produced here is a ggplot object, we can use <code><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_bw()</a></code> to change the plot theme too.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/dotplot.html">dotplot</a></span>(prim_alignment, <span class="dt">label_seqs=</span><span class="ot">TRUE</span>, <span class="dt">order_by=</span><span class="st">"qstart"</span>) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_bw</a></span>()</code></pre></div>
+<div class="sourceCode"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/dotplot.html">dotplot</a></span><span class="op">(</span><span class="va">prim_alignment</span>, label_seqs<span class="op">=</span><span class="cn">TRUE</span>, order_by<span class="op">=</span><span class="st">"qstart"</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_bw</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p><img src="Introduction_to_pafr_files/figure-html/dot_qstart-1.png" width="576" style="display: block; margin: auto;"></p>
-<p>The argument <code>order_by</code> takes three possible values: ‘size’, ‘qstart’ or ‘provided’. ‘Size’ (the default value) simply lines up query and target sequences from largest to smallest. ‘qstart’ keeps the query sequences ordered by size, but rearranges the targets by where they match to query sequences. For example, <code>T_chr5</code> is moved to the second sequence in the plot above, as it matches the first query chromosome. If <code>ordered_by</code> is set to ‘provided’, you need to provide a list to the function with two elements: the order of the query, and then target, sequences. This approach can also be used to down-sample an alignment to only a few focal sequences.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">to_keep &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/list.html">list</a></span>(
-        <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"Q_chr1"</span>, <span class="st">"Q_chr5"</span>, <span class="st">"Q_chr4"</span>, <span class="st">"Q_chr6"</span>),
-        <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"T_chr2"</span>, <span class="st">"T_chr5"</span>, <span class="st">"T_chr3"</span>, <span class="st">"T_chr6"</span>)
-)
-<span class="kw"><a href="../reference/dotplot.html">dotplot</a></span>(prim_alignment, <span class="dt">label_seqs=</span><span class="ot">TRUE</span>, <span class="dt">order_by=</span><span class="st">"provided"</span>, <span class="dt">ordering=</span>to_keep)</code></pre></div>
+<p>The argument <code>order_by</code> takes three possible values: 'size', 'qstart' or 'provided'. 'Size' (the default value) simply lines up query and target sequences from largest to smallest. 'qstart' keeps the query sequences ordered by size, but rearranges the targets by where they match to query sequences. For example, <code>T_chr5</code> is moved to the second sequence in the plot above, as it matches the first query chromosome. If <code>ordered_by</code> is set to 'provided', you need to provide a list to the function with two elements: the order of the query, and then target, sequences. This approach can also be used to down-sample an alignment to only a few focal sequences.</p>
+<div class="sourceCode"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">to_keep</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>
+        <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Q_chr1"</span>, <span class="st">"Q_chr5"</span>, <span class="st">"Q_chr4"</span>, <span class="st">"Q_chr6"</span><span class="op">)</span>,
+        <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"T_chr2"</span>, <span class="st">"T_chr5"</span>, <span class="st">"T_chr3"</span>, <span class="st">"T_chr6"</span><span class="op">)</span>
+<span class="op">)</span>
+<span class="fu"><a href="../reference/dotplot.html">dotplot</a></span><span class="op">(</span><span class="va">prim_alignment</span>, label_seqs<span class="op">=</span><span class="cn">TRUE</span>, order_by<span class="op">=</span><span class="st">"provided"</span>, ordering<span class="op">=</span><span class="va">to_keep</span><span class="op">)</span></code></pre></div>
 <pre><code>## Warning: Dropping data from sequences absent from ordering:
 ##  Q_chr2,Q_chr3,Q_chr7,Q_chrm</code></pre>
 <pre><code>## Warning: Dropping data from sequences absent from ordering:
@@ -307,9 +309,10 @@ long_ali</code></pre></div>
 <a href="#adding-annotations" class="anchor"></a>Adding annotations</h4>
 <p>You may have additional information about one or both of your genomes that you want annotate on your dot plots.</p>
 <p>For instance, here we know the locations of the centromeres in the query genome. We can use <code>read_bed</code> to load these locations into <code>pafr</code>.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">path_to_centro &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span>(<span class="st">"extdata"</span>, <span class="st">"Q_centro.bed"</span>, <span class="dt">package =</span> <span class="st">"pafr"</span>)
-centro &lt;-<span class="st"> </span><span class="kw"><a href="../reference/read_bed.html">read_bed</a></span>(path_to_centro)
-knitr<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span>(<span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(centro))</code></pre></div>
+<div class="sourceCode"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">path_to_centro</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"Q_centro.bed"</span>, package <span class="op">=</span> <span class="st">"pafr"</span><span class="op">)</span>
+<span class="va">centro</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/read_bed.html">read_bed</a></span><span class="op">(</span><span class="va">path_to_centro</span><span class="op">)</span>
+<span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">centro</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <table class="table">
 <thead><tr class="header">
 <th align="left">chrom</th>
@@ -349,68 +352,68 @@ knitr<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/kni
 </tr>
 </tbody>
 </table>
-<!-- 
-David: I got a bit lost with the paragraph below. Expand a bit on what's going on?
---><p>In <code>ggplot</code> style, we use the <code><a href="https://rdrr.io/r/base/Arithmetic.html">+</a></code> symbol to add the results of <code>highlight_query</code> to a dot plot. Note that for the plot to work, both the <code>ordered_by</code> and <code>ali</code> arguments must match between the call to <code>dotplot</code> and <code>highlight_query</code>.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/dotplot.html">dotplot</a></span>(prim_alignment, <span class="st">"qstart"</span>) <span class="op">+</span><span class="st"> </span>
-<span class="st">    </span><span class="kw"><a href="../reference/highlight_dotplot.html">highlight_query</a></span>(<span class="dt">ali=</span>prim_alignment, <span class="dt">bed=</span>centro, <span class="dt">ordered_by=</span><span class="st">"qstart"</span>)</code></pre></div>
+<p>In <code>ggplot</code> style, we use the <code><a href="https://rdrr.io/r/base/Arithmetic.html">+</a></code> symbol to add the results of <code>highlight_query</code> to a dot plot. (The ordering of the chromosomes in the plot is inherited from the dotplot, so does not need to be specified in the highlight function).</p>
+<div class="sourceCode"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/dotplot.html">dotplot</a></span><span class="op">(</span><span class="va">prim_alignment</span>, <span class="st">"qstart"</span><span class="op">)</span> <span class="op">+</span> 
+    <span class="fu"><a href="../reference/highlight_query.html">highlight_query</a></span><span class="op">(</span>bed<span class="op">=</span><span class="va">centro</span><span class="op">)</span></code></pre></div>
 <p><img src="Introduction_to_pafr_files/figure-html/highlight-1.png" width="576" style="display: block; margin: auto;"></p>
-<p>It is not apparent from the very small intervals plotted above, but ‘highlights’ here are filled rectangles. Plotting a larger rectangle for the target genome makes this clearer.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">interval &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(<span class="dt">chrom=</span><span class="st">"T_chr3"</span>, <span class="dt">start=</span><span class="dv">2000000</span>, <span class="dt">end=</span><span class="dv">3000000</span>)
-<span class="kw"><a href="../reference/dotplot.html">dotplot</a></span>(prim_alignment, <span class="dt">label_seqs=</span><span class="ot">TRUE</span>) <span class="op">+</span><span class="st"> </span>
-<span class="st">    </span><span class="kw"><a href="../reference/highlight_dotplot.html">highlight_target</a></span>(prim_alignment, interval)</code></pre></div>
+<p>It is not apparent from the very small intervals plotted above, but 'highlights' here are filled rectangles. Plotting a larger rectangle for the target genome makes this clearer.</p>
+<div class="sourceCode"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">interval</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>chrom<span class="op">=</span><span class="st">"T_chr3"</span>, start<span class="op">=</span><span class="fl">2000000</span>, end<span class="op">=</span><span class="fl">3000000</span><span class="op">)</span>
+<span class="fu"><a href="../reference/dotplot.html">dotplot</a></span><span class="op">(</span><span class="va">prim_alignment</span>, label_seqs<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span> <span class="op">+</span> 
+    <span class="fu"><a href="../reference/highlight_query.html">highlight_target</a></span><span class="op">(</span><span class="va">interval</span><span class="op">)</span></code></pre></div>
 <p><img src="Introduction_to_pafr_files/figure-html/highlight_t-1.png" width="576" style="display: block; margin: auto;"></p>
 </div>
 </div>
 <div id="synteny-plot" class="section level3">
 <h3 class="hasAnchor">
 <a href="#synteny-plot" class="anchor"></a>Synteny plot</h3>
-<p>The dot plot gives us a ‘whole genome’ view of a genomic alignment. Very often, however, we will also want to zoom in to look at how specific regions of two particular chromosomes are aligned to each other. The function <code>plot_synteny</code> provides a way to visualize alignments at this level.</p>
+<p>The dot plot gives us a 'whole genome' view of a genomic alignment. Very often, however, we will also want to zoom in to look at how specific regions of two particular chromosomes are aligned to each other. The function <code>plot_synteny</code> provides a way to visualize alignments at this level.</p>
 <p>For example, we can compare regions of query chromosome 3 and target chromosome 4.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/plot_synteny.html">plot_synteny</a></span>(long_ali, <span class="dt">q_chrom=</span><span class="st">"Q_chr3"</span>, <span class="dt">t_chrom=</span><span class="st">"T_chr4"</span>, <span class="dt">centre=</span><span class="ot">TRUE</span>) <span class="op">+</span>
-<span class="st">    </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_bw</a></span>()</code></pre></div>
+<div class="sourceCode"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/plot_synteny.html">plot_synteny</a></span><span class="op">(</span><span class="va">long_ali</span>, q_chrom<span class="op">=</span><span class="st">"Q_chr3"</span>, t_chrom<span class="op">=</span><span class="st">"T_chr4"</span>, centre<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_bw</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p><img src="Introduction_to_pafr_files/figure-html/unnamed-chunk-2-1.png" width="576" style="display: block; margin: auto;"></p>
 <p>In this plot, each sequence is represented by a white box and each alignment is a grey segment connecting those sequences that align to each other. In this case, the alignment is quite straightforward. However, the plot looks less clear when most of the alignments are in reverse-and-complement format.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/plot_synteny.html">plot_synteny</a></span>(long_ali, <span class="dt">q_chrom=</span><span class="st">"Q_chr5"</span>, <span class="dt">t_chrom=</span><span class="st">"T_chr5"</span>, <span class="dt">centre=</span><span class="ot">TRUE</span>) <span class="op">+</span>
-<span class="st">    </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_bw</a></span>()</code></pre></div>
+<div class="sourceCode"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/plot_synteny.html">plot_synteny</a></span><span class="op">(</span><span class="va">long_ali</span>, q_chrom<span class="op">=</span><span class="st">"Q_chr5"</span>, t_chrom<span class="op">=</span><span class="st">"T_chr5"</span>, centre<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_bw</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p><img src="Introduction_to_pafr_files/figure-html/unnamed-chunk-3-1.png" width="576" style="display: block; margin: auto;"></p>
 <p>The simple solution in these cases is to set the argument <code>rc</code> to <code>TRUE</code>, forcing the target sequence to be flipped.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/plot_synteny.html">plot_synteny</a></span>(long_ali, <span class="dt">q_chrom=</span><span class="st">"Q_chr5"</span>, <span class="dt">t_chrom=</span><span class="st">"T_chr5"</span>, <span class="dt">centre=</span><span class="ot">TRUE</span>, <span class="dt">rc=</span><span class="ot">TRUE</span>) <span class="op">+</span>
-<span class="st">    </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_bw</a></span>()</code></pre></div>
+<div class="sourceCode"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/plot_synteny.html">plot_synteny</a></span><span class="op">(</span><span class="va">long_ali</span>, q_chrom<span class="op">=</span><span class="st">"Q_chr5"</span>, t_chrom<span class="op">=</span><span class="st">"T_chr5"</span>, centre<span class="op">=</span><span class="cn">TRUE</span>, rc<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_bw</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p><img src="Introduction_to_pafr_files/figure-html/unnamed-chunk-4-1.png" width="576" style="display: block; margin: auto;"></p>
 </div>
 <div id="coverage-plot" class="section level3">
 <h3 class="hasAnchor">
 <a href="#coverage-plot" class="anchor"></a>Coverage plot</h3>
 <p>The function <code>plot_coverage</code> gives a useful way to see how much of a given genome is included in a genome alignment. By default, it displays each sequence in the target chromosome as a rectangular box, with shaded regions representing parts of the target genome that are included in an alignment:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/plot_coverage.html">plot_coverage</a></span>(prim_alignment)   </code></pre></div>
+<div class="sourceCode"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/plot_coverage.html">plot_coverage</a></span><span class="op">(</span><span class="va">prim_alignment</span><span class="op">)</span>   </code></pre></div>
 <p><img src="Introduction_to_pafr_files/figure-html/cov_plot-1.png" width="576" style="display: block; margin: auto;"></p>
 <p>It is also possible to produce the same plot using the query genome as the reference.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/plot_coverage.html">plot_coverage</a></span>(prim_alignment, <span class="dt">target=</span><span class="ot">FALSE</span>)   </code></pre></div>
+<div class="sourceCode"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/plot_coverage.html">plot_coverage</a></span><span class="op">(</span><span class="va">prim_alignment</span>, target<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span>   </code></pre></div>
 <p><img src="Introduction_to_pafr_files/figure-html/cov_target-1.png" width="576" style="display: block; margin: auto;"></p>
 <div id="coverage-by-query-sequence" class="section level4">
 <h4 class="hasAnchor">
 <a href="#coverage-by-query-sequence" class="anchor"></a>Coverage by query sequence</h4>
-<p>Sometimes, in addition to knowing how much of a given genome is represented in a whole genome alignment, it can be interesting to know which sequences from the other genome are aligning. For example, we might want to ‘paint’ regions of the target sequence by which query sequence they form an alignment to. The <code>plot_coverage</code> function can shade the alignment blocks it produces according to any column in the alignment.</p>
-<p>For example, this is how we could paint genomes for query sequence name (<em>i.e.</em>, the <code>qname</code> column), taking advantage of <code>ggplot</code>’s <code>scale_colour_brewer</code> to use a nice colour palette.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/plot_coverage.html">plot_coverage</a></span>(prim_alignment, <span class="dt">fill=</span><span class="st">'qname'</span>) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/scale_brewer.html">scale_fill_brewer</a></span>(<span class="dt">palette=</span><span class="st">"Set1"</span>)</code></pre></div>
+<p>Sometimes, in addition to knowing how much of a given genome is represented in a whole genome alignment, it can be interesting to know which sequences from the other genome are aligning. For example, we might want to 'paint' regions of the target sequence by which query sequence they form an alignment to. The <code>plot_coverage</code> function can shade the alignment blocks it produces according to any column in the alignment.</p>
+<p>For example, this is how we could paint genomes for query sequence name (<em>i.e.</em>, the <code>qname</code> column), taking advantage of <code>ggplot</code>'s <code>scale_colour_brewer</code> to use a nice colour palette.</p>
+<div class="sourceCode"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/plot_coverage.html">plot_coverage</a></span><span class="op">(</span><span class="va">prim_alignment</span>, fill<span class="op">=</span><span class="st">'qname'</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_brewer.html">scale_fill_brewer</a></span><span class="op">(</span>palette<span class="op">=</span><span class="st">"Set1"</span><span class="op">)</span></code></pre></div>
 <p><img src="Introduction_to_pafr_files/figure-html/cov_colourful-1.png" width="576" style="display: block; margin: auto;"></p>
 </div>
 </div>
 </div>
   </div>
 
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-        <div id="tocnav">
-      <h2 class="hasAnchor">
-<a href="#tocnav" class="anchor"></a>Contents</h2>
-      <ul class="nav nav-pills nav-stacked">
-<li><a href="#reading-in-data-with-read_paf">Reading in data with <code>read_paf</code></a></li>
-      <li><a href="#filtering-and-subsetting-alignments">Filtering and subsetting alignments</a></li>
-      <li><a href="#plotting-alignments">Plotting alignments</a></li>
-      </ul>
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+
+        <nav id="toc" data-toggle="toc"><h2 data-toc-skip>Contents</h2>
+    </nav>
 </div>
-      </div>
 
 </div>
 
@@ -421,7 +424,7 @@ David: I got a bit lost with the paragraph below. Expand a bit on what's going o
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>
