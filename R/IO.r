@@ -194,7 +194,7 @@ as_paf <- function(paf_data_frame){
     res
 }
 
-#'is a vector, possibly in character form, able to be treated as a numeric?
+#is a vector, possibly in character form, able to be treated as a numeric?
 is_numericable <- function(vec){
     UseMethod("is_numericable", vec)
 }
