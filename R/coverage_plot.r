@@ -20,6 +20,7 @@
 #' @param xlab string  Name for the x-axis
 #' @param x_labeller function  Function to be used to label the x-axis (defaults to
 #' \code{\link{Mb_lab}}
+#' @importFrom rlang .data
 #' @examples
 #' ali <- read_paf( system.file("extdata", "fungi.paf", package="pafr") )
 #' plot_coverage(ali)
@@ -61,12 +62,12 @@ plot_coverage <- function(ali, target = TRUE, fill = "forestgreen",
     }
     #However we make the plot, it needs some polish:
     p <- p + scale_x_continuous(xlab, labels = x_labeller) +
-        facet_grid(seq_name ~ .)
+        facet_grid(.data[["seq_name"]] ~ .)
     #finally label it one way or another and return.
     if (direct_label) {
         biggest <- max(u_chroms$seq_len)
         p <- p + geom_text(data = u_chroms,
-                           aes(x = biggest / 10,y = 0, label = seq_name),
+                           aes(x = biggest / 10,y = 0, label = .data[["seq_name"]]),
                            color = label_colour) +
             theme_coverage_plot(facet_labs=FALSE)
         return(p)

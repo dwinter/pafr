@@ -45,7 +45,7 @@ order_seqs <- function(ali, by, ordering = list()) {
         q_idx <- order(chrom_lens[["qlens"]][, 2], decreasing = TRUE)
         qmap  <- structure(.Names = chrom_lens[["qlens"]][q_idx, 1],
                         c(0, head(cumsum(chrom_lens[["qlens"]][q_idx, 2]), -1)))
-        longest_by_target <- top_n(group_by(ali, tname), 1, alen)
+        longest_by_target <- top_n(group_by(ali, .data[["tname"]]), 1, .data[["alen"]])
         t_idx <- order(qmap[longest_by_target$qname] + longest_by_target$qstart)
         tmap <- sort(structure(.Names = longest_by_target$tname[t_idx],
                          c(0, head(cumsum(longest_by_target$tlen[t_idx]), -1))))        
@@ -141,18 +141,18 @@ dotplot <- function(ali, order_by = c("size", "qstart", "provided"),
     by <- match.arg(order_by)
     if (by == "provided") {
         check_ordering(ali, ordering)
-        ali <- subset(ali, qname %in% ordering[[1]] & tname %in% ordering[[2]])
+        ali <- ali[ali$qname %in% ordering[[1]] & ali$tname %in% ordering[[2]],]
     }
     seq_maps <- order_seqs(ali, by, ordering)
     ali <- add_pos_in_concatentaed_genome(ali, seq_maps)
     #now build the plot, first the aligments, easiest to do this +ve strand
     #first, then -ve
     p <- ggplot() +
-      geom_segment(data = subset(ali, strand=="+"), 
-         aes(x = concat_qstart, xend = concat_qend, y = concat_tstart, yend = concat_tend),
+      geom_segment(data = ali[ali$strand=="+",], 
+         aes_string(x = "concat_qstart", xend = "concat_qend", y = "concat_tstart", yend = "concat_tend"),
          size=line_size, colour=alignment_colour) +
-      geom_segment(data = subset(ali, strand=="-"),
-        aes(x = concat_qend, xend = concat_qstart, y = concat_tstart, yend = concat_tend),
+      geom_segment(data = ali[ali$strand=="-",],
+        aes_string(x = "concat_qend", xend = "concat_qstart", y = "concat_tstart", yend = "concat_tend"),
         size = line_size, colour = alignment_colour) +
       coord_equal() +
       scale_x_continuous(xlab, labels = Mb_lab) + 
@@ -164,10 +164,10 @@ dotplot <- function(ali, order_by = c("size", "qstart", "provided"),
   if (label_seqs) {
     qname_df <- dotplot_name_df(seq_maps[["qmap"]], seq_maps[["qsum"]])
     tname_df <- dotplot_name_df(seq_maps[["tmap"]], seq_maps[["tsum"]])
-    p <- p + geom_text(data = qname_df, aes(label = seq_name, x = centre, y = 0),
+    p <- p + geom_text(data = qname_df, aes_string(label = "seq_name", x = "centre", y = "0"),
                        vjust = 1, check_overlap = TRUE) +
              geom_text(data = tname_df,
-                       aes(label = seq_name, x = 0, y = centre),
+                       aes_string(label = "seq_name", x = "0", y = "centre"),
                        angle = 90, vjust = 0, check_overlap = TRUE)
   }
   # We want to be able to annotated the dotpot with data in BED format. Adding
@@ -184,7 +184,7 @@ dotplot <- function(ali, order_by = c("size", "qstart", "provided"),
           if( !(any(check_chroms))) {
               stop("None of the chromosomes represented this bed file are part of the dotplot")
           } else {
-              bed <- subset(bed, chrom %in% names(seq_map))
+              bed <- bed[bed$chrom %in% names(seq_map),]
               missing <- unique( bed[["chrom"]] [!check_chroms])
               msg <- paste(length(missing), 
                            "of the chromosomes in this bed file are not part of the dotplot:\n  ", 

@@ -4,8 +4,12 @@ test_that("dotplot works produces a plot", {
     p <- dotplot(ali_pafr)
     expect_is(p, "ggplot")
     labs <- unlist(p[["labels"]])
-    expect_equal(names(labs), c("x", "y", "xend", "yend", "yintercept", "xintercept"))
-    expect_equal(unname(labs), c("concat_qstart", "concat_tstart", "concat_qend", "concat_tend", "yintercept", "xintercept"))
+    expect_equal(unname(labs["x"]), "concat_qstart")
+    expect_equal(unname(labs["xend"]), "concat_qend")
+    expect_equal(unname(labs["y"]), "concat_tstart")
+    expect_equal(unname(labs["yend"]), "concat_tend")
+    expect_equal(unname(labs["xintercept"]), "xintercept")
+    expect_equal(unname(labs["yintercept"]), "yintercept")
 })
 
 test_that("Ordering sequences by size", {

@@ -47,17 +47,17 @@ plot_synteny <- function(ali, q_chrom, t_chrom, centre = TRUE, rc = FALSE,
         bottoms <- c(0.8, 2.05)
         tops <- c(0.95, 2.2)
     }
-    ggplot() + geom_polygon(data = synt_df, aes(x, seq, group = block_id),
+    ggplot() + geom_polygon(data = synt_df, aes_string(x="x", y="seq", group = "block_id"),
                             fill = "grey80", colour = "black") +
                geom_rect(data = seq_lens,
-                     aes(xmin = start, xmax = end, ymin = bottoms, ymax = tops),
+                     aes_string(xmin = "start", xmax = "end", ymin = "bottoms", ymax = "tops"),
                      colour = "black", fill = "white") +
                scale_x_continuous(xlab, labels = x_labeller) + ylab(ylab)
 }
 
 # internal function to convert alignments into polygon co-ordinates for plotting      
 synteny_data <- function(ali, q_chrom, t_chrom, rc = FALSE) {
-    to_plot <- subset(ali, qname == q_chrom & tname == t_chrom)
+    to_plot <- ali[ali$qname == q_chrom & ali$tname == t_chrom,]
     if (rc) {
         e <- to_plot$tend
         s <- to_plot$tstart

@@ -48,36 +48,6 @@ read_bed <- function(file_name, tibble = FALSE, ...) {
 }
 
 
-# paf tags encode their data type. This function returns the function
-# responsible for changing the 'character' representation of tag values into
-# the appropriate type (used by process tags and read_paf).
-#tag_to_type_fxn <- function(tag_tokens) {96 - 33.87
-#    if (tag_tokens[[2]] %in% c("f", "H", "i")) {
-#        return(as.numeric)
-#    }
-#    identity
-#}
-
-.one_tag_row_new <- function(tags, tag_type_env) {
-    tokens <- str_split(tags, ":")
-    res <- vector("list", length(tokens))
-    for(i in seq_along(tokens)){
-        triplet <- tokens[[i]]
-        if( !exists(triplet[2], tag_type_env)){
-            #record the type of this tag
-            tag_type_env[[ triplet[1] ]] <- triplet[2]
-        }
-        res[i] <- structure(triplet[3], .Names=triplet[1])
-    }
-    res
-}
-
-#' @importFrom dplyr bind_rows
-process_tags_old <- function(tag_rows) {
-    tag_tibble <- dplyr::bind_rows(lapply(tag_rows, .one_tag_row))
-    as.data.frame(tag_tibble) #base format is df, so force it back here
-}
-
 
 #' @importFrom dplyr bind_rows
 process_tags <- function(raw_tags){
@@ -115,8 +85,12 @@ process_tags <- function(raw_tags){
 #' @param file_name  Path to the .paf file
 #' @param tibble logical  If TRUE, the genomic alignments are returned as
 #' a tidy \code{tbl_df}
+#' @param include_tags  logical if TRUE (default) read additional information
+#' about each alignment encoded as PAF tags. Setting this to FALSE will speed up
+#' parsing of paf alignments, sepcially those with large CIGAR strings/
 #' @return Either a \code{pafr} object, which acts as a \code{data.frame}, or a
-#' \code{tbl_df} containing information on genomic alignments
+#' \code{tbl_df} containing information on genomic alignments. The contents of
+#' this table are described in detail in teh pafr package vingette.
 #' @importFrom tibble as_tibble
 #' @importFrom stringr str_split
 #' @examples

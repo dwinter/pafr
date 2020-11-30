@@ -21,7 +21,8 @@ Depends:
 Imports:
     dplyr,
     tibble,
-    stringr
+    stringr,
+    rlang
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
