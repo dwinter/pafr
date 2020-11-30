@@ -4,7 +4,7 @@
 \alias{read_paf}
 \title{Read a genomic alignment in PAF format}
 \usage{
-read_paf(file_name, tibble = FALSE)
+read_paf(file_name, tibble = FALSE, include_tags = TRUE)
 }
 \arguments{
 \item{file_name}{Path to the .paf file}

@@ -19,8 +19,8 @@ Depends:
     R (>= 3.4.4),
     ggplot2,
 Imports:
-    dplyr, 
-    tibble
+    dplyr,
+    tibble,
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
@@ -29,7 +29,7 @@ Suggests: testthat,
     knitr,
     ggpubr,
     rmarkdown
-RoxygenNote: 6.0.1
+RoxygenNote: 7.1.1
 URL: https://github.com/dwinter/pafr
 BugReports: https://github.com/dwinter/pafr/issues
 VignetteBuilder: knitr

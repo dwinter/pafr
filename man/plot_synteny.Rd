@@ -4,8 +4,16 @@
 \alias{plot_synteny}
 \title{Plot synteny between a query and target sequence in a PAF alignment}
 \usage{
-plot_synteny(ali, q_chrom, t_chrom, centre = TRUE, rc = FALSE,
-  xlab = "Position in query", ylab = "", x_labeller = Mb_lab)
+plot_synteny(
+  ali,
+  q_chrom,
+  t_chrom,
+  centre = TRUE,
+  rc = FALSE,
+  xlab = "Position in query",
+  ylab = "",
+  x_labeller = Mb_lab
+)
 }
 \arguments{
 \item{ali}{pafr or tibble containing the genome alignment (as returned by

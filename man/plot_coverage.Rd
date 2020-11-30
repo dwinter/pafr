@@ -4,9 +4,15 @@
 \alias{plot_coverage}
 \title{Plot the regions of one genome that are covered by alignments in a paf file}
 \usage{
-plot_coverage(ali, target = TRUE, fill = "forestgreen",
-  direct_label = TRUE, label_colour = "black",
-  xlab = "Position in sequence", x_labeller = Mb_lab)
+plot_coverage(
+  ali,
+  target = TRUE,
+  fill = "forestgreen",
+  direct_label = TRUE,
+  label_colour = "black",
+  xlab = "Position in sequence",
+  x_labeller = Mb_lab
+)
 }
 \arguments{
 \item{ali}{alignment  An alignment as read by \code{\link{read_paf}}}

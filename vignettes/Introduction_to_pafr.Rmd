@@ -152,11 +152,15 @@ A major aim of `pafr` is to generate compelling visualisations of
 genomic alignments. To this end, the package implements three types of 
 genomic graphics, making use of the `ggplot2` plotting environment. 
 
-Although `ggplot2` is a powerful visualisation tool, we found that producing high-quality plots of genome alignments was difficult, requiring the use of many different layers
-and multiple transformations to datasets. The visualisation functions provided by `pafr`
-automate the process of transforming data into a useable form and adding layers to plots. Each
-of these functions returns `ggplot2` plots, which can then be modified by the
-addition of further ggplot layers, scales and themes. These figures are, therefore, incredible modifiable.
+Although `ggplot2` is a powerful visualisation tool, we found that producing 
+high-quality plots of genome alignments was difficult, requiring the use of 
+many different layers and multiple transformations to datasets. The 
+visualisation functions provided by `pafr` automate the process of transforming 
+data into a useable form and adding layers to plots. Each of these functions 
+returns `ggplot2` plots, which can then be modified by the addition of further 
+ggplot layers, scales and themes. 
+
+
 
 
 ### Dot plot
@@ -219,10 +223,6 @@ path_to_centro <- system.file("extdata", "Q_centro.bed", package = "pafr")
 centro <- read_bed(path_to_centro)
 knitr::kable(head(centro))
 ```
-
-<!-- 
-David: I got a bit lost with the paragraph below. Expand a bit on what's going on?
--->
 
 In `ggplot` style, we use the `+` symbol to add the results of `highlight_query`
 to a dot plot. Note that for the plot to work, both the `ordered_by` and

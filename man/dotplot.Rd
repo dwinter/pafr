@@ -4,9 +4,17 @@
 \alias{dotplot}
 \title{Generate a dot plot from a paf alignment}
 \usage{
-dotplot(ali, order_by = c("size", "qstart", "provided"), label_seqs = FALSE,
-  dashes = TRUE, ordering = list(), alignment_colour = "black",
-  xlab = "query", ylab = "target", line_size = 2)
+dotplot(
+  ali,
+  order_by = c("size", "qstart", "provided"),
+  label_seqs = FALSE,
+  dashes = TRUE,
+  ordering = list(),
+  alignment_colour = "black",
+  xlab = "query",
+  ylab = "target",
+  line_size = 2
+)
 }
 \arguments{
 \item{ali}{pafr or tibble containing the genome alignment (as returned by

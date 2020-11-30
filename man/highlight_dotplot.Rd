@@ -5,11 +5,25 @@
 \alias{highlight_target}
 \title{Highlight segments of a query or target genome in a dot plot}
 \usage{
-highlight_query(ali, bed, ordered_by = c("size", "qstart", "provided"),
-  ordering = list(), fill = "yellow", colour = "black", alpha = 0.6)
+highlight_query(
+  ali,
+  bed,
+  ordered_by = c("size", "qstart", "provided"),
+  ordering = list(),
+  fill = "yellow",
+  colour = "black",
+  alpha = 0.6
+)
 
-highlight_target(ali, bed, ordered_by = c("size", "qstart", "provided"),
-  ordering = list(), fill = "yellow", colour = "black", alpha = 0.6)
+highlight_target(
+  ali,
+  bed,
+  ordered_by = c("size", "qstart", "provided"),
+  ordering = list(),
+  fill = "yellow",
+  colour = "black",
+  alpha = 0.6
+)
 }
 \arguments{
 \item{ali}{pafr or tibble containing a genome alignment (as returned by
