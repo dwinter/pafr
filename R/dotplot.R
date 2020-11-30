@@ -170,39 +170,80 @@ dotplot <- function(ali, order_by = c("size", "qstart", "provided"),
                        aes(label = seq_name, x = 0, y = centre),
                        angle = 90, vjust = 0, check_overlap = TRUE)
   }
+  # We want to be able to annotated the dotpot with data in BED format. Adding
+  # arugments to this fxn wouldbe pretty unwieldy, so we want to take advantage
+  # of ggplots overloaded "+" to add the annotatoins. To oders the annotations
+  # in that same way as the dotplot object, we need this object to include a
+  # functoin for mapping chromosome positoins to concatenated genome positoins
+  # in the dotlot
+  p$seq_map_fxn <- function(bed, query=TRUE, ...){
+      map_n <-  if (query) 1 else 3
+      seq_map <- seq_maps[[map_n]]
+      check_chroms <-  bed[["chrom"]] %in% names(seq_map)
+      if( !(all(check_chroms)) ){
+          if( !(any(check_chroms))) {
+              stop("None of the chromosomes represented this bed file are part of the dotplot")
+          } else {
+              bed <- subset(bed, chrom %in% names(seq_map))
+              missing <- unique( bed[["chrom"]] [!check_chroms])
+              msg <- paste(length(missing), 
+                           "of the chromosomes in this bed file are not part of the dotplot:\n  ", 
+                           paste(missing, collapse=", "))
+              warning(msg, call.=FALSE)
+          }
+      }
+      data.frame(istart=bed[["start"]] + seq_map[ bed[["chrom"]] ], 
+                 iend = bed[["end"]] + seq_map[ bed[["chrom"]] ],
+                len = seq_maps[[map_n + 1]] 
+      )
+  }
   p
 }
 
-highlight_dotplot <- function(hl_source, ali, bed, ordered_by, ordering, fill, colour, alpha){
-    map_n <-  if (hl_source == "query") 1 else 3
-    seq_maps <- order_seqs(ali, ordered_by)
-    os <- seq_maps[[map_n]][as.character(bed[["chrom"]])]
-    to_plot <- data.frame(i_start = bed$start + os, i_end = bed$end + os)
-    if (hl_source == "query") {
-        ystart <- 0
-        yend <- seq_maps[["tsum"]]
-        xstart <- "i_start"
-        xend <- "i_end"
-    } else {
-        ystart <- "i_start"
-        yend <- "i_end"        
-        xend <- seq_maps[["qsum"]]
-        xstart <- 0
+highlight_dotplot <- function(bed, query=TRUE, ...){
+    # this gets a bit complicated. In order for the ggplot "+" operator to 
+    # acess the parent plot, we need to to define a function that takes a ggplot
+    # as input. So this function only returns a function, which is then called
+    # by ggplot_add (below).
+    args <- list(...)
+    f <- function(parent_plot){
+        to_plot <- parent_plot$seq_map_fxn(bed, query)
+        if (query) {
+            ystart <- 0
+            yend <- "len"
+            xstart <- "istart"
+            xend <- "iend"
+        } else {
+            ystart <- "istart"
+            yend <- "iend"        
+            xend <- "len"
+            xstart <- 0
+        }
+        args$data <- to_plot
+        args$mapping <- aes_string(xmin = xstart, xmax = xend, ymin = ystart, ymax = yend)
+        do.call(geom_rect, args)
     }
-
-    geom_rect(data = to_plot,
-             aes_string(xmin = xstart, xmax = xend, ymin = ystart, ymax = yend),
-             fill = fill, colour = colour, alpha = alpha)
+    class(f) <- c("dotplot_hl", class(f))
+    f
 }
+
+#'@export
+ggplot_add.dotplot_hl <- function(object, plot, object_name){
+    new_layer <- object(plot)
+    plot$layers <- append(plot$layers, new_layer)
+    plot
+}
+
+#'@export
+print.dotplot_hl <- function(x, ...){
+    cat(" <pafr dotplot highlight layer function (should be added to plot)>\n")
+}
+
 
 #' @rdname highlight_dotplot
 #' @export 
-highlight_query <- function(ali, bed, 
-                           ordered_by = c("size", "qstart", "provided"), 
-                           ordering = list(), fill = "yellow", colour = "black",
-                           alpha=0.6) {
-    highlight_dotplot("query", ali, bed,  
-                      match.arg(ordered_by), ordering, fill, colour, alpha)
+highlight_query <- function(bed, fill = "yellow", colour = "black", alpha=0.6) {
+    highlight_dotplot(bed,  query=TRUE, fill=fill, colour=colour, alpha=alpha)
 }
   
 #' Highlight segments of a query or target genome in a dot plot
@@ -212,18 +253,9 @@ highlight_query <- function(ali, bed,
 #' (see examples below) will add a rectangular 'highlight' corresponding to a
 #' particular genomic interval in the corresponding genome.
 #'
-#' @param ali pafr or tibble containing a genome alignment (as returned by
-#' \code{\link{read_paf}})
 #' @param bed \code{data.frame} or \code{tbl_df} containing a bed file, as returned by
 #' \code{\link{read_bed}}. Should contain three columns named 'chrom', 'start' 
 #'  and 'end'
-#' @param ordered_by  How the query and target sequences are ordered in the
-#' dot plot that this highlight is being added to. This argument should match that
-#' used in \code{\link{dotplot}}.
-#' @param ordering  If \code{order_by} is set to TRUE,
-#' this should be a list with two elements that specify the order of query
-#' and then target sequences in the dot plot. This option is ignored if
-#' \code{order_by} is set to other values
 #' @param fill character  Fill colour for highlight segment
 #' @param colour character  Outline colour for highlight segment
 #' @param alpha character  Opacity ([0-1]) for highlight segment
@@ -231,15 +263,13 @@ highlight_query <- function(ali, bed,
 #' @examples
 #' ali <- read_paf( system.file("extdata", "fungi.paf", package="pafr") )
 #' cen <- read_bed(system.file("extdata", "Q_centro.bed", package="pafr"))
-#' dotplot(ali) + highlight_query(ali, cen)
+#' dotplot(ali) + highlight_query(cen)
 #' interval <- data.frame(chrom="T_chr3", start=2000000, end=3000000)
 #' dotplot(ali, label_seqs=TRUE) + 
-#'    highlight_target(ali, interval)
+#'    highlight_target(interval)
 #' @export
-highlight_target <- function(ali, bed, 
-                             ordered_by = c("size", "qstart", "provided"), 
-                             ordering=list(), 
-                             fill="yellow", colour="black", alpha=0.6){
-    highlight_dotplot("target", ali, bed,  
-                      match.arg(ordered_by), ordering, fill, colour, alpha)
+highlight_target <- function(bed, fill = "yellow", colour = "black", alpha=0.6) {
+    highlight_dotplot(bed,  query=FALSE, fill=fill, colour=colour, alpha=alpha)
 }
+
+

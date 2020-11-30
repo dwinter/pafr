@@ -225,12 +225,12 @@ knitr::kable(head(centro))
 ```
 
 In `ggplot` style, we use the `+` symbol to add the results of `highlight_query`
-to a dot plot. Note that for the plot to work, both the `ordered_by` and
-`ali` arguments must match between the call to `dotplot` and `highlight_query`.
+to a dot plot. (The ordering of the chromosomes in the plot is inherited from
+the dotplot, so does not need to be specified in the highlight function).
 
 ```{r highlight, fig.height=6}
 dotplot(prim_alignment, "qstart") + 
-    highlight_query(ali=prim_alignment, bed=centro, ordered_by="qstart")
+    highlight_query(bed=centro)
 ```
 
 It is not apparent from the very small intervals plotted above, but 'highlights'
@@ -240,7 +240,7 @@ makes this clearer.
 ```{r highlight_t, fig.height=6}
 interval <- data.frame(chrom="T_chr3", start=2000000, end=3000000)
 dotplot(prim_alignment, label_seqs=TRUE) + 
-    highlight_target(prim_alignment, interval)
+    highlight_target(interval)
 ```
 
 
