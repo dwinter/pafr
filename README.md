@@ -1,29 +1,18 @@
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-![Devlopment stage](https://img.shields.io/badge/development--stage-beta-orange) [![Travis-CI Build Status](https://travis-ci.org/dwinter/pafr.svg?branch=master)](https://travis-ci.org/dwinter/pafr) [![Coverage Status](https://img.shields.io/codecov/c/github/dwinter/pafr/master.svg)](https://codecov.io/github/dwinter/pafr?branch=master)
+[![Travis-CI Build Status](https://travis-ci.org/dwinter/pafr.svg?branch=master)](https://travis-ci.org/dwinter/pafr) [![Coverage Status](https://img.shields.io/codecov/c/github/dwinter/pafr/master.svg)](https://codecov.io/github/dwinter/pafr?branch=master)
 
 pafr
 ====
 
 Read, manipulate and visualize 'Pairwise mApping Format' data in R
 
-Under construction
-------------------
+In development
+--------------
 
-This package is in the process of being turned from research code into a nice usable package. The package is now feature-complete, and all functions are documented. However, there may still be bugs in the code that haven't been exposed by our tests and it is possible we will introduce breaking-changes in the future.
+This package is in the process of being turned from research code into a nice usable package. The package is now feature-complete and has a suite of tests and documentation. It is still possible that you will find bugs that our own test data has not thrown up, so please provide any feedback and or issues you have with the code.
 
-Nevertheless, we'd appreciate feedback from anyone that might the package. Having installed the package, making a whole-genome dotplot is as simple as reading in an alignment and calling `dotplot`:.
-
-``` r
-library(pafr, quietly=TRUE)
-test_alignment <- system.file("extdata", "fungi.paf", package="pafr")
-ali <- read_paf(test_alignment)
-dotplot(ali, label_seqs=TRUE)
-```
-
-![](man/figures/README-dotplot-1.png)
-
-Installation
-------------
+Install
+-------
 
 The package is not yet available on CRAN, but we will keep the master branch of this repository stable. You can install using devtools
 
@@ -31,6 +20,49 @@ The package is not yet available on CRAN, but we will keep the master branch of 
 #install.packages(devtools)
 devtools::install_github("dwinter/pafr")
 ```
+
+Read in a .paf file and check it out
+------------------------------------
+
+Having installed the package, making a whole-genome dotplot is as simple as reading in an alignment and calling `dotplot`:
+
+``` r
+library(pafr, quietly=TRUE)
+test_alignment <- system.file("extdata", "fungi.paf", package="pafr")
+ali <- read_paf(test_alignment)
+dotplot(ali)
+```
+
+![](man/figures/README-dotplot-1.png)
+
+The alignments are provided as a table that acts like `data.frame`. The table has columns for each of the 12 standard columns in the .paf format as well as any tags represented in the file.Printing the alignment object shows all the avaible tags.
+
+``` r
+ali
+#> pafr object with 2501 alignments (36.5Mb)
+#>  8 query seqs
+#>  8 target seqs
+#>  11 tags: NM, ms, AS, nn, tp, cm, s1, s2, dv, cg, zd
+```
+
+The table behaves as a `data.frame`, so integrates with existing R functions. We can find the mean length of alignments in this file using the `alen` column.
+
+``` r
+mean(ali$alen)
+#> [1] 14575.81
+```
+
+Likewise, we can use ggplot to find the distributoin of alignment lengths in the file.
+
+``` r
+ggplot(ali, aes(alen, fill=dv)) + 
+    geom_histogram(colour="black") + 
+    theme_bw(base_size=16) + 
+    scale_x_log10("Alignment-length")
+#> `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
+```
+
+![](man/figures/README-len_distr-1.png)
 
 Plots
 -----
