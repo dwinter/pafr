@@ -24,7 +24,7 @@ chrom_sizes <- function(ali) {
 # which represent the starting positions of each sequence in a concatenated
 # alignment and the total length of the query and target sequences.
 #
-#' @importFrom dplyr top_n
+#' @importFrom dplyr slice_max
 #' @importFrom dplyr group_by
 #' @importFrom utils head
 order_seqs <- function(ali, by, ordering = list()) {
@@ -45,7 +45,7 @@ order_seqs <- function(ali, by, ordering = list()) {
         q_idx <- order(chrom_lens[["qlens"]][, 2], decreasing = TRUE)
         qmap  <- structure(.Names = chrom_lens[["qlens"]][q_idx, 1],
                         c(0, head(cumsum(chrom_lens[["qlens"]][q_idx, 2]), -1)))
-        longest_by_target <- top_n(group_by(ali, .data[["tname"]]), 1, .data[["alen"]])
+        longest_by_target <- slice_max(group_by(ali, .data[["tname"]]), .data[["alen"]])
         t_idx <- order(qmap[longest_by_target$qname] + longest_by_target$qstart)
         tmap <- sort(structure(.Names = longest_by_target$tname[t_idx],
                          c(0, head(cumsum(longest_by_target$tlen[t_idx]), -1))))        
