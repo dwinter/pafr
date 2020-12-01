@@ -7,9 +7,9 @@ Authors@R: c(
             role = c("aut", "cre"), 
             comment  = c(ORCID = "0000-0002-6165-0029")),
     person("Kate", "Lee", 
-            email = "K.Lee3@massey.ac.nz", 
+            email = "kate.d.lee@gmail.com", 
             role = c("ctb"), 
-            comment  = c(ORCID = "")),
+            comment  = c(ORCID = ""000-0002-0886-3746)),
     person("Murray", "Cox", 
             email = "m.p.cox@massey.ac.nz", 
             role = c("ctb"), 
@@ -30,8 +30,9 @@ Suggests: testthat,
     covr,
     knitr,
     ggpubr,
-    rmarkdown
+    rmarkdown,
+    microbenchmark
 RoxygenNote: 7.1.1
-URL: https://github.com/dwinter/pafr
+URL: https://dwinter.github.io/pafr/
 BugReports: https://github.com/dwinter/pafr/issues
 VignetteBuilder: knitr
