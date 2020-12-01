@@ -55,9 +55,10 @@ mean(ali$alen)
 Likewise, we can use ggplot to find the distributoin of alignment lengths in the file.
 
 ``` r
-ggplot(ali, aes(alen, fill=dv)) + 
+ggplot(ali, aes(alen)) + 
     geom_histogram(colour="black", bins=20) + 
     theme_bw(base_size=16) + 
+    ggtitle("Distribution of alignment lengths") +
     scale_x_log10("Alignment-length")
 ```
 
