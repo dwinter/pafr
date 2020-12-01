@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Read, manipulate and visualize Pairwise mApping Format data • pafr</title>
-<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous">
+<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/flatly/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="bootstrap-toc.css">
 <script src="bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
@@ -81,7 +81,7 @@
 <div id="in-development" class="section level2">
 <h2 class="hasAnchor">
 <a href="#in-development" class="anchor"></a>In development</h2>
-<p>This package is in the process of being turned from research code into a nice usable package. The package is now feature-complete and has a suite of tests and documentation. It is still possible that you will find bugs that our own test data has not thrown up, so please provide any feedback and or issues you have with the code.</p>
+<p>The package is now feature-complete and being readied for its first CRAN release. It has a suite of tests and documentation. It is still possible that you will find bugs that our own test data has not thrown up, so please provide any feedback and or issues you have with the code.</p>
 </div>
 <div id="install" class="section level2">
 <h2 class="hasAnchor">
@@ -101,18 +101,22 @@
 <span class="va">ali</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/read_paf.html">read_paf</a></span><span class="op">(</span><span class="va">test_alignment</span><span class="op">)</span>
 <span class="fu"><a href="reference/dotplot.html">dotplot</a></span><span class="op">(</span><span class="va">ali</span><span class="op">)</span></code></pre></div>
 <p><img src="reference/figures/README-dotplot-1.png"></p>
-<p>The alignments are provided as a table that acts like <code>data.frame</code>. The table has columns for each of the 12 standard columns in the .paf format as well as any tags represented in the file.Printing the alignment object shows all the avaible tags.</p>
+</div>
+<div id="a-paf-file-in-r" class="section level2">
+<h2 class="hasAnchor">
+<a href="#a-paf-file-in-r" class="anchor"></a>A paf file in R</h2>
+<p><code>read_paf</code> takes alignments in a .paf file and represents them in table that behaves very much like a standard R <code>data.frame</code>. The table has columns for each of the 12 standard columns in the .paf format as well columns for any any tags represented in the file. Printing the tables shows a summary of the contents and lists th the avaible tags.</p>
 <div class="sourceCode"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">ali</span>
 <span class="co">#&gt; pafr object with 2501 alignments (36.5Mb)</span>
 <span class="co">#&gt;  8 query seqs</span>
 <span class="co">#&gt;  8 target seqs</span>
 <span class="co">#&gt;  11 tags: NM, ms, AS, nn, tp, cm, s1, s2, dv, cg, zd</span></code></pre></div>
-<p>The table behaves as a <code>data.frame</code>, so integrates with existing R functions. We can find the mean length of alignments in this file using the <code>alen</code> column.</p>
+<p>Because the table behaves as a <code>data.frame</code>, it integrates with existing R functions. For example, We can find the mean length of alignments in this file using the <code>alen</code> column.</p>
 <div class="sourceCode"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">ali</span><span class="op">$</span><span class="va">alen</span><span class="op">)</span>
 <span class="co">#&gt; [1] 14575.81</span></code></pre></div>
-<p>Likewise, we can use ggplot to find the distributoin of alignment lengths in the file.</p>
+<p>Likewise, we can produce a ggplot histogram of the distributoin of alignment lengths in the file.</p>
 <div class="sourceCode"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">ggplot</span><span class="op">(</span><span class="va">ali</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">alen</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
     <span class="fu">geom_histogram</span><span class="op">(</span>colour<span class="op">=</span><span class="st">"black"</span>, bins<span class="op">=</span><span class="fl">20</span><span class="op">)</span> <span class="op">+</span> 
@@ -120,11 +124,19 @@
     <span class="fu">ggtitle</span><span class="op">(</span><span class="st">"Distribution of alignment lengths"</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu">scale_x_log10</span><span class="op">(</span><span class="st">"Alignment-length"</span><span class="op">)</span></code></pre></div>
 <p><img src="reference/figures/README-len_distr-1.png"></p>
+<p>If we decide we don’t llike those shorter alignments, we can remove them with <code>subset</code> or</p>
+<div class="sourceCode"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">ali_long</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html">subset</a></span><span class="op">(</span><span class="va">ali</span>, <span class="va">alen</span> <span class="op">&gt;</span> <span class="fl">1e4</span><span class="op">)</span>
+<span class="va">ali_long</span>
+<span class="co">#&gt; pafr object with 448 alignments (27.2Mb)</span>
+<span class="co">#&gt;  8 query seqs</span>
+<span class="co">#&gt;  8 target seqs</span>
+<span class="co">#&gt;  11 tags: NM, ms, AS, nn, tp, cm, s1, s2, dv, cg, zd</span></code></pre></div>
 </div>
 <div id="plots" class="section level2">
 <h2 class="hasAnchor">
 <a href="#plots" class="anchor"></a>Plots</h2>
-<p>In addition to the dotplot demonstrated above, the package impliments two classes of genomic visualization</p>
+<p>In addition to the dotplot demonstrated above, the package impliments two other classes of genomic visualization</p>
 <div id="synteny-plot" class="section level3">
 <h3 class="hasAnchor">
 <a href="#synteny-plot" class="anchor"></a>Synteny plot</h3>
