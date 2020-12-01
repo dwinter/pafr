@@ -145,7 +145,7 @@ read_paf <- function(file_name, tibble=FALSE, include_tags=TRUE) {
 #' @param paf_data_frame a data.frame object with 12 columns. Column names and
 #' types wil be over-written in the returned object
 #' @return a pafr object 
-#' @seealso read_pa
+#' @seealso read_paf
 as_paf <- function(paf_data_frame){
     #lets be assertive
     if( ncol(paf_data_frame) != 12 ){

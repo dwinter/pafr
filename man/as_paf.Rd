@@ -23,5 +23,5 @@ visualizations, it might make sense to use a fast reading function to get a
 function. The `pafr` object can then work easily with the functions in this package.
 }
 \seealso{
-read_pa
+read_paf
 }
