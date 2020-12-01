@@ -260,9 +260,9 @@
   times<span class="op">=</span><span class="fl">10</span>
 <span class="op">)</span></code></pre></div>
 <pre><code>## Unit: milliseconds
-##     expr       min        lq      mean    median        uq      max neval
-##     tags 190.76558 193.75686 201.34789 200.47748 203.50680 227.7629    10
-##  no_tags  41.30875  43.35468  44.93968  44.48221  47.19497  48.1346    10</code></pre>
+##     expr       min        lq      mean   median        uq       max neval
+##     tags 180.14231 183.51932 186.75805 185.7875 190.23529 193.77943    10
+##  no_tags  40.20453  40.77489  42.45922  41.6123  44.51837  46.69066    10</code></pre>
 <p>That's about five times faster on my computer. Huge or highly-fragmented genomes may still produce so many alignments that they take a long time to read even with this approach. If you run into this issue, you may want to remove the tag data from the file before processing it in R. For example, you could use the unix utility <code>cut</code> to take only the firt 12 columns from a file.</p>
 <div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="fu">cut</span> -f1-12 [alignment_with_tags.paf] <span class="op">&gt;</span> tagless.paf</code></pre></div>
 <p>With not tag dat to consider, <code>read_paf</code> will be able to deal with this data more quickly. <code>pafr</code> also provides the functoin <code>as_paf</code> to allow users to convert a 12-column <code>data.frame</code> or simlar into a <code>pafr</code> object that can be used by visualisation functions in this package. This approach allows you to use <code>read.table</code> or optimised functions like <code><a href="https://readr.tidyverse.org/reference/read_delim.html">readr::read_delim</a></code> or <code><a href="https://Rdatatable.gitlab.io/data.table/reference/fread.html">data.table::fread</a></code> to process large files.</p>
