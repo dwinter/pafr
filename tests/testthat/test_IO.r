@@ -2,8 +2,10 @@ context("file IO")
 # Setup
 
 ali_pafr <- read_paf("test_ali.paf")
+ali_skip_tags <- read_paf("test_ali.paf", include_tags=FALSE)
 ali_tib <- read_paf("test_ali.paf", tibble=TRUE)
 ali_tagless <- read_paf("tagless.paf")
+ali_df <- read.table("tagless.paf")
 
 
 tag_names <- c("NM", "ms", "AS", "nn", "tp", "cm", "s1", "s2", "dv", "cg", "zd")
@@ -51,4 +53,26 @@ test_that("can handle tagless alignments", {
     expect_equal(ncol(ali_tagless), 12)
     expect_output(print(ali_tagless, "0 tags"))
 })
+test_that("We can ignore tags read_paf", {
+    expect_that(ali_skip_tags, is_a("pafr"))
+    expect_that( ncol(ali_skip_tags), equals(12))
+})
 
+
+test_that("can convert data.frame to pafr", {
+    expect_that(ali_df, is_a("data.frame"))
+    ali_converted <- as_paf(ali_df)
+    expect_that(ali_converted, is_a("pafr"))
+    
+    expect_that( nrow(ali_converted), equals(5))
+    expect_that( ncol(ali_converted), equals(12))
+    expect_that( sum(ali_converted[["alen"]]), equals(240777))
+})
+
+test_that("throw errors on converting data.frames", {
+    ali_df$extra_col <- "shouldn't be here"
+    expect_error( as_paf(ali_df) )
+    ali_df$extra_col <- NULL
+    ali_df[[12]] <- "Should be a number"
+    expect_error( as_paf(ali_df) )
+})

@@ -132,18 +132,23 @@ read_paf <- function(file_name, tibble=FALSE, include_tags=TRUE) {
     res
 }
 
-#;
+#' Coerce a data.frame or tibble into a pafr object
+#' 
+#' The main reason to use this function is speed up the process of reading in
+#' a large paf file that has no tags. Functions like read.table, read_delim
+#' (reader) and fread (data.table) can process a 12 column file  more quickly
+#' than pafr's read_paf. If you you do not need tag data for your analyses or
+#' visualizations, it might make sense to use a fast reading function to get a
+#' 12 column data.frame,  convert that data.frame into a `pafr  object with this
+#' function. The `pafr` object can then work easily with the functions in this package.
+#' @export 
+#' @param paf_data_frame a data.frame object with 12 columns. Column names and
+#' types wil be over-written in the returned object
+#' @return a pafr object 
+#' @seealso read_pa
 as_paf <- function(paf_data_frame){
     #lets be assertive
     if( ncol(paf_data_frame) != 12 ){
-        stop("data.frame should be in paf format, with 12 columns")
-    }
-    col_names <- c("qname", "qlen", "qstart", "qend", "strand",
-                   "tname", "tlen", "tstart", "tend", "nmatch",
-                   "alen", "mapq")
-  as_paf <- function(paf_data_frame){
-    #lets be assertive
-    if( nrow(paf_data_frame) != 12 ){
         stop("data.frame should be in paf format, with 12 columns")
     }
     col_names <- c("qname", "qlen", "qstart", "qend", "strand",
@@ -161,12 +166,7 @@ as_paf <- function(paf_data_frame){
     names(res) <- col_names
     class(res) <- c("pafr", "data.frame")
     res
-}    #ok, looks good
-    res <- .make_numeric(paf_data_frame, c(2, 3, 4, 7:12))
-    names(res) <- col_names
-    class(res) <- c("pafr", "data.frame")
-    res
-}
+}    
 
 #is a vector, possibly in character form, able to be treated as a numeric?
 is_numericable <- function(vec){

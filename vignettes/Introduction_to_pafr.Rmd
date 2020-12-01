@@ -97,10 +97,7 @@ similarity.
 
 Because the `pafr` object is effectively a `data.frame`, we can again use standard R
 functions to inspect or analyse it. For example, we can calculate the mean
-divergence level for alignments featuring each query sequence.
-<!---
-David: what do you mean by "alignments featuring each query sequence"?
--->
+divergence level for alignments featuring each sequence in the query genome.
 
 ```{r, compare_q}
 by_q <- aggregate(dv ~ qname, data=ali, FUN=mean)
@@ -109,6 +106,54 @@ knitr::kable(by_q)
 
 Interestingly enough, `Q_chrm` is the mitochondrial genome, so it appears that the
 mitochondrial genome displays less divergence than any of the autosomal chromosomes in this particular species.
+
+
+### Reading really big alignments
+
+Though `read_paf` has been optimised to process the tags in a paf file quickly, it
+can still take some time to read paf files that have a large number of
+alignments. For example, it takes about 30 seconds to read an alignment between
+two fragmented vertebrate genomes on my desktop PC. If speed is of the essence
+and you know you don't need the data encoded in the tags, there are a few tricks
+to get a `pafr` object more quickly.
+
+First, you can tell read_paf to ignore the tag information using the
+`include_tags` argument. Let's use `microbenchmark` to see how much time we can
+save by skipping the tags.
+
+```{r, include-tags}
+microbenchmark::microbenchmark(
+  tags = read_paf(path_to_fungal_alignment),
+  no_tags = read_paf(path_to_fungal_alignment, include_tags=FALSE),
+  times=10
+)
+```
+
+That's about five times faster on my computer.
+
+There may be cases the alignemnts are so huge or fragmented that they are still
+taking a long time to read in. In this case, you may want to remove the tag data
+prior ot reading in the alignments. For example, you could use the unix utility
+`cut`:
+
+```sh
+cut -f12 [alignment_with_tags.paf] > tagless.paf
+```
+
+With not tags to process, read_paf will be quicker. In this case, you could also
+read the .paf file in with `read.table` or a faster reading function like
+`fread` from data.table. The data.frame returned by that function can then be
+converted to a `pafr` object for use with the plotting functions below using 
+`as_pafr`. 
+
+
+```r
+tagless_df <- read.table("tagless.paf")
+tagless_ali <- as_paf(tagless_df)
+```
+pafr` provides the function `as_pafr` to convert
+a data.frame (or tibble or similar) into a `pafr`
+system.time(read_paf(path_to_fungal_alignment, include_tags=FALSE))
 
 
 ## Filtering and subsetting alignments
