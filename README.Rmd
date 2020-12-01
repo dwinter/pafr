@@ -71,7 +71,7 @@ file.
 
 ```{r,len_distr}
 ggplot(ali, aes(alen, fill=dv)) + 
-    geom_histogram(colour="black") + 
+    geom_histogram(colour="black", bins=20) + 
     theme_bw(base_size=16) + 
     scale_x_log10("Alignment-length")
 ```

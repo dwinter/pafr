@@ -56,10 +56,9 @@ Likewise, we can use ggplot to find the distributoin of alignment lengths in the
 
 ``` r
 ggplot(ali, aes(alen, fill=dv)) + 
-    geom_histogram(colour="black") + 
+    geom_histogram(colour="black", bins=20) + 
     theme_bw(base_size=16) + 
     scale_x_log10("Alignment-length")
-#> `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
 ```
 
 ![](man/figures/README-len_distr-1.png)
