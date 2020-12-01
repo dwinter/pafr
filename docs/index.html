@@ -96,7 +96,7 @@
 <a href="#read-in-a--paf-file-and-check-it-out" class="anchor"></a>Read in a .paf file and check it out</h2>
 <p>Having installed the package, making a whole-genome dotplot is as simple as reading in an alignment and calling <code>dotplot</code>:</p>
 <div class="sourceCode"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">pafr</span>, quietly<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dwinter.github.io/pafr/">pafr</a></span>, quietly<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span>
 <span class="va">test_alignment</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"fungi.paf"</span>, package<span class="op">=</span><span class="st">"pafr"</span><span class="op">)</span>
 <span class="va">ali</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/read_paf.html">read_paf</a></span><span class="op">(</span><span class="va">test_alignment</span><span class="op">)</span>
 <span class="fu"><a href="reference/dotplot.html">dotplot</a></span><span class="op">(</span><span class="va">ali</span><span class="op">)</span></code></pre></div>
@@ -168,6 +168,13 @@
 </li>
 </ul>
 </div>
+<div class="developers">
+<h2>Developers</h2>
+<ul class="list-unstyled">
+<li>David Winter <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0002-6165-0029" target="orcid.widget" aria-label="ORCID"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
+<li><a href="authors.html">All authors...</a></li>
+</ul>
+</div>
 
   <div class="dev-status">
 <h2>Dev status</h2>
@@ -181,7 +188,7 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by .</p>
+  <p>Developed by David Winter.</p>
 </div>
 
 <div class="pkgdown">

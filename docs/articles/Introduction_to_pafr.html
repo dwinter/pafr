@@ -176,7 +176,7 @@
 <p>In addition, each row can have a variable number of 'tags', which share a similar format to those used in SAM files <a href="https://samtools.github.io/hts-specs/SAMtags.pdf">See the SAM specification (pdf)</a>.</p>
 <p><code>pafr</code> provides the function <code>read_paf</code> to read <code>.paf</code> alignments into an R session.</p>
 <div class="sourceCode"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/dwinter/pafr">pafr</a></span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dwinter.github.io/pafr/">pafr</a></span><span class="op">)</span></code></pre></div>
 <pre><code>## Loading required package: ggplot2</code></pre>
 <div class="sourceCode"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">path_to_fungal_alignment</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"fungi.paf"</span>, package <span class="op">=</span> <span class="st">"pafr"</span><span class="op">)</span>
@@ -203,9 +203,7 @@
 <pre><code>## Warning: Removed 52 rows containing missing values (geom_point).</code></pre>
 <p><img src="Introduction_to_pafr_files/figure-html/alen-1.png" width="576" style="display: block; margin: auto;"></p>
 <p>We can see that there are many short alignments, some of which are very divergent. But there are also some very long alignments, all of which show high similarity.</p>
-<p>Because the <code>pafr</code> object is effectively a <code>data.frame</code>, we can again use standard R functions to inspect or analyse it. For example, we can calculate the mean divergence level for alignments featuring each query sequence. <!---
-David: what do you mean by "alignments featuring each query sequence"?
---></p>
+<p>Because the <code>pafr</code> object is effectively a <code>data.frame</code>, we can again use standard R functions to inspect or analyse it. For example, we can calculate the mean divergence level for alignments featuring each sequence in the query genome.</p>
 <div class="sourceCode"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">by_q</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/aggregate.html">aggregate</a></span><span class="op">(</span><span class="va">dv</span> <span class="op">~</span> <span class="va">qname</span>, data<span class="op">=</span><span class="va">ali</span>, FUN<span class="op">=</span><span class="va">mean</span><span class="op">)</span>
 <span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span><span class="va">by_q</span><span class="op">)</span></code></pre></div>
@@ -250,6 +248,30 @@ David: what do you mean by "alignments featuring each query sequence"?
 </tbody>
 </table>
 <p>Interestingly enough, <code>Q_chrm</code> is the mitochondrial genome, so it appears that the mitochondrial genome displays less divergence than any of the autosomal chromosomes in this particular species.</p>
+<div id="reading-really-big-alignments" class="section level3">
+<h3 class="hasAnchor">
+<a href="#reading-really-big-alignments" class="anchor"></a>Reading really big alignments</h3>
+<p>Though <code>read_paf</code> has been optimised to process the tags in a paf file quickly, it can still take some time to read paf files that have a large number of alignments. For example, it takes about 30 seconds to read an alignment between two fragmented vertebrate genomes on my desktop PC. If speed is of the essence and you know you don't need the data encoded in the tags, there are a few tricks to get a <code>pafr</code> object more quickly.</p>
+<p>First, you can tell read_paf to ignore the tag information using the <code>include_tags</code> argument. Let's use <code>microbenchmark</code> to see how much time we can save by skipping the tags.</p>
+<div class="sourceCode"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">microbenchmark</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/microbenchmark/man/microbenchmark.html">microbenchmark</a></span><span class="op">(</span>
+  tags <span class="op">=</span> <span class="fu"><a href="../reference/read_paf.html">read_paf</a></span><span class="op">(</span><span class="va">path_to_fungal_alignment</span><span class="op">)</span>,
+  no_tags <span class="op">=</span> <span class="fu"><a href="../reference/read_paf.html">read_paf</a></span><span class="op">(</span><span class="va">path_to_fungal_alignment</span>, include_tags<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span>,
+  times<span class="op">=</span><span class="fl">10</span>
+<span class="op">)</span></code></pre></div>
+<pre><code>## Unit: milliseconds
+##     expr       min        lq      mean    median        uq       max neval
+##     tags 189.77956 197.06247 207.83179 201.79677 228.20931 237.24151    10
+##  no_tags  41.45146  42.66716  44.29976  43.75636  46.14447  49.43853    10</code></pre>
+<p>That's about five times faster on my computer.</p>
+<p>There may be cases the alignemnts are so huge or fragmented that they are still taking a long time to read in. In this case, you may want to remove the tag data prior ot reading in the alignments. For example, you could use the unix utility <code>cut</code>:</p>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="fu">cut</span> -f12 [alignment_with_tags.paf] <span class="op">&gt;</span> tagless.paf</code></pre></div>
+<p>With not tags to process, read_paf will be quicker. In this case, you could also read the .paf file in with <code>read.table</code> or a faster reading function like <code>fread</code> from data.table. The data.frame returned by that function can then be converted to a <code>pafr</code> object for use with the plotting functions below using <code>as_pafr</code>.</p>
+<div class="sourceCode"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">tagless_df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.table</a></span><span class="op">(</span><span class="st">"tagless.paf"</span><span class="op">)</span>
+<span class="va">tagless_ali</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/as_paf.html">as_paf</a></span><span class="op">(</span><span class="va">tagless_df</span><span class="op">)</span></code></pre></div>
+<p>pafr<code>provides the function</code>as_pafr<code>to convert a data.frame (or tibble or similar) into a</code>pafr` system.time(read_paf(path_to_fungal_alignment, include_tags=FALSE))</p>
+</div>
 </div>
 <div id="filtering-and-subsetting-alignments" class="section level2">
 <h2 class="hasAnchor">
