@@ -261,8 +261,8 @@
 <span class="op">)</span></code></pre></div>
 <pre><code>## Unit: milliseconds
 ##     expr       min        lq      mean    median        uq       max neval
-##     tags 189.77956 197.06247 207.83179 201.79677 228.20931 237.24151    10
-##  no_tags  41.45146  42.66716  44.29976  43.75636  46.14447  49.43853    10</code></pre>
+##     tags 186.57907 187.61826 195.35483 190.72973 201.02217 219.41380    10
+##  no_tags  40.20491  42.14562  44.08762  42.33174  47.03888  49.99354    10</code></pre>
 <p>That's about five times faster on my computer.</p>
 <p>There may be cases the alignemnts are so huge or fragmented that they are still taking a long time to read in. In this case, you may want to remove the tag data prior ot reading in the alignments. For example, you could use the unix utility <code>cut</code>:</p>
 <div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="fu">cut</span> -f12 [alignment_with_tags.paf] <span class="op">&gt;</span> tagless.paf</code></pre></div>
