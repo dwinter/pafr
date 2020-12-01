@@ -65,12 +65,11 @@ ali
 ```
 
 For the worked example, a total of 35 Mb of aligned genome sequence is represented by 8 query
-and 8 target sequences. `read_paf` lists the 12 columns of the PAF file with
-column names labelled as in the table above.
+and 8 target sequences. The 12 standard parts of the PAF file are represented by
+columns named as in the table above.
 
 Any tags present in the `.paf` file are included as an additional column. The tags
-used by `minimap2` [are documented
-here](https://lh3.github.io/minimap2/minimap2.html) and also in the `man` page for that
+used by `minimap2` [are documented here](https://lh3.github.io/minimap2/minimap2.html) and also in the `man` page for that
 program. 
 
 One interesting tag for this particular alignment is `dv`, which encodes the
@@ -117,9 +116,10 @@ two fragmented vertebrate genomes on my desktop PC. If speed is of the essence
 and you know you don't need the data encoded in the tags, there are a few tricks
 to get a `pafr` object more quickly.
 
-First, you can tell read_paf to ignore the tag information using the
-`include_tags` argument. Let's use `microbenchmark` to see how much time we can
-save by skipping the tags.
+First, you can tell `read_paf` to ignore the tag information by setting the
+`include_tags` argument to `FALSE`. Let's use the `microbenchmark` benchmark 
+package to to see how much time we can save by skipping the tags in our example
+alignment.
 
 ```{r, include-tags}
 microbenchmark::microbenchmark(
@@ -129,31 +129,28 @@ microbenchmark::microbenchmark(
 )
 ```
 
-That's about five times faster on my computer.
-
-There may be cases the alignemnts are so huge or fragmented that they are still
-taking a long time to read in. In this case, you may want to remove the tag data
-prior ot reading in the alignments. For example, you could use the unix utility
-`cut`:
+That's about five times faster on my computer. Huge or highly-fragmented genomes 
+may still produce so many alignments that they take a long time to read even
+with this approach. If you run into this issue, you may want to remove the tag
+data from the file before processing it in R. For example, you could use the 
+unix utility `cut` to take only the firt 12 columns from a file.
 
 ```sh
-cut -f12 [alignment_with_tags.paf] > tagless.paf
+cut -f1-12 [alignment_with_tags.paf] > tagless.paf
 ```
 
-With not tags to process, read_paf will be quicker. In this case, you could also
-read the .paf file in with `read.table` or a faster reading function like
-`fread` from data.table. The data.frame returned by that function can then be
-converted to a `pafr` object for use with the plotting functions below using 
-`as_pafr`. 
+With not tag dat to consider, `read_paf` will be able to deal with this data more 
+quickly. `pafr` also provides the functoin `as_paf` to allow users to convert a
+12-column `data.frame` or simlar into a `pafr` object that can be used by
+visualisation functions in this package. This approach allows you to use
+`read.table` or optimised functions like `readr::read_delim` or
+`data.table::fread` to process large files.
 
 
 ```r
 tagless_df <- read.table("tagless.paf")
 tagless_ali <- as_paf(tagless_df)
 ```
-pafr` provides the function `as_pafr` to convert
-a data.frame (or tibble or similar) into a `pafr`
-system.time(read_paf(path_to_fungal_alignment, include_tags=FALSE))
 
 
 ## Filtering and subsetting alignments
@@ -163,7 +160,7 @@ low-quality, short or otherwise non-ideal alignments. `minimap2` uses the
 `tp` ('type of alignment') tag to mark secondary alignments (*i.e.*, possible
 alignments between the query and target sequences that are not the best possible
 alignments for those regions). The function `filter_secondary_alignments` removes
-non-primary alignments from a `pafr object`. 
+non-primary alignments from a `pafr` object. 
 
 We can use this function to filter our `ali` object and see how many alignments
 (*i.e.*, rows of data) are removed as a result:
@@ -288,6 +285,8 @@ dotplot(prim_alignment, label_seqs=TRUE) +
     highlight_target(interval)
 ```
 
+The 'highlight' functions use ggplot's `geom_rect` to prodice these annotatoins,
+and will pass on any argument use by this function (e.g. colour, fill, alpha...).
 
 ### Synteny plot
 
@@ -360,3 +359,10 @@ palette.
 ```{r, cov_colourful}
 plot_coverage(prim_alignment, fill='qname') + scale_fill_brewer(palette="Set1")
 ```
+
+# Feedback, bugs and development 
+
+We would love to hear your feedback on `pafr`. You can file issues (including
+bugs, usage questions and feature requests) at the package's github
+issue-tracker: https://github.com/dwinter/pafr/issues
+

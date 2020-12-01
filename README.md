@@ -9,7 +9,7 @@ Read, manipulate and visualize 'Pairwise mApping Format' data in R
 In development
 --------------
 
-This package is in the process of being turned from research code into a nice usable package. The package is now feature-complete and has a suite of tests and documentation. It is still possible that you will find bugs that our own test data has not thrown up, so please provide any feedback and or issues you have with the code.
+The package is now feature-complete and being readied for its first CRAN release. It has a suite of tests and documentation. It is still possible that you will find bugs that our own test data has not thrown up, so please provide any feedback and or issues you have with the code.
 
 Install
 -------
@@ -35,7 +35,10 @@ dotplot(ali)
 
 ![](man/figures/README-dotplot-1.png)
 
-The alignments are provided as a table that acts like `data.frame`. The table has columns for each of the 12 standard columns in the .paf format as well as any tags represented in the file.Printing the alignment object shows all the avaible tags.
+A paf file in R
+---------------
+
+`read_paf` takes alignments in a .paf file and represents them in table that behaves very much like a standard R `data.frame`. The table has columns for each of the 12 standard columns in the .paf format as well columns for any any tags represented in the file. Printing the tables shows a summary of the contents and lists th the avaible tags.
 
 ``` r
 ali
@@ -45,14 +48,14 @@ ali
 #>  11 tags: NM, ms, AS, nn, tp, cm, s1, s2, dv, cg, zd
 ```
 
-The table behaves as a `data.frame`, so integrates with existing R functions. We can find the mean length of alignments in this file using the `alen` column.
+Because the table behaves as a `data.frame`, it integrates with existing R functions. For example, We can find the mean length of alignments in this file using the `alen` column.
 
 ``` r
 mean(ali$alen)
 #> [1] 14575.81
 ```
 
-Likewise, we can use ggplot to find the distributoin of alignment lengths in the file.
+Likewise, we can produce a ggplot histogram of the distributoin of alignment lengths in the file.
 
 ``` r
 ggplot(ali, aes(alen)) + 
@@ -64,10 +67,21 @@ ggplot(ali, aes(alen)) +
 
 ![](man/figures/README-len_distr-1.png)
 
+If we decide we don't llike those shorter alignments, we can remove them with `subset` or
+
+``` r
+ali_long <- subset(ali, alen > 1e4)
+ali_long
+#> pafr object with 448 alignments (27.2Mb)
+#>  8 query seqs
+#>  8 target seqs
+#>  11 tags: NM, ms, AS, nn, tp, cm, s1, s2, dv, cg, zd
+```
+
 Plots
 -----
 
-In addition to the dotplot demonstrated above, the package impliments two classes of genomic visualization
+In addition to the dotplot demonstrated above, the package impliments two other classes of genomic visualization
 
 ### Synteny plot
 
