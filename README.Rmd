@@ -47,8 +47,8 @@ dotplot(ali)
 behaves very much like a standard R `data.frame`. The table 
 has columns for each of the 12 standard columns in the .paf format as well
 columns for any any tags represented in the file. Printing the tables shows a 
-summary of the contents and lists the the avaible tags.
-
+summary of the contents and lists the the available tags.
+ 
 ```{r, ali}
 ali
 ```
@@ -81,7 +81,7 @@ long_ali
 
 ## Plots
 
-In addition to the dotplot demonstrated above, the package impliments two
+In addition to the dotplot demonstrated above, the package implements two
 other classes of genomic visualization
 
 ### Synteny plot
@@ -103,8 +103,8 @@ shading those regions of each sequence that are covered by at least one
 alignment. This can be a useful in identifying how alternative genome assemblies 
 differ from each other, or visualizing differences between related genomes.
 
-In this example we visualize the sequences in the traget genome, shading each
-aligned-regoin according to query-sequence aligning to that region.
+In this example we visualize the sequences in the target genome, shading each
+aligned-region according to query-sequence aligning to that region.
 
 ```{r, coverage}
 plot_coverage(long_ali, fill='qname') +

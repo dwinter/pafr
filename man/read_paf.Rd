@@ -14,12 +14,12 @@ a tidy \code{tbl_df}}
 
 \item{include_tags}{logical if TRUE (default) read additional information
 about each alignment encoded as PAF tags. Setting this to FALSE will speed up
-parsing of paf alignments, sepcially those with large CIGAR strings/}
+parsing of paf alignments, specially those with large CIGAR strings/}
 }
 \value{
 Either a \code{pafr} object, which acts as a \code{data.frame}, or a
 \code{tbl_df} containing information on genomic alignments. The contents of
-this table are described in detail in teh pafr package vingette.
+this table are described in detail in the pafr package vingette.
 }
 \description{
 See the package vignette for detailed information on the file format and its

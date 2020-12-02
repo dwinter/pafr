@@ -1,6 +1,6 @@
 Package: pafr
 Title: Read, manipulate and visualize 'Pairwise mApping Format' data
-Version: 0.0.1
+Version: 0.0.2
 Authors@R: c(
     person("David", "Winter", 
             email = "david.winter@gmail.com", 

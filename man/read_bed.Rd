@@ -12,7 +12,7 @@ read_bed(file_name, tibble = FALSE, ...)
 \item{tibble}{logical  If TRUE, the genomic intervals are returned as
 a tidy \code{tbl_df}.}
 
-\item{...}{Other arugments passed to \code{read.table}}
+\item{...}{Other arguments passed to \code{read.table}}
 }
 \value{
 Either a \code{data.frame} or a \code{tbl_df} with at least three

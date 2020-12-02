@@ -78,7 +78,7 @@ plot_coverage <- function(ali, target = TRUE, fill = "forestgreen",
 #' A minimalistic ggplot2 theme designed for use with genome coverage plots
 #'
 #' This theme is used as the default when \code{\link{plot_coverage}} is called,
-#' so you should usually only call this function to modify the appearence of the
+#' so you should usually only call this function to modify the appearance of the
 #' coverage plot.
 #' @param facet_labs logical  If TRUE (default), label sequences using the facet
 #' labels; if FALSE, sequences are labeled directly using 

@@ -14,7 +14,7 @@
 #' @param file_name  Path to the bed file to be read in
 #' @param tibble logical  If TRUE, the genomic intervals are returned as
 #' a tidy \code{tbl_df}.
-#' @param ...  Other arugments passed to \code{read.table}
+#' @param ...  Other arguments passed to \code{read.table}
 #' @return Either a \code{data.frame} or a \code{tbl_df} with at least three
 #' columns named 'chrom', 'start' and 'end'
 #' @importFrom tibble as_tibble
@@ -87,10 +87,10 @@ process_tags <- function(raw_tags){
 #' a tidy \code{tbl_df}
 #' @param include_tags  logical if TRUE (default) read additional information
 #' about each alignment encoded as PAF tags. Setting this to FALSE will speed up
-#' parsing of paf alignments, sepcially those with large CIGAR strings/
+#' parsing of paf alignments, specially those with large CIGAR strings/
 #' @return Either a \code{pafr} object, which acts as a \code{data.frame}, or a
 #' \code{tbl_df} containing information on genomic alignments. The contents of
-#' this table are described in detail in teh pafr package vingette.
+#' this table are described in detail in the pafr package vingette.
 #' @importFrom tibble as_tibble
 #' @importFrom stringr str_split
 #' @examples
@@ -143,7 +143,7 @@ read_paf <- function(file_name, tibble=FALSE, include_tags=TRUE) {
 #' function. The `pafr` object can then work easily with the functions in this package.
 #' @export 
 #' @param paf_data_frame a data.frame object with 12 columns. Column names and
-#' types wil be over-written in the returned object
+#' types will be over-written in the returned object
 #' @return a pafr object 
 #' @seealso read_paf
 as_paf <- function(paf_data_frame){

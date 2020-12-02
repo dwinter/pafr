@@ -133,15 +133,15 @@ That's about five times faster on my computer. Huge or highly-fragmented genomes
 may still produce so many alignments that they take a long time to read even
 with this approach. If you run into this issue, you may want to remove the tag
 data from the file before processing it in R. For example, you could use the 
-unix utility `cut` to take only the firt 12 columns from a file.
+unix utility `cut` to take only the first 12 columns from a file.
 
 ```sh
 cut -f1-12 [alignment_with_tags.paf] > tagless.paf
 ```
 
-With not tag dat to consider, `read_paf` will be able to deal with this data more 
-quickly. `pafr` also provides the functoin `as_paf` to allow users to convert a
-12-column `data.frame` or simlar into a `pafr` object that can be used by
+With not tag data to consider, `read_paf` will be able to deal with this data more 
+quickly. `pafr` also provides the function `as_paf` to allow users to convert a
+12-column `data.frame` or similar into a `pafr` object that can be used by
 visualisation functions in this package. This approach allows you to use
 `read.table` or optimised functions like `readr::read_delim` or
 `data.table::fread` to process large files.
@@ -198,7 +198,7 @@ Although `ggplot2` is a powerful visualisation tool, we found that producing
 high-quality plots of genome alignments was difficult, requiring the use of 
 many different layers and multiple transformations to datasets. The 
 visualisation functions provided by `pafr` automate the process of transforming 
-data into a useable form and adding layers to plots. Each of these functions 
+data into a usable form and adding layers to plots. Each of these functions 
 returns `ggplot2` plots, which can then be modified by the addition of further 
 ggplot layers, scales and themes. 
 
@@ -285,7 +285,7 @@ dotplot(prim_alignment, label_seqs=TRUE) +
     highlight_target(interval)
 ```
 
-The 'highlight' functions use ggplot's `geom_rect` to prodice these annotatoins,
+The 'highlight' functions use ggplot's `geom_rect` to produce these annotations,
 and will pass on any argument use by this function (e.g. colour, fill, alpha...).
 
 ### Synteny plot

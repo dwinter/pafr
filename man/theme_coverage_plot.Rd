@@ -17,7 +17,7 @@ do not display a legend}
 }
 \description{
 This theme is used as the default when \code{\link{plot_coverage}} is called,
-so you should usually only call this function to modify the appearence of the
+so you should usually only call this function to modify the appearance of the
 coverage plot.
 }
 \examples{

@@ -8,7 +8,7 @@ as_paf(paf_data_frame)
 }
 \arguments{
 \item{paf_data_frame}{a data.frame object with 12 columns. Column names and
-types wil be over-written in the returned object}
+types will be over-written in the returned object}
 }
 \value{
 a pafr object

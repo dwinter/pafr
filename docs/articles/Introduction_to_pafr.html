@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pafr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.2</span>
       </span>
     </div>
 
@@ -260,12 +260,12 @@
   times<span class="op">=</span><span class="fl">10</span>
 <span class="op">)</span></code></pre></div>
 <pre><code>## Unit: milliseconds
-##     expr       min        lq      mean   median        uq       max neval
-##     tags 180.14231 183.51932 186.75805 185.7875 190.23529 193.77943    10
-##  no_tags  40.20453  40.77489  42.45922  41.6123  44.51837  46.69066    10</code></pre>
-<p>That's about five times faster on my computer. Huge or highly-fragmented genomes may still produce so many alignments that they take a long time to read even with this approach. If you run into this issue, you may want to remove the tag data from the file before processing it in R. For example, you could use the unix utility <code>cut</code> to take only the firt 12 columns from a file.</p>
+##     expr       min        lq      mean    median        uq       max neval
+##     tags 196.55810 197.10971 199.71339 199.00400 201.69211 205.82663    10
+##  no_tags  41.33416  41.88992  44.34422  43.27138  47.22024  48.20145    10</code></pre>
+<p>That's about five times faster on my computer. Huge or highly-fragmented genomes may still produce so many alignments that they take a long time to read even with this approach. If you run into this issue, you may want to remove the tag data from the file before processing it in R. For example, you could use the unix utility <code>cut</code> to take only the first 12 columns from a file.</p>
 <div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="fu">cut</span> -f1-12 [alignment_with_tags.paf] <span class="op">&gt;</span> tagless.paf</code></pre></div>
-<p>With not tag dat to consider, <code>read_paf</code> will be able to deal with this data more quickly. <code>pafr</code> also provides the functoin <code>as_paf</code> to allow users to convert a 12-column <code>data.frame</code> or simlar into a <code>pafr</code> object that can be used by visualisation functions in this package. This approach allows you to use <code>read.table</code> or optimised functions like <code><a href="https://readr.tidyverse.org/reference/read_delim.html">readr::read_delim</a></code> or <code><a href="https://Rdatatable.gitlab.io/data.table/reference/fread.html">data.table::fread</a></code> to process large files.</p>
+<p>With not tag data to consider, <code>read_paf</code> will be able to deal with this data more quickly. <code>pafr</code> also provides the function <code>as_paf</code> to allow users to convert a 12-column <code>data.frame</code> or similar into a <code>pafr</code> object that can be used by visualisation functions in this package. This approach allows you to use <code>read.table</code> or optimised functions like <code><a href="https://readr.tidyverse.org/reference/read_delim.html">readr::read_delim</a></code> or <code><a href="https://Rdatatable.gitlab.io/data.table/reference/fread.html">data.table::fread</a></code> to process large files.</p>
 <div class="sourceCode"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">tagless_df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.table</a></span><span class="op">(</span><span class="st">"tagless.paf"</span><span class="op">)</span>
 <span class="va">tagless_ali</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/as_paf.html">as_paf</a></span><span class="op">(</span><span class="va">tagless_df</span><span class="op">)</span></code></pre></div>
@@ -383,7 +383,7 @@
 <span class="fu"><a href="../reference/dotplot.html">dotplot</a></span><span class="op">(</span><span class="va">prim_alignment</span>, label_seqs<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span> <span class="op">+</span> 
     <span class="fu"><a href="../reference/highlight_query.html">highlight_target</a></span><span class="op">(</span><span class="va">interval</span><span class="op">)</span></code></pre></div>
 <p><img src="Introduction_to_pafr_files/figure-html/highlight_t-1.png" width="576" style="display: block; margin: auto;"></p>
-<p>The 'highlight' functions use ggplot's <code>geom_rect</code> to prodice these annotatoins, and will pass on any argument use by this function (e.g. colour, fill, alpha...).</p>
+<p>The 'highlight' functions use ggplot's <code>geom_rect</code> to produce these annotations, and will pass on any argument use by this function (e.g. colour, fill, alpha...).</p>
 </div>
 </div>
 <div id="synteny-plot" class="section level3">

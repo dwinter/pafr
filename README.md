@@ -33,7 +33,7 @@ dotplot(ali)
 A paf file in R
 ---------------
 
-`read_paf` takes alignments in a .paf file and represents them in table that behaves very much like a standard R `data.frame`. The table has columns for each of the 12 standard columns in the .paf format as well columns for any any tags represented in the file. Printing the tables shows a summary of the contents and lists the the avaible tags.
+`read_paf` takes alignments in a .paf file and represents them in table that behaves very much like a standard R `data.frame`. The table has columns for each of the 12 standard columns in the .paf format as well columns for any any tags represented in the file. Printing the tables shows a summary of the contents and lists the the available tags.
 
 ``` r
 ali
@@ -76,7 +76,7 @@ long_ali
 Plots
 -----
 
-In addition to the dotplot demonstrated above, the package impliments two other classes of genomic visualization
+In addition to the dotplot demonstrated above, the package implements two other classes of genomic visualization
 
 ### Synteny plot
 
@@ -93,7 +93,7 @@ plot_synteny(long_ali, q_chrom="Q_chr3", t_chrom="T_chr4", centre=TRUE)
 
 The coverage plot displays all sequences in either the query or target genome, shading those regions of each sequence that are covered by at least one alignment. This can be a useful in identifying how alternative genome assemblies differ from each other, or visualizing differences between related genomes.
 
-In this example we visualize the sequences in the traget genome, shading each aligned-regoin according to query-sequence aligning to that region.
+In this example we visualize the sequences in the target genome, shading each aligned-region according to query-sequence aligning to that region.
 
 ``` r
 plot_coverage(long_ali, fill='qname') +
