@@ -137,7 +137,7 @@ check_ordering <- function(ali, ordering) {
 dotplot <- function(ali, order_by = c("size", "qstart", "provided"),
                     label_seqs = FALSE, dashes = TRUE, ordering = list(),
                     alignment_colour = "black", xlab = "query", ylab = "target",
-                    line_size=2) {
+                    line_size=2, label_size=4) {
     by <- match.arg(order_by)
     if (by == "provided") {
         check_ordering(ali, ordering)
@@ -165,10 +165,10 @@ dotplot <- function(ali, order_by = c("size", "qstart", "provided"),
     qname_df <- dotplot_name_df(seq_maps[["qmap"]], seq_maps[["qsum"]])
     tname_df <- dotplot_name_df(seq_maps[["tmap"]], seq_maps[["tsum"]])
     p <- p + geom_text(data = qname_df, aes_string(label = "seq_name", x = "centre", y = "0"),
-                       vjust = 1, check_overlap = TRUE) +
+                       vjust = 1, check_overlap = TRUE, size=label_size) +
              geom_text(data = tname_df,
                        aes_string(label = "seq_name", x = "0", y = "centre"),
-                       angle = 90, vjust = 0, check_overlap = TRUE)
+                       angle = 90, vjust = 0, check_overlap = TRUE, size=label_size)
   }
   # We want to be able to annotated the dotpot with data in BED format. Adding
   # arugments to this fxn wouldbe pretty unwieldy, so we want to take advantage
